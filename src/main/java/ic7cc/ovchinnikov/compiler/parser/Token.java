@@ -53,7 +53,6 @@ public interface Token {
   public static final int COLON = 22;
   public static final int LBRACE = 31;
   public static final int ELSE = 13;
-  public static final int GOTO = 58;
   public static final int WHILE = 7;
   public static final int THEN = 11;
   public static final int RBRACE = 32;
@@ -125,8 +124,7 @@ public interface Token {
   "LATTICE",
   "NUMBER",
   "STRING",
-  "ID",
-  "GOTO"
+  "ID"
   };
 }
 

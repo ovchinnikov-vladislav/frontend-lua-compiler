@@ -108,23 +108,26 @@ non terminal optforexp;
 non terminal opteqexplist;
 non terminal empty;
 
-
 start with chunk;
 
+// Успешная
 chunk ::= block;
 
-block ::= statlist retstat
+block ::= /* statlist retstat
         | statlist
-        | retstat
+        |*/ retstat
         | empty;
 
+/*
 statlist ::=  stat optsemi
             | stat optsemi statlist;
+*/
 
+// Успешная
 retstat ::=   RETURN optsemi
             | RETURN explist optsemi
             | BREAK optsemi;
-
+/*
 stat ::=  SEMICOLON
         | varlist EQ explist
         | functioncall
@@ -142,14 +145,18 @@ stat ::=  SEMICOLON
 
 varlist ::=  var
            | var COMMA varlist;
+*/
 
+// Успешная
 explist ::=  exp
            | exp COMMA explist;
 
+/*
 functioncall ::=  prefixexp args
                 | prefixexp COLON Name args;
 
 label ::= COLONCOLON Name COLONCOLON;
+*/
 
 exp ::=  NIL
        | FALSE
@@ -157,12 +164,13 @@ exp ::=  NIL
        | NUMBER
        | STRING
        | PARAMS
-       | functiondef
+     /*  | functiondef
        | prefixexp
        | tableconstructor
        | exp binop exp
-       | unop exp;
+       | unop exp */;
 
+/*
 optelse ::=  ELSE block
            | ELSEIF exp THEN block optelse
            | empty;
@@ -238,10 +246,12 @@ field ::=  LBRACKET exp RBRACKET EQ exp
 
 fieldsep ::=  COMMA
             | SEMICOLON;
-
+*/
 optsemi	::=  SEMICOLON
            | empty;
-
+/*
 Name ::= ID;
+
+*/
 
 empty ::= /* empty */;

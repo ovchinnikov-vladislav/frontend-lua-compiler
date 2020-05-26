@@ -1,0 +1,331 @@
+package ic7cc.ovchinnikov.compiler.parser;
+
+import java_cup.runtime.*;
+
+parser code  {:
+  public void report_error(String message, Object info) {
+    StringBuilder m = new StringBuilder("Error ");
+
+    if (info instanceof java_cup.runtime.Symbol)
+      m.CONCAT( "("+info.toString()+")" );
+
+    m.CONCAT(" : "+message);
+
+    System.out.println(m);
+  }
+
+  public void report_fatal_error(String message, Object info) {
+    report_error(message, info);
+    throw new RuntimeException("Fatal Syntax Error");
+  }
+:};
+
+terminal SEMICOLON; // `;`
+terminal RETURN;
+terminal BREAK;
+terminal EQ;
+terminal LOCAL;
+terminal FUNCTION;
+terminal ID;
+terminal DO;
+terminal END;
+terminal REPEAT;
+terminal UNTIL;
+terminal FOR;
+terminal COMMA;
+terminal IN;
+terminal WHILE;
+terminal IF;
+terminal THEN;
+terminal ELSEIF;
+terminal ELSE;
+terminal LBRACKET;
+terminal RBRACKET;
+terminal DOT;
+terminal COLON;
+terminal NIL;
+terminal FALSE;
+terminal TRUE;
+terminal NUMBER;
+terminal PARAMS;
+terminal LPAREN;
+terminal RPAREN;
+terminal LBRACE;
+terminal RBRACE;
+terminal STRING;
+terminal OR;
+terminal AND;
+terminal LESS;
+terminal LESSEQ;
+terminal MORE;
+terminal MOREEQ;
+terminal NOTEQ;
+terminal EQEQ;
+terminal CONCAT;
+terminal PLUS;
+terminal MINUS;
+terminal MULTIPLICATION;
+terminal DIVISION;
+terminal MOD;
+terminal NOT;
+terminal LATTICE;
+terminal EXPONENTIATION;
+terminal BITWISEAND; // `&`
+terminal BITWISENOT; // `~`
+terminal BITWISEOR; // `|`
+terminal BITWISERIGHT; // `>>`
+terminal BITWISELEFT; // `<<`
+
+non terminal block;
+non terminal chunk;
+non terminal chunk2;
+non terminal optsemi;
+non terminal laststat;
+non terminal stat;
+non terminal forblock;
+non terminal whileblock;
+non terminal ifblock;
+non terminal iflist;
+non terminal if;
+non terminal elseif;
+non terminal else;
+non terminal var;
+non terminal varlist;
+non terminal funcID;
+non terminal funcID2;
+non terminal IDlist;
+non terminal exp;
+non terminal explist;
+non terminal prefixexp;
+non terminal function;
+non terminal functioncall;
+non terminal funcbody;
+non terminal parlist;
+non terminal args;
+non terminal tableconstructor;
+non terminal field;
+non terminal fieldlist;
+non terminal fieldlist2;
+non terminal optfieldsep;
+non terminal fieldsep;
+non terminal string;
+non terminal op;
+non terminal op_1;
+non terminal op_2;
+non terminal op_3;
+non terminal op_4;
+non terminal op_5;
+non terminal op_6;
+non terminal op_7;
+non terminal op_8;
+non terminal op_9;
+
+start with block;
+
+block ::= chunk;
+
+chunk ::= chunk2 laststat
+		| chunk2
+		| laststat
+		;
+
+chunk2 ::= stat optsemi
+	   	| chunk stat optsemi
+		;
+
+optsemi	::= SEMICOLON
+		| /* empty */
+		;
+
+laststat ::= RETURN explist optsemi
+		| RETURN optsemi
+		| BREAK optsemi
+		;
+
+stat ::= varlist EQ explist
+		| LOCAL IDlist EQ explist
+		| LOCAL IDlist
+		| FUNCTION funcID funcbody
+		| LOCAL FUNCTION ID funcbody
+		| functioncall
+		| DO block END
+        | whileblock
+		| REPEAT block UNTIL exp
+		| ifblock
+		| forblock
+	 	;
+
+forblock ::= FOR ID EQ exp COMMA exp DO block END
+		| FOR ID EQ exp COMMA exp COMMA exp DO block END
+		| FOR IDlist IN explist DO block END
+		;
+
+whileblock ::= WHILE exp DO block END
+        ;
+
+ifblock	::= iflist else END;
+
+iflist ::= if
+		| iflist elseif
+		;
+
+if	::= IF exp THEN block
+		;
+
+elseif	::= ELSEIF exp THEN block
+		;
+
+else ::= ELSE block
+		| /* empty */
+		;
+
+var	::= ID
+		| prefixexp LBRACKET exp RBRACKET
+		| prefixexp DOT ID
+	 	;
+
+varlist ::= var
+		| varlist COMMA var
+		;
+
+funcID ::= funcID2
+		| funcID2 COLON ID
+		;
+
+funcID2 ::= ID
+		| funcID2 DOT ID
+		;
+
+IDlist ::= ID
+		| IDlist COMMA ID
+		;
+
+exp	::= NIL
+	 	| FALSE
+		| TRUE
+		| NUMBER
+		| string
+		/*| PARAMS {
+            // TODO: Implement
+			//$$ = Node("exp", $1);
+		}*/
+		| function
+		| prefixexp
+		/*| tableconstructor {
+            // TODO: Implement
+            //$$ = $1;
+			//$$ = Node("exp","tableconstructor");
+			//$$.children.push_back($1);
+		}*/
+		| op
+		;
+
+explist ::= exp
+		| explist COMMA exp
+		;
+
+prefixexp ::= var
+		| functioncall
+		| LPAREN exp RPAREN
+		;
+
+function ::= FUNCTION funcbody
+		;
+
+functioncall ::= prefixexp args
+		| prefixexp COLON ID args
+		;
+
+funcbody ::= LPAREN parlist RPAREN block END
+		| LPAREN RPAREN block END
+		;
+
+parlist	::= IDlist
+		| IDlist COMMA PARAMS
+		| PARAMS
+		;
+
+args ::= LPAREN RPAREN
+		| LPAREN explist RPAREN
+        | tableconstructor
+		| string
+		;
+
+tableconstructor ::= LBRACE fieldlist RBRACE
+		| LBRACE RBRACE
+		;
+
+field ::= LBRACKET exp RBRACKET EQ exp
+		| ID EQ exp
+		| exp
+	  	;
+
+fieldlist ::= fieldlist2 optfieldsep
+		;
+
+fieldlist2 ::= field
+		| fieldlist2 fieldsep field;
+
+optfieldsep ::= fieldsep
+		| /* empty */
+		;
+
+fieldsep ::= COMMA
+		| SEMICOLON
+		;
+
+string ::= STRING
+		;
+
+
+/*
+    Operator Priority
+*/
+
+op  ::= op_1
+        ;
+
+op_1 ::= op_1 OR op_2
+        | op_2
+        ;
+
+op_2 ::= op_2 AND op_3
+        | op_3
+        ;
+
+op_3 ::= op_3 LESS op_4
+        | op_3 LESSEQ op_4
+        | op_3 MORE op_4
+        | op_3 MOREEQ op_4
+        | op_3 NOTEQ op_4
+        | op_3 EQEQ op_4
+        | op_4
+        ;
+
+op_4 ::= op_4 CONCAT op_5
+        | op_5
+        ;
+
+op_5 ::= op_5 PLUS op_6
+        | op_5 MINUS op_6
+        | op_6
+        ;
+
+op_6 ::= op_6 MULTIPLICATION op_7
+        | op_6 DIVISION op_7
+        | op_6 MOD op_7
+        | op_7
+        ;
+
+op_7 ::= NOT op_8
+        | LATTICE op_8
+        | MINUS op_8
+        | op_8
+        ;
+
+op_8 ::= op_8 EXPONENTIATION op_9
+        | op_9
+        ;
+
+op_9 ::= exp
+        ;

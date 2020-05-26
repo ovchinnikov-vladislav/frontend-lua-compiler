@@ -1,5 +1,6 @@
 package ic7cc.ovchinnikov.compiler.lexer;
 
+import ic7cc.ovchinnikov.compiler.token.*;
 import ic7cc.ovchinnikov.compiler.parser.Token;
 import static ic7cc.ovchinnikov.compiler.parser.Token.*;
 import java_cup.runtime.*;
@@ -18,6 +19,10 @@ import java.util.regex.Pattern;
 %cupdebug
 // Имя класса с токенами, который сгенерил cup
 %cupsym Token
+// Генерирование верного токена окончания файла
+%eofval{
+    return new java_cup.runtime.Symbol(Token.EOF);
+%eofval}
 
 %implements Token
 
@@ -88,7 +93,6 @@ CommentContent = (!("]""="*"]"))*
 
   // Ключевые слова
       "break"                 { return symbol(BREAK); }
-      "goto"                  { return symbol(GOTO); }
       "do"                    { return symbol(DO); }
       "end"                   { return symbol(END); }
       "while"                 { return symbol(WHILE); }
@@ -139,7 +143,7 @@ CommentContent = (!("]""="*"]"))*
       ">"                     { return symbol(MORE); }
       ">="                    { return symbol(MOREEQ); }
       "=="                    { return symbol(EQEQ); }
-      "~="                    { return sybmol(NOTEQ); }
+      "~="                    { return symbol(NOTEQ); }
       "and"                   { return symbol(AND); }
       "or"                    { return symbol(OR); }
       "."                     { return symbol(DOT); }
@@ -147,7 +151,7 @@ CommentContent = (!("]""="*"]"))*
 
   // Унарные операторы (исключение, нет минуса - он входит и в бинарные, и в унарные операторы
       "~"                     { return symbol(BITWISENOT); }
-      "not"                   { return sybmol(NOT); }
+      "not"                   { return symbol(NOT); }
       "#"                     { return symbol(LATTICE); } // длина строки
 
   // Идентификатор

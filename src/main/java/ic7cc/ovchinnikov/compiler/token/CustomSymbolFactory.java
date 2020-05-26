@@ -1,5 +1,7 @@
 package ic7cc.ovchinnikov.compiler.token;
 
+import ic7cc.ovchinnikov.compiler.ast.ASTNode;
+import ic7cc.ovchinnikov.compiler.parser.location.LocationFactory;
 import java_cup.runtime.ComplexSymbolFactory;
 import java_cup.runtime.Symbol;
 
@@ -7,10 +9,10 @@ public class CustomSymbolFactory extends ComplexSymbolFactory {
 
     @Override
     public Symbol newSymbol(String name, int id, Symbol left, Symbol right, Object value) {
-        if (value instanceof SyntaxNode) {
-            ((SyntaxNode) value).setStart(LocationFactory.fromSymbol(left));
+        if (value instanceof ASTNode) {
+            ((ASTNode) value).setStart(LocationFactory.from(left));
             if (right.left != -1 && right.right != -1)
-                ((SyntaxNode) value).setEnd(LocationFactory.fromSymbol(right));
+                ((ASTNode) value).setEnd(LocationFactory.from(right));
         }
 
         Symbol s = new Symbol(id, left, right, value);

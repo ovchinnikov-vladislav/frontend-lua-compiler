@@ -4,6 +4,8 @@
 
 package ic7cc.ovchinnikov.compiler.lexer;
 
+import ic7cc.ovchinnikov.compiler.token.*;
+import ic7cc.ovchinnikov.compiler.parser.Token;
 import static ic7cc.ovchinnikov.compiler.parser.Token.*;
 import java_cup.runtime.*;
 import java.util.regex.Pattern;
@@ -829,7 +831,8 @@ public class Lexer implements java_cup.runtime.Scanner, Token {
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
             zzDoEOF();
-          { return new java_cup.runtime.Symbol(sym.EOF); }
+          {     return new java_cup.runtime.Symbol(Token.EOF);
+ }
       }
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
@@ -1054,7 +1057,7 @@ public class Lexer implements java_cup.runtime.Scanner, Token {
             // fall through
           case 113: break;
           case 45:
-            { return sybmol(NOTEQ);
+            { return symbol(NOTEQ);
             }
             // fall through
           case 114: break;
@@ -1109,7 +1112,7 @@ public class Lexer implements java_cup.runtime.Scanner, Token {
             // fall through
           case 124: break;
           case 56:
-            { return sybmol(NOT);
+            { return symbol(NOT);
             }
             // fall through
           case 125: break;

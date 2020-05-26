@@ -2,7 +2,6 @@ package ic7cc.ovchinnikov.compiler.lexer;
 
 import static ic7cc.ovchinnikov.compiler.parser.Token.*;
 
-import ic7cc.ovchinnikov.compiler.parser.Token;
 import java_cup.runtime.*;import java.util.regex.Pattern;
 
 %%

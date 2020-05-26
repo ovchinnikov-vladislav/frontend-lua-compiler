@@ -77,9 +77,6 @@ terminal NUMBER;
 terminal STRING;
 terminal ID;
 
-// Объявлено, но не используется
-terminal GOTO;
-
 non terminal chunk;
 non terminal block;
 non terminal stat;
@@ -106,6 +103,10 @@ non terminal fieldlist;
 non terminal field;
 non terminal fieldsep;
 non terminal optsemi;
+non terminal optelse;
+non terminal optforexp;
+non terminal opteqexplist;
+non terminal empty;
 
 
 start with chunk;
@@ -132,7 +133,7 @@ stat ::=  SEMICOLON
         | DO block END
         | WHILE exp DO block END
         | REPEAT block UNTIL exp
-        | IF exp THEN BLOCK optelse END
+        | IF exp THEN block optelse END
         | FOR Name EQ exp COMMA exp optforexp DO block END
         | FOR namelist IN explist DO block END
         | FUNCTION funcname funcbody
@@ -238,7 +239,7 @@ field ::=  LBRACKET exp RBRACKET EQ exp
 fieldsep ::=  COMMA
             | SEMICOLON;
 
-optsemi	::=  SEMI
+optsemi	::=  SEMICOLON
            | empty;
 
 Name ::= ID;

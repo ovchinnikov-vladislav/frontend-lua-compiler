@@ -19,6 +19,11 @@
             <version>11b-20160615</version>
         </dependency>
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
@@ -71,6 +76,7 @@
                             <generatedSourcesDirectory>src/main/java</generatedSourcesDirectory>
                             <parserName>Parser</parserName>
                             <symbolsName>Token</symbolsName>
+                            <symbolInterface>true</symbolInterface>
                         </configuration>
                     </execution>
                 </executions>

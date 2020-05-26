@@ -1,51 +1,50 @@
 package ic7cc.ovchinnikov.compiler.lexer;
 
+import ic7cc.ovchinnikov.compiler.parser.Token;
 import static ic7cc.ovchinnikov.compiler.parser.Token.*;
-
-import java_cup.runtime.*;import java.util.regex.Pattern;
+import java_cup.runtime.*;
+import java.util.regex.Pattern;
 
 %%
 
 %public
-%class Lexer // Имя генерируемого класса лексического анализатора
-
-%unicode
+// Имя генерируемого класса лексического анализатора
+%class Lexer
 
 %line
 %column
 
 %cup
 %cupdebug
-%cupsym Token // Имя класса с токенами, который сгенерил cup
+// Имя класса с токенами, который сгенерил cup
+%cupsym Token
+
+%implements Token
 
 %{
-  StringBuilder string = new StringBuilder();
-  
-  private Symbol symbol(int type) {
-    return new Symbol(type, yyline+1, yycolumn+1);
+
+  SymbolFactory symbolFactory = new CustomSymbolFactory();
+
+  public SymbolFactory getSymbolFactory() {
+  	return symbolFactory;
   }
 
-  private Symbol symbol(int type, Object value) {
-    return new Symbol(type, yyline+1, yycolumn+1, value);
+  StringBuffer string = new StringBuffer();
+
+  private Symbol symbol(int sym) {
+    Symbol symb = new Symbol(sym, yyline+1, yycolumn+1);
+    return symb;
   }
 
-  /** 
-   * assumes correct representation of a long value for 
-   * specified radix in scanner buffer from <code>start</code> 
-   * to <code>end</code> 
-   */
-  private long parseLong(int start, int end, int radix) {
-    long result = 0;
-    long digit;
-
-    for (int i = start; i < end; i++) {
-      digit  = Character.digit(yycharat(i),radix);
-      result*= radix;
-      result+= digit;
-    }
-
-    return result;
+  private Symbol symbol(int sym, Object val) {
+    Symbol symb = new Symbol(sym, yyline+1, yycolumn+1, val);
+    return symb;
   }
+
+  private void error(String message) {
+    System.out.println("Error at line "+(yyline+1)+", column "+(yycolumn+1)+" : "+message);
+  }
+
 %}
 
 // Идентификатор
@@ -72,7 +71,7 @@ EndOfLineComment = "--" {InputCharacter}* {LineTerminator}
 MultipleLineComment = "--[""="*"[" {CommentContent} "]""="*"]"
 
 // Пока не встретит закрывающие скобки, это комментарий
-CommentContent = (!("]""="*"]"))
+CommentContent = (!("]""="*"]"))*
 
 %state STRINGDOUBLE
 %state STRINGSINGLE
@@ -82,6 +81,10 @@ CommentContent = (!("]""="*"]"))
 %%
 
 <YYINITIAL> {
+
+       \"                     { string.setLength(0); yybegin(STRINGDOUBLE); }
+       \'                     { string.setLength(0); yybegin(STRINGSINGLE); }
+       \[\[                   { string.setLength(0); yybegin(STRINGBRACKET); }
 
   // Ключевые слова
       "break"                 { return symbol(BREAK); }
@@ -198,4 +201,4 @@ CommentContent = (!("]""="*"]"))
       \\\'                    { string.append("\'"); }
 }
 
-.|\n                          { throw new RuntimeException("Illegal character <" + Pattern.quote(yytext()) + ">"); }
+      .|\n                    { throw new RuntimeException("Illegal character <" + Pattern.quote(yytext()) + ">"); }

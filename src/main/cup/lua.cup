@@ -113,6 +113,9 @@ start with chunk;
 
 chunk ::= block;
 
+block ::= empty;
+
+/*
 block ::= statlist retstat
         | statlist
         | retstat
@@ -243,5 +246,5 @@ optsemi	::=  SEMICOLON
            | empty;
 
 Name ::= ID;
-
+*/
 empty ::= /* empty */;

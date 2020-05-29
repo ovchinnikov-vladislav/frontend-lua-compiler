@@ -4,61 +4,72 @@ Cup.
 
 Для реализации лексического анализатора Lua используется JFlex.
 
-BNF Lua 5.1:
+BNF Lua 5.4:
 
-	chunk ::= {stat [`;´]} [laststat[`;´]]
+    chunk ::= block
 
-	block ::= chunk
+	block ::= {stat} [retstat]
 
-	stat ::=  varlist1 `=´ explist1  |
-		 functioncall  |
-		 do block end  |
-		 while exp do block end  |
-		 repeat block until exp  |
-		 if exp then block {elseif exp then block} [else block] end  |
-		 for Name `=´ exp `,´ exp [`,´ exp] do block end  |
-		 for namelist in explist1 do block end  |
-		 function funcname funcbody  |
-		 local function Name funcbody  |
-		 local namelist [`=´ explist1]
+	stat ::=  ‘;’ | 
+		 varlist ‘=’ explist | 
+		 functioncall | 
+		 label | 
+		 break | 
+		 goto Name | 
+		 do block end | 
+		 while exp do block end | 
+		 repeat block until exp | 
+		 if exp then block {elseif exp then block} [else block] end | 
+		 for Name ‘=’ exp ‘,’ exp [‘,’ exp] do block end | 
+		 for namelist in explist do block end | 
+		 function funcname funcbody | 
+		 local function Name funcbody | 
+		 local attnamelist [‘=’ explist] 
 
-	laststat ::= return [explist1]  |  break
+	attnamelist ::=  Name attrib {‘,’ Name attrib}
 
-	funcname ::= Name {`.´ Name} [`:´ Name]
+	attrib ::= [‘<’ Name ‘>’]
 
-	varlist1 ::= var {`,´ var}
+	retstat ::= return [explist] [‘;’]
 
-	var ::=  Name  |  prefixexp `[´ exp `]´  |  prefixexp `.´ Name
+	label ::= ‘::’ Name ‘::’
 
-	namelist ::= Name {`,´ Name}
+	funcname ::= Name {‘.’ Name} [‘:’ Name]
 
-	explist1 ::= {exp `,´} exp
+	varlist ::= var {‘,’ var}
 
-	exp ::=  nil  |  false  |  true  |  Number  |  String  |  `...´  |
-		 function  |  prefixexp  |  tableconstructor  |  exp binop exp  |  unop exp
+	var ::=  Name | prefixexp ‘[’ exp ‘]’ | prefixexp ‘.’ Name 
 
-	prefixexp ::= var  |  functioncall  |  `(´ exp `)´
+	namelist ::= Name {‘,’ Name}
 
-	functioncall ::=  prefixexp args  |  prefixexp `:´ Name args
+	explist ::= exp {‘,’ exp}
 
-	args ::=  `(´ [explist1] `)´  |  tableconstructor  |  String
+	exp ::=  nil | false | true | Numeral | LiteralString | ‘...’ | functiondef | 
+		 prefixexp | tableconstructor | exp binop exp | unop exp 
 
-	function ::= function funcbody
+	prefixexp ::= var | functioncall | ‘(’ exp ‘)’
 
-	funcbody ::= `(´ [parlist1] `)´ block end
+	functioncall ::=  prefixexp args | prefixexp ‘:’ Name args 
 
-	parlist1 ::= namelist [`,´ `...´]  |  `...´
+	args ::=  ‘(’ [explist] ‘)’ | tableconstructor | LiteralString 
 
-	tableconstructor ::= `{´ [fieldlist] `}´
+	functiondef ::= function funcbody
+
+	funcbody ::= ‘(’ [parlist] ‘)’ block end
+
+	parlist ::= namelist [‘,’ ‘...’] | ‘...’
+
+	tableconstructor ::= ‘{’ [fieldlist] ‘}’
 
 	fieldlist ::= field {fieldsep field} [fieldsep]
 
-	field ::= `[´ exp `]´ `=´ exp  |  Name `=´ exp  |  exp
+	field ::= ‘[’ exp ‘]’ ‘=’ exp | Name ‘=’ exp | exp
 
-	fieldsep ::= `,´  |  `;´
+	fieldsep ::= ‘,’ | ‘;’
 
-	binop ::= `+´  |  `-´  |  `*´  |  `/´  |  `^´  |  `%´  |  `..´  |
-		 `<´  |  `<=´  |  `>´  |  `>=´  |  `==´  |  `~=´  |
-		 and  |  or
+	binop ::=  ‘+’ | ‘-’ | ‘*’ | ‘/’ | ‘//’ | ‘^’ | ‘%’ | 
+		 ‘&’ | ‘~’ | ‘|’ | ‘>>’ | ‘<<’ | ‘..’ | 
+		 ‘<’ | ‘<=’ | ‘>’ | ‘>=’ | ‘==’ | ‘~=’ | 
+		 and | or
 
-	unop ::= `-´  |  not  |  `#´
+	unop ::= ‘-’ | not | ‘#’ | ‘~’

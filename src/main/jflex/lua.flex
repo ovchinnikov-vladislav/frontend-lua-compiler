@@ -157,11 +157,13 @@ CommentContent = (!("]""="*"]"))*
  // Присваивание
       "="                     { return symbol(ASSIGNMENT); }
 
+      "goto"                    { return symbol(GOTO); }
+
   // Идентификатор
       {Name}                  { return symbol(ID, yytext()); }
 
   // Числовой литерал
-      {Number}                { return symbol(NUMBER, new Double(Double.parseDouble(yytext())));}
+      {Number}                { return symbol(NUMERAL, new Double(Double.parseDouble(yytext())));}
 
   // Пробелы
       {WhiteSpace}            { }
@@ -171,7 +173,7 @@ CommentContent = (!("]""="*"]"))*
 }
 
 <STRINGDOUBLE> {
-      "\""                    { yybegin(YYINITIAL); return symbol(STRING, string.toString()); }
+      "\""                    { yybegin(YYINITIAL); return symbol(LITERAL_STRING, string.toString()); }
       [^\n\r\"\\]+            { string.append(yytext()); }
       "\\n"                   { string.append("\n"); }
       "\\r"                   { string.append("\r"); }
@@ -183,7 +185,7 @@ CommentContent = (!("]""="*"]"))*
 }
 
 <STRINGBRACKET> {
-      \]\]                    { yybegin(YYINITIAL); return symbol(STRING, string.toString()); }
+      \]\]                    { yybegin(YYINITIAL); return symbol(LITERAL_STRING, string.toString()); }
       [^\]]+                  { string.append(yytext()); }
       "\\n"                   { string.append("\n"); }
       "\\r"                   { string.append("\r"); }
@@ -195,7 +197,7 @@ CommentContent = (!("]""="*"]"))*
 }
 
 <STRINGSINGLE> {
-      "'"                     { yybegin(YYINITIAL); return symbol(STRING, string.toString()); }
+      "'"                     { yybegin(YYINITIAL); return symbol(LITERAL_STRING, string.toString()); }
       [^\n\r"'"\\]+           { string.append(yytext()); }
       "\\n"                   { string.append("\n"); }
       "\\r"                   { string.append("\r"); }

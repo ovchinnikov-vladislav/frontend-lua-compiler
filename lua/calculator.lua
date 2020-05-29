@@ -1,7 +1,5 @@
 function characterPresent(stringParam, character)
-    --[[
-        This function returns true if and only if character is in stringParam.
-    ]]--
+
     --Loop through stringParam:
     for i=1, #stringParam do
         --If the current character is character, return true.
@@ -13,11 +11,6 @@ function characterPresent(stringParam, character)
 end
 
 function getNumber(stringParam)
-    --[[
-        This function parses a number from the beginning of stringParam and also returns the rest of the string.
-        For example, if stringParam is "23s", this function returns 23, "s".
-        If there is no number at the beginning of stringParam (e.g., stringParam is "Hi"), then the function returns nil, stringParam.
-    ]]--
     --These are all of the characters we would expect in a number.
     local validCharacters = "0123456789.-"
     --This is true if and only if we have found a digit.
@@ -50,17 +43,6 @@ function getNumber(stringParam)
 end
 
 function parseExpression(expression, expectEndParentheses)
-    --[[
-        This function parses expression and returns the mathematical value of expression along with the rest of expression that was not parsed.
-        If expectEndParentheses is not specified, it defaults to false.
-        If expectEndParentheses is false, then the whole expression is parsed. If the expression is valid, what is returned is the value of the expression along with the empty string.
-        If expectEndParentheses is true, then the expression is parsed up until the first end parentheses without a matching beginning parentheses. If the expression is valid, what is returned is the value of the expression along with the rest of expression after the end parentheses.
-        In both cases, if the expression is invalid, the. what is returned is nil along with an error message.
-        For example:
-        parseExpression("2+3") -> 5, ""
-        parseExpression("Hi") -> nil, "Invalid input where number or '(' was expected"
-        parseExpression("2+3)+5", true) -> 5, "+5"
-    ]]--
     --This is true if and only if we are expecting an expression next instead of an operator.
     local expectingExpression = true
     --This is true if and only if the last expression examined was surrounded by parentheses.

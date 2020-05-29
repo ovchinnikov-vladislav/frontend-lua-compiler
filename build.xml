@@ -46,7 +46,7 @@
 	</target>
 
 	<target name="cup" depends="initBuildParser">
-		<cup srcfile="${cup}/lua.cup" destdir="${gen}" interface="true"
+		<cup srcfile="${cup}/lua-5-4.cup" destdir="${gen}" interface="true"
 			 package="ic7cc.ovchinnikov.compiler.parser" symbols="Token" parser="Parser" expect="19" />
 	</target>
 

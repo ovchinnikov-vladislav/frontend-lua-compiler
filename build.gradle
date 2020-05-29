@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'application'
+    id "io.freefair.lombok" version "5.0.0-rc4"
+}
+
+ant.importBuild('build.xml')
+
+repositories {
+    jcenter()
+    flatDir {
+        dirs 'lib', 'lib/tools'
+    }
+}
+
+dependencies {
+    implementation 'com.google.guava:guava:28.2-jre'
+    implementation files('lib/java-cup-11a-runtime.jar')
+    testImplementation 'junit:junit:4.12'
+}
+
+tasks.compileJava.dependsOn(tasks.gen)
+
+application {
+    mainClassName = 'ic7cc.ovchinnikov.compiler.App'
+}

@@ -125,34 +125,34 @@ CommentContent = (!("]""="*"]"))*
       "}"                     { return symbol(RBRACE); }
       ";"                     { return symbol(SEMICOLON); }
       ","                     { return symbol(COMMA); }
+      "."                     { return symbol(DOT); }
+      ":"                     { return symbol(COLON); }
 
   // Бинарные операторы,
-      "+"                     { return symbol(PLUS); }
-      "-"                     { return symbol(MINUS); }
-      "*"                     { return symbol(MULTIPLICATION); }
-      "/"                     { return symbol(DIVISION); }
-      "^"                     { return symbol(EXPONENTIATION); }
+      "+"                     { return symbol(ADD); }
+      "-"                     { return symbol(SUB); }
+      "*"                     { return symbol(MUL); }
+      "/"                     { return symbol(DIV); }
+      "^"                     { return symbol(POW); }
       "%"                     { return symbol(MOD); }
-      "&"                     { return symbol(BITWISEAND); }
-      "|"                     { return symbol(BITWISEOR); }
-      ">>"                    { return symbol(BITWISERIGHT); }
-      "<<"                    { return symbol(BITWISELEFT); }
+      "&"                     { return symbol(BAND); }
+      "|"                     { return symbol(BOR); }
+      ">>"                    { return symbol(BRIGHT); }
+      "<<"                    { return symbol(BLEFT); }
       ".."                    { return symbol(CONCAT); }
       "<"                     { return symbol(LESS);}
       "<="                    { return symbol(LESSEQ); }
       ">"                     { return symbol(MORE); }
       ">="                    { return symbol(MOREEQ); }
-      "=="                    { return symbol(EQEQ); }
+      "=="                    { return symbol(EQUAL); }
       "~="                    { return symbol(NOTEQ); }
       "and"                   { return symbol(AND); }
       "or"                    { return symbol(OR); }
-      "."                     { return symbol(DOT); }
-      ":"                     { return symbol(COLON); }
 
   // Унарные операторы (исключение, нет минуса - он входит и в бинарные, и в унарные операторы
-      "~"                     { return symbol(BITWISENOT); }
+ //     "~"                     { return symbol(BNOT); }
       "not"                   { return symbol(NOT); }
-      "#"                     { return symbol(LATTICE); } // длина строки
+      "#"                     { return symbol(LENGTH); } // длина строки
 
   // Идентификатор
       {Name}                  { return symbol(ID, yytext()); }
@@ -161,7 +161,7 @@ CommentContent = (!("]""="*"]"))*
       {Number}                { return symbol(NUMBER, new Double(Double.parseDouble(yytext())));}
 
   // Присваивание
-      "="                     { return symbol(EQ); }
+      "="                     { return symbol(ASSIGNMENT); }
 
   // Пробелы
       {WhiteSpace}            { }

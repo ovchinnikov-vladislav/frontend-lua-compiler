@@ -1,257 +1,254 @@
 package ic7cc.ovchinnikov.compiler.parser;
 
+/*
+import java.util.*;
+import java.io.*;
+import java_cup.runtime.Symbol;
 import java_cup.runtime.*;
+import ic7cc.ovchinnikov.compiler.ast.*;
+import ic7cc.ovchinnikov.compiler.ast.node.*;
+import ic7cc.ovchinnikov.compiler.parser.location.*;
+*/
+import ic7cc.ovchinnikov.compiler.lexer.Lexer;
 
-parser code  {: 
+
+parser code {:
   public void report_error(String message, Object info) {
-    StringBuilder m = new StringBuilder("Error ");
+      StringBuilder m = new StringBuilder("Error ");
 
-    if (info instanceof java_cup.runtime.Symbol) 
-      m.append( "("+info.toString()+")" );
-     
-    m.append(" : "+message);
-   
-    System.out.println(m);
-  }
-   
-  public void report_fatal_error(String message, Object info) {
-    report_error(message, info);
-    throw new RuntimeException("Fatal Syntax Error");
-  }
+      if (info instanceof java_cup.runtime.Symbol)
+        m.append( "("+info.toString()+")" );
+
+      m.append(" : "+message);
+
+      System.out.println(m);
+    }
+
+    public void report_fatal_error(String message, Object info) {
+      report_error(message, info);
+
+    }
 :};
 
-terminal SEMICOLON; // `;`
-terminal EQ; // `=`
-terminal BREAK;
-terminal DO;
-terminal END;
-terminal WHILE;
-terminal REPEAT;
-terminal UNTIL;
-terminal IF;
-terminal THEN;
-terminal ELSEIF;
-terminal ELSE;
-terminal FOR;
-terminal COMMA; // `,`
-terminal IN;
-terminal FUNCTION;
-terminal LOCAL;
-terminal RETURN;
-terminal COLONCOLON; // `::`
-terminal DOT; // `.`
-terminal COLON; // `:`
-terminal LBRACKET; // `[`
-terminal RBRACKET; // `]`
-terminal NIL;
-terminal FALSE;
-terminal TRUE;
-terminal PARAMS; // `...`
-terminal LPAREN; // `(`
-terminal RPAREN; // `)`
-terminal LBRACE; // `{`
-terminal RBRACE; // `}`
-terminal PLUS; // `+`
-terminal MINUS; // `-`
-terminal MULTIPLICATION; // `*`
-terminal DIVISION; // `/`
-terminal EXPONENTIATION; // `^`
-terminal MOD; // `%`
-terminal BITWISEAND; // `&`
-terminal BITWISENOT; // `~`
-terminal BITWISEOR; // `|`
-terminal BITWISERIGHT; // `>>`
-terminal BITWISELEFT; // `<<`
-terminal CONCAT; // `..`
-terminal LESS; // `<`
-terminal LESSEQ; // `<=`
-terminal MORE; // `>`
-terminal MOREEQ; // `>=`
-terminal EQEQ; // `==`
-terminal NOTEQ; // `~=`
-terminal AND;
-terminal OR;
-terminal NOT;
-terminal LATTICE; // `#`
-terminal NUMBER;
-terminal STRING;
+ /* Terminals (tokens returned by lexer). */
+
+
+terminal ASSIGNMENT; // =
+terminal DOT, COLON;
+terminal LOCAL, FUNCTION, END;
+terminal DO, WHILE, FOR, IN, REPEAT, UNTIL;
+terminal IF, THEN, ELSE, ELSEIF, RETURN, BREAK;
+terminal NIL, FALSE, TRUE, PARAMS;
+terminal ADD, MUL, SUB, DIV, MOD, POW, CONCAT;
+terminal EQUAL, LESSEQ, NOTEQ, LESS, MORE, MOREEQ, AND, OR;
+terminal BAND, BOR, BRIGHT, BLEFT;
+terminal NOT, LENGTH;
+terminal LPAREN, RPAREN, LBRACKET, RBRACKET, LBRACE, RBRACE;
+terminal SEMICOLON, COMMA;
+terminal NUMBER, STRING;
 terminal ID;
 
+ /*NON TERMINALS */
+
 non terminal chunk;
-non terminal block;
+non terminal block, optelse;
 non terminal stat;
 non terminal statlist;
 non terminal retstat;
-non terminal varlist;
-non terminal explist;
-non terminal functioncall;
-non terminal label;
-non terminal Name;
-non terminal exp;
-non terminal namelist;
+
 non terminal funcname;
-non terminal funcbody;
+non terminal varlist;
 non terminal var;
+non terminal namelist;
+non terminal explist, args, optassignexplist;
+non terminal exp, optforexp;
 non terminal prefixexp;
-non terminal functiondef;
-non terminal tableconstructor;
-non terminal binop;
-non terminal unop;
-non terminal args;
+non terminal functioncall;
+non terminal funcbody;
 non terminal parlist;
+non terminal tableconstructor;
 non terminal fieldlist;
 non terminal field;
 non terminal fieldsep;
-non terminal optsemi;
-non terminal optelse;
-non terminal optforexp;
-non terminal opteqexplist;
-non terminal empty;
+non terminal optfieldsep;
+non terminal binop;
+non terminal unop;
+non terminal optsemi, empty;
+non terminal Name;
+
+precedence nonassoc LPAREN, RPAREN;
+precedence nonassoc COMMA;
+
+precedence left OR;
+precedence left AND;
+precedence left BOR;
+precedence left BAND;
+precedence left EQUAL, NOTEQ;
+precedence left LESSEQ, LESS, MORE, MOREEQ;
+precedence left BRIGHT, BLEFT;
+precedence left ADD, SUB, CONCAT;
+precedence left MUL, DIV, MOD;
+precedence right POW;
+precedence left LENGTH;
+
+/* Grammar */
 
 start with chunk;
 
-// Успешная
-chunk ::= block;
+chunk ::= block
+;
 
-block ::= /* statlist retstat
+block ::= statlist retstat
         | statlist
-        |*/ retstat
-        | empty;
+        | retstat
+        | empty
+        ;
 
-/*
 statlist ::=  stat optsemi
-            | stat optsemi statlist;
-*/
+            | stat optsemi statlist
+            ;
 
-// Успешная
 retstat ::=   RETURN optsemi
             | RETURN explist optsemi
-            | BREAK optsemi;
-/*
-stat ::=  SEMICOLON
-        | varlist EQ explist
-        | functioncall
-        | label
-        | BREAK
-        | DO block END
-        | WHILE exp DO block END
-        | REPEAT block UNTIL exp
-        | IF exp THEN block optelse END
-        | FOR Name EQ exp COMMA exp optforexp DO block END
-        | FOR namelist IN explist DO block END
-        | FUNCTION funcname funcbody
-        | LOCAL FUNCTION Name funcbody
-        | LOCAL namelist opteqexplist;
+            | BREAK optsemi
+            ;
 
-varlist ::=  var
-           | var COMMA varlist;
-*/
+stat ::=  varlist  ASSIGNMENT  explist
+	    | functioncall
+		| DO block END
+		| WHILE exp DO block END
+	    | REPEAT block UNTIL exp
+		| IF exp THEN block optelse END
+		| FOR ID  ASSIGNMENT  exp  COMMA  exp  optforexp  DO  block END
+		| FOR  namelist  IN  explist  DO  block END
+		| FUNCTION  funcname  funcbody
+		| LOCAL  FUNCTION  Name  funcbody
+		| LOCAL  namelist  optassignexplist
+		;
 
-// Успешная
+varlist	::=  var
+		   | var  COMMA  varlist
+		   ;
+
 explist ::=  exp
-           | exp COMMA explist;
+		   | exp COMMA explist
+		   ;
 
-/*
 functioncall ::=  prefixexp args
-                | prefixexp COLON Name args;
+				| prefixexp COLON Name args
+				;
 
-label ::= COLONCOLON Name COLONCOLON;
-*/
-
-exp ::=  NIL
-       | FALSE
-       | TRUE
-       | NUMBER
-       | STRING
-       | PARAMS
-     /*  | functiondef
-       | prefixexp
-       | tableconstructor
+exp	::=	 NIL
+	   | FALSE
+	   | TRUE
+	   | NUMBER
+	   | STRING
+	   | PARAMS
+	   | prefixexp
+	   | tableconstructor
        | exp binop exp
-       | unop exp */;
+	   | unop exp
+	   | FUNCTION funcbody
+	   ;
 
-/*
-optelse ::=  ELSE block
-           | ELSEIF exp THEN block optelse
-           | empty;
+optelse	::=	 ELSE  block
+		   | ELSEIF exp THEN  block optelse
+		   | empty
+		   ;
 
 optforexp ::=  COMMA exp
-             | empty;
+			 | empty
+             ;
 
 namelist ::=  Name
-            | namelist COMMA Name;
+			| namelist COMMA ID
+			;
 
 funcname ::=  Name
-            | Name DOT funcname
-            | Name COLON Name;
+			| Name DOT funcname
+			| Name COLON Name
+			;
 
-funcbody ::= LPAREN parlist RPAREN block END;
+funcbody ::= LPAREN parlist RPAREN block END
+			;
 
-opteqexplist ::=  EQ explist
-                | empty;
+optassignexplist ::=  ASSIGNMENT explist
+				    | empty
+			        ;
 
 var ::=  Name
-       | prefixexp LBRACKET exp RBRACKET
-       | prefixexp DOT Name;
+	   | prefixexp LBRACKET exp RBRACKET
+	   | prefixexp  DOT ID
+	   ;
 
 prefixexp ::=  var
-             | functioncall
-             | LPAREN exp RPAREN;
+			 | functioncall
+			 | LPAREN exp RPAREN
+			 ;
 
 args ::=  LPAREN explist RPAREN
-        | LPAREN RPAREN
-        | tableconstructor
-        | STRING;
-
-functiondef ::= FUNCTION funcbody;
+		| LPAREN RPAREN
+		| tableconstructor
+		| STRING
+		;
 
 tableconstructor ::=  LBRACE fieldlist RBRACE
-                    | LBRACE RBRACE;
+ 					| LBRACE RBRACE
+ 					;
 
-binop ::=  PLUS
-         | MINUS
-         | MULTIPLICATION
-         | DIVISION
-         | EXPONENTIATION
-         | MOD
-         | BITWISEAND
-         | BITWISENOT
-         | BITWISEOR
-         | BITWISERIGHT
-         | BITWISELEFT
-         | CONCAT
-         | LESS
-         | LESSEQ
-         | MORE
-         | MOREEQ
-         | EQEQ
-         | NOTEQ
-         | AND
-         | OR;
+binop ::=  ADD
+		 | SUB
+		 | MUL
+		 | DIV
+		 | MOD
+		 | POW
+		 | CONCAT
+		 | EQUAL
+		 | LESSEQ
+		 | NOTEQ
+		 | LESS
+		 | MORE
+		 | MOREEQ
+		 | AND
+		 | OR
+		 | BAND
+		 | BOR
+		 | BRIGHT
+		 | BLEFT
+		 ;
 
-unop ::=  MINUS
-        | NOT
-        | LATTICE;
+unop ::=  SUB
+		| NOT
+		| LENGTH
+		;
 
 parlist ::=  namelist
-           | namelist COMMA PARAMS
-           | PARAMS;
+		   | namelist  COMMA  PARAMS
+		   | PARAMS
+		   | /* empty */
+		   ;
 
 fieldlist ::=  field
-             | field fieldsep fieldlist;
+			 | field fieldsep fieldlist
+ 			 ;
 
-field ::=  LBRACKET exp RBRACKET EQ exp
-         | Name EQ exp
-         | exp;
+field ::=  LBRACKET exp RBRACKET ASSIGNMENT exp
+		 | Name ASSIGNMENT exp
+		 | exp
+		 ;
 
 fieldsep ::=  COMMA
-            | SEMICOLON;
-*/
-optsemi	::=  SEMICOLON
-           | empty;
-/*
-Name ::= ID;
+            | SEMICOLON
+			;
 
-*/
+optfieldsep	::=	  COMMA
+                | SEMICOLON
+                | empty;
+
+optsemi	::=	  SEMICOLON
+            | empty
+            ;
+
+Name ::= ID;
 
 empty ::= /* empty */;

@@ -133,6 +133,7 @@ CommentContent = (!("]""="*"]"))*
       "-"                     { return symbol(SUB); }
       "*"                     { return symbol(MUL); }
       "/"                     { return symbol(DIV); }
+      "//"                    { return symbol(FDIV); }
       "^"                     { return symbol(POW); }
       "%"                     { return symbol(MOD); }
       "&"                     { return symbol(BAND); }
@@ -154,10 +155,12 @@ CommentContent = (!("]""="*"]"))*
       "not"                   { return symbol(NOT); }
       "#"                     { return symbol(LENGTH); } // длина строки
 
+   // Операция побитового НЕ и побитового исключающего ИЛИ
+      "~"                     { return symbol(BXOR); }
+
+
  // Присваивание
       "="                     { return symbol(ASSIGNMENT); }
-
-      "goto"                    { return symbol(GOTO); }
 
   // Идентификатор
       {Name}                  { return symbol(ID, yytext()); }

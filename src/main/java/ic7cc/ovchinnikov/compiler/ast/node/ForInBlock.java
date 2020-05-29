@@ -3,7 +3,7 @@ package ic7cc.ovchinnikov.compiler.ast.node;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
 
-public class For extends Stat {
+public class ForInBlock extends Stat {
 
     @Override
     public ASTNode getParent() {

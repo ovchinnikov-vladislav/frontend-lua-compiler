@@ -1,6 +1,6 @@
 package ic7cc.ovchinnikov.compiler.parser;
 
-/*
+
 import java.util.*;
 import java.io.*;
 import java_cup.runtime.Symbol;
@@ -8,7 +8,7 @@ import java_cup.runtime.*;
 import ic7cc.ovchinnikov.compiler.ast.*;
 import ic7cc.ovchinnikov.compiler.ast.node.*;
 import ic7cc.ovchinnikov.compiler.parser.location.*;
-*/
+
 import ic7cc.ovchinnikov.compiler.lexer.Lexer;
 
 
@@ -33,61 +33,53 @@ parser code {:
  /* Терминалы (токены, которые будут прочитаны лексером). */
 
 terminal ASSIGNMENT;                                        // =
-terminal DOT, COLON, COLONCOLON;                            // операция точки и двоеточие, двойное двоеточие
+terminal DOT, COLON;                                        // операция точки и двоеточие
 terminal LOCAL, FUNCTION, END;
 terminal DO, WHILE, FOR, IN, REPEAT, UNTIL;                 // циклические операторы
 terminal IF, THEN, ELSE, ELSEIF, RETURN, BREAK;             // операторы управления выполнением кода
 terminal NIL, FALSE, TRUE, PARAMS;                          // зарезервированные литералы
-terminal ADD, MUL, SUB, DIV, MOD, POW, CONCAT;              // арифметические операторы и оператор конкатенации
+terminal ADD, MUL, SUB, DIV, FDIV, MOD, POW, CONCAT;        // арифметические операторы и оператор конкатенации
 terminal EQUAL, LESSEQ, NOTEQ, LESS, MORE, MOREEQ, AND, OR; // операторы отношения
-terminal BAND, BOR, BRIGHT, BLEFT;                          // побитовые операторы
+terminal BAND, BOR, BRIGHT, BLEFT, BXOR;                    // побитовые операторы
 terminal NOT, LENGTH;                                       // унарные операторы
 terminal LPAREN, RPAREN, LBRACKET, RBRACKET, LBRACE, RBRACE;// скобки
 terminal SEMICOLON, COMMA;                                  // точка с запятой и запятая
 terminal NUMERAL, LITERAL_STRING;                           // Числовой и строковый литералы
 terminal ID;                                                // Идентификаторы
-terminal GOTO;
 
  /*Нетерминалы */
 
 non terminal chunk;
-non terminal block;
-non terminal statlist;
-non terminal retstat;
-non terminal empty;
-non terminal stat;
-non terminal varlist;
-non terminal explist;
-non terminal functioncall;
-non terminal label;
+non terminal Block block;
+non terminal StatList statlist;
+non terminal RetStat retstat;
+non terminal Stat stat;
+
+non terminal VarList varlist;
+non terminal ExpList explist;
+non terminal FunctionCall functioncall;
 non terminal Name;
-non terminal exp;
+non terminal Exp exp;
 non terminal elseiflist;
-non terminal elseblock;
-non terminal expaddit;
-non terminal namelist;
-non terminal funcname;
+non terminal NameList namelist;
+non terminal FuncName funcname;
 non terminal funcbody;
-non terminal attnamelist;
-non terminal eqexplistaddit;
-non terminal attrib;
-non terminal attriblist;
 non terminal dotnamelist;
 non terminal varadditlist;
-non terminal var;
+non terminal Var var;
 non terminal nameadditlist;
 non terminal expadditlist;
-non terminal functiondef;
-non terminal prefixexp;
-non terminal tableconstructor;
+non terminal PrefixExp prefixexp;
+non terminal TableConstructor tableconstructor;
 non terminal binop;
 non terminal unop;
 non terminal args;
-non terminal parlist;
-non terminal fieldlist;
-non terminal field;
+non terminal ParList parlist;
+non terminal FieldList fieldlist;
+non terminal Field field;
 non terminal fieldadditlist;
 non terminal fieldsep;
+non terminal empty;
 
 // Приоритеты
 precedence nonassoc LPAREN, RPAREN;
@@ -109,12 +101,24 @@ precedence left LENGTH;
 
 start with chunk;
 
-chunk ::= block;
+chunk ::= block  {: System.out.println("Chunk with block"); :};
 
-block ::=  statlist retstat
-         | statlist
-         | retstat
-         | empty
+block ::=  statlist:sl retstat:rs    {:
+                                        System.out.println("Block with statlist and retstat");
+                                        RESULT = new Block(sl, rs);
+                                    :}
+         | statlist:sl              {:
+                                        System.out.println("Block with statlist");
+                                        RESULT = new Block(sl, null);
+                                    :}
+         | retstat:rs               {:
+                                        System.out.println("Block with retstat");
+                                        RESULT = new Block(null, rs);
+                                    :}
+         | empty                    {:
+                                        System.out.println("Block");
+                                        RESULT = new Block(null, null);
+                                    :}
          ;
 
 statlist ::=  stat
@@ -124,43 +128,22 @@ statlist ::=  stat
 stat ::=  SEMICOLON
         | varlist ASSIGNMENT explist
         | functioncall
-        | label
         | BREAK
-        | GOTO Name
         | DO block END
         | WHILE exp DO block END
         | REPEAT block UNTIL exp
-        | IF exp THEN block elseiflist elseblock END
-        | FOR Name ASSIGNMENT exp COMMA exp expaddit DO block END
+        | IF exp THEN block elseiflist END
+        | IF exp THEN block elseiflist ELSE block END
+        | FOR Name ASSIGNMENT exp COMMA exp DO block END
+        | FOR Name ASSIGNMENT exp COMMA exp COMMA exp DO block END
         | FOR namelist IN explist DO block END
         | FUNCTION funcname funcbody
         | LOCAL FUNCTION Name funcbody
-        | LOCAL attnamelist eqexplistaddit
+        | LOCAL namelist
+        | LOCAL namelist ASSIGNMENT explist
         ;
 
 elseiflist ::=  ELSEIF exp THEN block elseiflist
-              | empty
-              ;
-
-elseblock ::=  ELSE block
-             | empty
-             ;
-
-expaddit ::=  COMMA exp
-            | empty
-            ;
-
-eqexplistaddit ::=  ASSIGNMENT explist
-                  | empty
-                  ;
-
-attnamelist ::= Name attrib attriblist;
-
-attrib ::=  LESS Name MORE
-          | empty
-          ;
-
-attriblist ::=  COMMA Name attrib
               | empty
               ;
 
@@ -169,8 +152,6 @@ retstat ::=  RETURN explist SEMICOLON
            | RETURN SEMICOLON
            | RETURN
            ;
-
-label ::= COLONCOLON Name COLONCOLON;
 
 funcname ::=  Name dotnamelist COLON Name
             | Name dotnamelist
@@ -205,7 +186,7 @@ exp	::=	 NIL
 	   | NUMERAL
 	   | LITERAL_STRING
 	   | PARAMS
-	   | functiondef
+	   | FUNCTION funcbody // functiondef
 	   | prefixexp
 	   | tableconstructor
        | exp binop exp
@@ -231,8 +212,6 @@ args ::=  LPAREN explist RPAREN
         | LITERAL_STRING
         ;
 
-functiondef ::= FUNCTION funcbody;
-
 funcbody ::=  LPAREN parlist RPAREN block END
             | LPAREN RPAREN block END
             ;
@@ -245,7 +224,7 @@ tableconstructor ::=  LBRACE fieldlist RBRACE
                     | LBRACE RBRACE;
 
 fieldlist ::=  field fieldadditlist fieldsep
-             | field
+             | field fieldadditlist
              ;
 
 field ::=  LBRACKET exp RBRACKET ASSIGNMENT exp
@@ -265,6 +244,7 @@ binop ::=  ADD
 		 | SUB
 		 | MUL
 		 | DIV
+		 | FDIV
 		 | MOD
 		 | POW
 		 | CONCAT
@@ -280,11 +260,13 @@ binop ::=  ADD
 		 | BOR
 		 | BRIGHT
 		 | BLEFT
+		 | BXOR
 		 ;
 
 unop ::=  SUB
 		| NOT
 		| LENGTH
+		| BXOR
 		;
 
 Name ::= ID;

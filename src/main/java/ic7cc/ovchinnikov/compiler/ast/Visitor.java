@@ -8,4 +8,38 @@ import ic7cc.ovchinnikov.compiler.ast.node.*;
 
 public interface Visitor {
 
+    void visit(Operation op);
+    void visit(StatList statList);
+    void visit(VarList varList);
+    void visit(NameList nameList);
+    void visit(ExpList expList);
+    void visit(FieldList fieldList);
+    void visit(Block block);
+    void visit(Name name);
+    void visit(TableConstructor tableConstructor);
+    void visit(RetStat lastStat);
+    void visit(Stat stat);
+    void visit(Assignment assignment);
+    void visit(DoBlock doBlock);
+    void visit(WhileBlock whileBlock);
+    void visit(RepeatUntil repeatUntil);
+    void visit(IfThenElseBlock ifThenElseBlock);
+    void visit(ForBlock forBlock);
+    void visit(ForInBlock forIn);
+    void visit(LocalFunctionDef localFunctionDef);
+    void visit(Exp exp);
+    void visit(Nil nil);
+    void visit(BooleanExp booleanExp);
+    void visit(NumeralExp numeralExp);
+    void visit(LiteralStringExp literalStringExp);
+    void visit(TableConstructorExp tableConstructorExp);
+    void visit(Binop binop);
+    void visit(Unop unop);
+    void visit(Var var);
+    void visit(Variable variable);
+    void visit(PrefixExp prefixExp);
+    void visit(FunctionCall functionCall);
+    void visit(FuncName funcName);
+    void visit(Field field);
+    
 }

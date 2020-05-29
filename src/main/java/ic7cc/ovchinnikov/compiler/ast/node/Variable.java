@@ -3,7 +3,7 @@ package ic7cc.ovchinnikov.compiler.ast.node;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
 
-public class ForIn extends Stat {
+public class Variable extends Var {
 
     @Override
     public ASTNode getParent() {

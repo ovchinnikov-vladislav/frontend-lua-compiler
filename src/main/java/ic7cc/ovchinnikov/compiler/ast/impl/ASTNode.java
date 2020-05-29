@@ -1,6 +1,6 @@
-package ic7cc.ovchinnikov.compiler.ast;
+package ic7cc.ovchinnikov.compiler.ast.impl;
 
-import ic7cc.ovchinnikov.compiler.ast.visitor.VisitedNode;
+import ic7cc.ovchinnikov.compiler.ast.VisitedNode;
 import ic7cc.ovchinnikov.compiler.parser.location.Location;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package ic7cc.ovchinnikov.compiler.ast.visitor;
+package ic7cc.ovchinnikov.compiler.ast;
 
 public interface VisitedNode {
 

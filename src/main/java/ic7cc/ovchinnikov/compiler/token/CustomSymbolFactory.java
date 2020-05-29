@@ -1,6 +1,6 @@
 package ic7cc.ovchinnikov.compiler.token;
 
-import ic7cc.ovchinnikov.compiler.ast.ASTNode;
+import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
 import ic7cc.ovchinnikov.compiler.parser.location.LocationFactory;
 import java_cup.runtime.ComplexSymbolFactory;
 import java_cup.runtime.Symbol;

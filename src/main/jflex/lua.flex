@@ -154,14 +154,14 @@ CommentContent = (!("]""="*"]"))*
       "not"                   { return symbol(NOT); }
       "#"                     { return symbol(LENGTH); } // длина строки
 
+ // Присваивание
+      "="                     { return symbol(ASSIGNMENT); }
+
   // Идентификатор
       {Name}                  { return symbol(ID, yytext()); }
 
   // Числовой литерал
       {Number}                { return symbol(NUMBER, new Double(Double.parseDouble(yytext())));}
-
-  // Присваивание
-      "="                     { return symbol(ASSIGNMENT); }
 
   // Пробелы
       {WhiteSpace}            { }

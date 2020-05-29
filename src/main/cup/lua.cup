@@ -30,27 +30,25 @@ parser code {:
     }
 :};
 
- /* Terminals (tokens returned by lexer). */
+ /* Терминалы (токены, которые будут прочитаны лексером). */
 
-
-terminal ASSIGNMENT; // =
-terminal DOT, COLON;
+terminal ASSIGNMENT;                                        // =
+terminal DOT, COLON;                                        // операция точки и двоеточие
 terminal LOCAL, FUNCTION, END;
-terminal DO, WHILE, FOR, IN, REPEAT, UNTIL;
-terminal IF, THEN, ELSE, ELSEIF, RETURN, BREAK;
-terminal NIL, FALSE, TRUE, PARAMS;
-terminal ADD, MUL, SUB, DIV, MOD, POW, CONCAT;
-terminal EQUAL, LESSEQ, NOTEQ, LESS, MORE, MOREEQ, AND, OR;
-terminal BAND, BOR, BRIGHT, BLEFT;
-terminal NOT, LENGTH;
-terminal LPAREN, RPAREN, LBRACKET, RBRACKET, LBRACE, RBRACE;
-terminal SEMICOLON, COMMA;
-terminal NUMBER, STRING;
-terminal ID;
+terminal DO, WHILE, FOR, IN, REPEAT, UNTIL;                 // циклические операторы
+terminal IF, THEN, ELSE, ELSEIF, RETURN, BREAK;             // операторы управления выполнением кода
+terminal NIL, FALSE, TRUE, PARAMS;                          // зарезервированные литералы
+terminal ADD, MUL, SUB, DIV, MOD, POW, CONCAT;              // арифметические операторы и оператор конкатенации
+terminal EQUAL, LESSEQ, NOTEQ, LESS, MORE, MOREEQ, AND, OR; // операторы отношения
+terminal BAND, BOR, BRIGHT, BLEFT;                          // побитовые операторы
+terminal NOT, LENGTH;                                       // унарные операторы
+terminal LPAREN, RPAREN, LBRACKET, RBRACKET, LBRACE, RBRACE;// скобки
+terminal SEMICOLON, COMMA;                                  // точка с запятой и запятая
+terminal NUMBER, STRING;                                    // Числовой и строковый литералы
+terminal ID;                                                // Идентификаторы
 
- /*NON TERMINALS */
+ /*Нетерминалы */
 
-non terminal chunk;
 non terminal block, optelse;
 non terminal stat;
 non terminal statlist;
@@ -76,6 +74,7 @@ non terminal unop;
 non terminal optsemi, empty;
 non terminal Name;
 
+// Приоритеты
 precedence nonassoc LPAREN, RPAREN;
 precedence nonassoc COMMA;
 
@@ -91,12 +90,9 @@ precedence left MUL, DIV, MOD;
 precedence right POW;
 precedence left LENGTH;
 
-/* Grammar */
+/* Продукции грамматики */
 
-start with chunk;
-
-chunk ::= block
-;
+start with block;
 
 block ::= statlist retstat
         | statlist

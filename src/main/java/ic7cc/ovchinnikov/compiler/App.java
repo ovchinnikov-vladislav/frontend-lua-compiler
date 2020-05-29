@@ -11,7 +11,7 @@ import java.io.FileReader;
 public class App {
 
     public static void main(String[] args) throws Exception {
-        Parser parser = new Parser(new Lexer(new FileReader("lua/testlocal.lua")));
+        Parser parser = new Parser(new Lexer(new FileReader("lua/calculator.lua")));
         parser.parse();
     }
 }

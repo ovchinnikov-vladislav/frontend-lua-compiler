@@ -30,7 +30,7 @@ parser code {:
     }
 :};
 
- /* Терминалы (токены, которые будут прочитаны лексером). */
+/* Терминалы (токены, которые будут прочитаны лексером). */
 
 terminal ASSIGNMENT;                                        // =
 terminal DOT, COLON;                                        // операция точки и двоеточие
@@ -103,20 +103,23 @@ start with chunk;
 
 chunk ::= block  {: System.out.println("Chunk with block"); :};
 
-block ::=  statlist:sl retstat:rs    {:
-                                        System.out.println("Block with statlist and retstat");
+block ::=  statlist:sl retstat:rs   {:
+                                        //System.out.println("Block with statlist and retstat");
                                         RESULT = new Block(sl, rs);
                                     :}
          | statlist:sl              {:
-                                        System.out.println("Block with statlist");
+                                        //System.out.println("Block with statlist");
                                         RESULT = new Block(sl, null);
                                     :}
          | retstat:rs               {:
-                                        System.out.println("Block with retstat");
+                                        //System.out.println("Block with retstat");
+                                        StatList statList = new StatList();
+                                        statList.setStart(rs.getStart());
+                                        statList.setEnd(rs.getStart());
                                         RESULT = new Block(null, rs);
                                     :}
          | empty                    {:
-                                        System.out.println("Block");
+                                        //System.out.println("Block");
                                         RESULT = new Block(null, null);
                                     :}
          ;

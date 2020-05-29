@@ -1,37 +1,37 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
-import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
 
 public class DoBlock extends Stat {
 
-    @Override
-    public ASTNode getParent() {
-        return null;
-    }
+    public Block block;
 
-    @Override
-    public void setParent(ASTNode parent) {
-
+    public DoBlock(Block block) {
+        this.block = block;
+        if (block != null) block.setParent(this);
     }
 
     @Override
     public void accept(Visitor visitor) {
-
+        visitor.visit(this);
     }
 
     @Override
     public void childrenAccept(Visitor visitor) {
-
-    }
-
-    @Override
-    public void traverseBottomUp(Visitor visitor) {
-
+        if (block != null) block.accept(visitor);
     }
 
     @Override
     public void traverseTopDown(Visitor visitor) {
+        accept(visitor);
+        if (block != null)
+            block.traverseTopDown(visitor);
+    }
 
+    @Override
+    public void traverseBottomUp(Visitor visitor) {
+        if (block != null)
+            block.traverseBottomUp(visitor);
+        accept(visitor);
     }
 }

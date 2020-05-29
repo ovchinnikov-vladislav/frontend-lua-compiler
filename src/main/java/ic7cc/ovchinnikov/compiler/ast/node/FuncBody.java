@@ -2,26 +2,31 @@ package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public class ParList extends ASTNode {
+public class FuncBody extends ASTNode {
 
     private ASTNode parent;
-    private NameList nameList;
-    private Boolean varParList;
+    private final ParList parList;
+    private final Block block;
 
-    public ParList(NameList nameList, Boolean varParList) {
-        this.nameList = nameList;
-        this.varParList = varParList;
+    public FuncBody(ParList parList, Block block) {
+        this.parList = parList;
+        this.block = block;
+    }
+
+    @Override
+    public ASTNode getParent() {
+        return parent;
+    }
+
+    @Override
+    public void setParent(ASTNode parent) {
+        this.parent = parent;
     }
 
     @Override
     public void accept(Visitor visitor) {
         throw new RuntimeException("Should not be here!");
-
     }
 
     @Override
@@ -38,4 +43,17 @@ public class ParList extends ASTNode {
     public void traverseTopDown(Visitor visitor) {
         throw new RuntimeException("Should not be here!");
     }
+
+    public NameList getArgs() {
+        return parList.getNameList();
+    }
+
+    public boolean getVarArgs() {
+        return parList.getVarParList();
+    }
+
+    public Block getBlock() {
+        return block;
+    }
+
 }

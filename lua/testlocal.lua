@@ -1,1 +1,1 @@
-local id <attr> = {}
+local id = {}

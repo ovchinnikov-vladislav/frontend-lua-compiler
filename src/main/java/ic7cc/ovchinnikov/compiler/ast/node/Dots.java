@@ -2,12 +2,9 @@ package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 
-public class BooleanExp extends Exp {
+public class Dots extends Exp {
 
-    public boolean value;
-
-    public BooleanExp(boolean value) {
-        this.value = value;
+    public Dots () {
     }
 
     @Override

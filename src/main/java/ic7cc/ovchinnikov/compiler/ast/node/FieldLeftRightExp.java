@@ -1,23 +1,18 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
-import ic7cc.ovchinnikov.compiler.ast.Operation;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 
-public class Binop extends Exp {
+public class FieldLeftRightExp extends Field {
 
     public Exp leftExp;
-    public Operation op;
     public Exp rightExp;
 
-    public Binop(Exp leftExp, Operation op, Exp rightExp) {
+    public FieldLeftRightExp(Exp leftExp, Exp rightExp) {
         this.leftExp = leftExp;
-
         if (leftExp != null)
             leftExp.setParent(this);
 
-        this.op = op;
         this.rightExp = rightExp;
-
         if (rightExp != null)
             rightExp.setParent(this);
     }
@@ -31,6 +26,7 @@ public class Binop extends Exp {
     public void childrenAccept(Visitor visitor) {
         if (leftExp != null)
             leftExp.accept(visitor);
+
         if (rightExp != null)
             rightExp.accept(visitor);
     }

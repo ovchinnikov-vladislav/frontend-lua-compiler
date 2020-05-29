@@ -2,12 +2,16 @@ package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 
-public class BooleanExp extends Exp {
+public class FieldNameExp extends Field {
 
-    public boolean value;
+    public String ident;
+    public Exp exp;
 
-    public BooleanExp(boolean value) {
-        this.value = value;
+    public FieldNameExp(String ident, Exp exp) {
+        this.ident = ident;
+        this.exp = exp;
+        if (exp != null)
+            exp.setParent(this);
     }
 
     @Override
@@ -17,15 +21,23 @@ public class BooleanExp extends Exp {
 
     @Override
     public void childrenAccept(Visitor visitor) {
+        if (exp != null)
+            exp.accept(visitor);
     }
 
     @Override
     public void traverseTopDown(Visitor visitor) {
         accept(visitor);
+
+        if (exp != null)
+            exp.traverseTopDown(visitor);
     }
 
     @Override
     public void traverseBottomUp(Visitor visitor) {
+        if (exp != null)
+            exp.traverseBottomUp(visitor);
+
         accept(visitor);
     }
 }

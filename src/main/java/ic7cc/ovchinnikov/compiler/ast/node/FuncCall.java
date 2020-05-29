@@ -1,21 +1,17 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
-import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
 
-public class Assignment extends Stat {
+public class FuncCall extends FunctionCall {
 
-    public VarList varList;
+    public PrefixExp preExp;
     public ExpList expList;
 
-    public Assignment(VarList varList, ExpList expList) {
-        this.varList = varList;
-        if (varList != null)
-            varList.setParent(this);
-
+    public FuncCall(PrefixExp preExp, ExpList expList) {
+        this.preExp = preExp;
+        if (preExp != null) preExp.setParent(this);
         this.expList = expList;
-        if (expList != null)
-            expList.setParent(this);
+        if (expList != null) expList.setParent(this);
     }
 
     @Override
@@ -25,8 +21,8 @@ public class Assignment extends Stat {
 
     @Override
     public void childrenAccept(Visitor visitor) {
-        if (varList != null)
-            varList.accept(visitor);
+        if (preExp != null)
+            preExp.accept(visitor);
 
         if (expList != null)
             expList.accept(visitor);
@@ -36,8 +32,8 @@ public class Assignment extends Stat {
     public void traverseTopDown(Visitor visitor) {
         accept(visitor);
 
-        if (varList != null)
-            varList.traverseTopDown(visitor);
+        if (preExp != null)
+            preExp.traverseTopDown(visitor);
 
         if (expList != null)
             expList.traverseTopDown(visitor);
@@ -45,13 +41,12 @@ public class Assignment extends Stat {
 
     @Override
     public void traverseBottomUp(Visitor visitor) {
-        if (varList != null)
-            varList.traverseBottomUp(visitor);
+        if (preExp != null)
+            preExp.traverseBottomUp(visitor);
 
         if (expList != null)
             expList.traverseBottomUp(visitor);
 
         accept(visitor);
     }
-
 }

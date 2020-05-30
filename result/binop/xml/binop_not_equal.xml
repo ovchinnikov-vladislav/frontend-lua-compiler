@@ -1,0 +1,1 @@
+<Block><StatList><Assignment><VarList><Variable var="a"/></VarList><ExpList><BinaryOperation operation="NOTEQ"><NumeralExp number="1.0"/><NumeralExp number="2.0"/></BinaryOperation></ExpList></Assignment></StatList></Block>

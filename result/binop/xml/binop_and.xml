@@ -1,0 +1,1 @@
+<Block><StatList><Assignment><VarList><Variable var="a"/></VarList><ExpList><BinaryOperation operation="AND"><PreExp><PrefixExpVar><Variable var="b"/></PrefixExpVar></PreExp><PreExp><PrefixExpVar><Variable var="c"/></PrefixExpVar></PreExp></BinaryOperation></ExpList></Assignment></StatList></Block>

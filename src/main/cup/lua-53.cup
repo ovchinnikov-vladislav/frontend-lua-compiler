@@ -70,7 +70,7 @@ non terminal RetStat retstat;
 non terminal Stat stat;
 
 non terminal VarList varlist;
-non terminal ExpList explist;
+non terminal ExpList explist, args, ;
 non terminal FunctionCall functioncall;
 non terminal Name;
 non terminal Exp exp;
@@ -86,7 +86,6 @@ non terminal PrefixExp prefixexp;
 non terminal TableConstructor tableconstructor;
 non terminal binop;
 non terminal unop;
-non terminal args;
 non terminal ParList parlist;
 non terminal FieldList fieldlist;
 non terminal Field field;
@@ -159,7 +158,7 @@ stat ::=  SEMICOLON
 elselist ::=  ELSEIF exp THEN block elselist
             | ELSE block
             | empty
-              ;
+            ;
 
 retstat ::=  RETURN explist SEMICOLON
            | RETURN explist

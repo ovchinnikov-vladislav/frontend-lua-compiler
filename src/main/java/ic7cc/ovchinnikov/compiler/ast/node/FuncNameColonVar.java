@@ -6,12 +6,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FuncNameDDotVar extends FuncName {
+public class FuncNameColonVar extends FuncName {
 
     private Name selfFuncName;
     private Name funcName;
 
-    public FuncNameDDotVar(Name selfFuncName, Name funcName) {
+    public FuncNameColonVar(Name selfFuncName, Name funcName) {
         this.selfFuncName = selfFuncName;
         if (selfFuncName != null)
             selfFuncName.setParent(this);

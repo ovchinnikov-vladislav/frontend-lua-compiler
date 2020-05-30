@@ -1,6 +1,5 @@
 package ic7cc.ovchinnikov.compiler.ast.serialization;
 
-import ic7cc.ovchinnikov.compiler.ast.Operation;
 import ic7cc.ovchinnikov.compiler.ast.VisitedNode;
 import ic7cc.ovchinnikov.compiler.ast.impl.VisitorAdaptor;
 import ic7cc.ovchinnikov.compiler.ast.node.*;
@@ -238,8 +237,8 @@ public abstract class VisitorAdapterGeneric extends VisitorAdaptor {
 	}
 
 	@Override
-	public void visit(FuncNameDDotVar funcNameDDotVar) {
-		visitGeneric(funcNameDDotVar);
+	public void visit(FuncNameColonVar funcNameColonVar) {
+		visitGeneric(funcNameColonVar);
 	}
 
 	@Override

@@ -77,7 +77,6 @@ non terminal Exp exp, comforexp;
 non terminal NameList namelist;
 non terminal FuncName funcname;
 non terminal FuncBody funcbody;
-non terminal varadditlist;
 non terminal Var var;
 non terminal nameadditlist;
 non terminal expadditlist;
@@ -207,21 +206,19 @@ retstat ::=  RETURN explist:el SEMICOLON         {:  RESULT = new Return(el); :}
            | RETURN                              {:  RESULT = new Return(null); :}
            ;
 
-funcname ::=  NAME
-            | NAME COLON NAME
-            | NAME DOT funcname
+funcname ::=  NAME:name                          {:  RESULT = new FuncNameVar(new Name(name)); :}
+            | NAME:name1 COLON NAME:name2        {:  RESULT = new FuncNameColonVar(new Name(name1), new Name(name2)); :}
+            | NAME:name DOT funcname:fn          {:  RESULT = new FuncNameVarDotFuncName(new Name(name), fn); :}
             ;
 
-varlist ::= var varadditlist;
+varlist ::=  var
+           | var COMMA varlist
+           ;
 
 var ::=  NAME
        | prefixexp LBRACKET exp RBRACKET
        | prefixexp DOT NAME
        ;
-
-varadditlist ::=  COMMA var varadditlist
-                | empty
-                ;
 
 namelist ::= NAME nameadditlist;
 

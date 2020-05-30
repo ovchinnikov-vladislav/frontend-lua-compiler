@@ -55,7 +55,7 @@ public interface Visitor {
      void visit(FuncName funcName);
      void visit(FuncNameVar funcNameVar);
      void visit(FuncNameVarDotFuncName funcNameVarDotFuncName);
-     void visit(FuncNameDDotVar funcNameDDotVar);
+     void visit(FuncNameColonVar funcNameColonVar);
      void visit(Field field);
      void visit(FieldLeftRightExp fieldLeftRightExp);
      void visit(FieldNameExp fieldNameExp);

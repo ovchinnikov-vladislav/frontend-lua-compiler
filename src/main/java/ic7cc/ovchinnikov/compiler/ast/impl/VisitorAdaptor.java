@@ -246,7 +246,7 @@ public abstract class VisitorAdaptor implements Visitor {
     }
 
     @Override
-    public void visit(FuncNameDDotVar funcNameDDotVar) {
+    public void visit(FuncNameColonVar funcNameColonVar) {
 
     }
 

@@ -12,17 +12,17 @@ public class FuncSyntactic {
         public PrefixExp prefixexp;
 
         @Override
-        public void visit(FuncNameDDotVar funcNameDDotVar) {
-            Variable var2 = new Variable(funcNameDDotVar.getSelfFuncName().getName());
-            var2.setStart(funcNameDDotVar.getSelfFuncName().getStart());
-            var2.setEnd(funcNameDDotVar.getSelfFuncName().getEnd());
+        public void visit(FuncNameColonVar funcNameColonVar) {
+            Variable var2 = new Variable(funcNameColonVar.getSelfFuncName().getName());
+            var2.setStart(funcNameColonVar.getSelfFuncName().getStart());
+            var2.setEnd(funcNameColonVar.getSelfFuncName().getEnd());
             PrefixExp prefixExp = new PrefixExpVar(var2);
             prefixExp.setStart(var2.getStart());
             prefixExp.setEnd(var2.getEnd());
 
-            LiteralStringExp selfvar = new LiteralStringExp(funcNameDDotVar.getFuncName().getName());
-            selfvar.setStart(funcNameDDotVar.getFuncName().getStart());
-            selfvar.setEnd(funcNameDDotVar.getFuncName().getEnd());
+            LiteralStringExp selfvar = new LiteralStringExp(funcNameColonVar.getFuncName().getName());
+            selfvar.setStart(funcNameColonVar.getFuncName().getStart());
+            selfvar.setEnd(funcNameColonVar.getFuncName().getEnd());
 
             VarTabIndex head = new VarTabIndex(prefixExp, selfvar);
             head.setStart(prefixExp.getStart());
@@ -65,7 +65,7 @@ public class FuncSyntactic {
         }
 
         @Override
-        public void visit(FuncNameDDotVar funcNameDDotVar) {
+        public void visit(FuncNameColonVar funcNameColonVar) {
             ddotcall = true;
         }
 
@@ -88,8 +88,8 @@ public class FuncSyntactic {
 
             vl.append(var);
             return vl;
-        } else if (fn instanceof FuncNameDDotVar) {
-            FuncNameDDotVar ddotVar = (FuncNameDDotVar) fn;
+        } else if (fn instanceof FuncNameColonVar) {
+            FuncNameColonVar ddotVar = (FuncNameColonVar) fn;
             VarTabIndex head = new VarTabIndex(new PrefixExpVar(new Variable(ddotVar.getSelfFuncName().getName())), new LiteralStringExp(
                     ddotVar.getFuncName().getName()));
             head.setStart(ddotVar.getStart());

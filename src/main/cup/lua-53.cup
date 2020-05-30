@@ -60,7 +60,7 @@ terminal NOT, LENGTH;                                       // унарные о
 terminal LPAREN, RPAREN, LBRACKET, RBRACKET, LBRACE, RBRACE;// скобки
 terminal SEMICOLON, COMMA;                                  // точка с запятой и запятая
 terminal NUMERAL, LITERAL_STRING;                           // Числовой и строковый литералы
-terminal ID;                                                // Идентификаторы
+terminal NAME;                                              // Идентификаторы
 
  /*Нетерминалы */
 
@@ -70,13 +70,12 @@ non terminal RetStat retstat;
 non terminal Stat stat;
 
 non terminal VarList varlist;
-non terminal ExpList explist, args, ;
+non terminal ExpList explist, args, assignexplist;
 non terminal FunctionCall functioncall;
-non terminal Name;
-non terminal Exp exp;
+non terminal Exp exp, comforexp;
 non terminal NameList namelist;
 non terminal FuncName funcname;
-non terminal funcbody;
+non terminal FuncBody funcbody;
 non terminal dotnamelist;
 non terminal varadditlist;
 non terminal Var var;
@@ -84,8 +83,8 @@ non terminal nameadditlist;
 non terminal expadditlist;
 non terminal PrefixExp prefixexp;
 non terminal TableConstructor tableconstructor;
-non terminal binop;
-non terminal unop;
+non terminal Operation binop;
+non terminal Operation unop;
 non terminal ParList parlist;
 non terminal FieldList fieldlist;
 non terminal Field field;
@@ -114,45 +113,67 @@ precedence left LENGTH;
 start with block;
 
 block ::=  statlist:sl retstat:rs   {:
-                                        //System.out.println("Block with statlist and retstat");
+                                        System.out.println("Block with statlist and retstat");
                                         RESULT = new Block(sl, rs);
                                     :}
          | statlist:sl              {:
-                                        //System.out.println("Block with statlist");
+                                        System.out.println("Block with statlist");
                                         RESULT = new Block(sl, null);
                                     :}
          | retstat:rs               {:
-                                        //System.out.println("Block with retstat");
-                                        StatList statList = new StatList();
-                                        statList.setStart(rs.getStart());
-                                        statList.setEnd(rs.getStart());
-                                        RESULT = new Block(null, rs);
+                                        System.out.println("Block with retstat");
+                                        StatList sl = new StatList();
+                                        sl.setStart(rs.getStart());
+                                        sl.setEnd(rs.getStart());
+                                        RESULT = new Block(sl, rs);
                                     :}
          | empty                    {:
-                                        //System.out.println("Block");
-                                        RESULT = new Block(null, null);
+										StatList statlist = new StatList();
+										statlist.setStart(LocationFactory.fromSymbol(null));
+										statlist.setEnd(LocationFactory.fromSymbol(null));
+										System.out.println("Empty block");
+										RESULT = new Block(statlist, null);
                                     :}
          ;
 
-statlist ::=  stat
-            | stat statlist
+statlist ::=  stat:s			    {:
+									    System.out.println("Single stat");
+									    RESULT = new StatList(s);
+								    :}
+            | stat:s statlist:sl    {:
+                                        System.out.println("Recurrent stat");
+									    if (sl == null) {
+										    sl = new StatList(s);
+										    RESULT = sl;
+		                                } else {
+		                                    sl.addStat(0, s);
+		                                    RESULT = sl;
+		                                }
+
+								    :}
             ;
 
-stat ::=  SEMICOLON
-        | varlist ASSIGNMENT explist
-        | functioncall
-        | BREAK
-        | DO block END
-        | WHILE exp DO block END
-        | REPEAT block UNTIL exp
-        | IF exp THEN block elselist END
-        | FOR Name ASSIGNMENT exp COMMA exp DO block END
-        | FOR Name ASSIGNMENT exp COMMA exp COMMA exp DO block END
+stat ::=  SEMICOLON                                                 {:
+                                                                        System.out.println("SEMICOLON");
+                                                                    :}
+        | varlist:vl ASSIGNMENT explist:el                          {:
+                                                                        System.out.println("stat");
+                                                                        RESULT = new Assignment(vl, el);
+                                                                    :}
+        | functioncall:fc                                           {:  RESULT = new FuncCallStatement(fc); :}
+        | BREAK                                                     {:  RESULT = new Break(); :}
+        | DO block:b END                                            {:
+                                                                        System.out.println("stat - do end");
+                                                                        RESULT = new DoBlock(b);
+                                                                    :}
+        | WHILE exp:e DO block:b END                                {:  RESULT = new WhileBlock(e, b); :}
+        | REPEAT block:b UNTIL exp:e                                {:  RESULT = new RepeatUntil(b, e); :}
+        | IF exp:e THEN block:b elselist:elsel END                  {:  RESULT = new IfThenElseBlock(e, b, elsel); :}
+        | FOR NAME ASSIGNMENT exp COMMA exp comforexp DO block END
         | FOR namelist IN explist DO block END
         | FUNCTION funcname funcbody
-        | LOCAL FUNCTION Name funcbody
-        | LOCAL namelist
-        | LOCAL namelist ASSIGNMENT explist
+        | LOCAL FUNCTION NAME funcbody
+        | LOCAL namelist assignexplist
         ;
 
 elselist ::=  ELSEIF exp THEN block elselist
@@ -160,34 +181,42 @@ elselist ::=  ELSEIF exp THEN block elselist
             | empty
             ;
 
+comforexp ::=  COMMA exp
+             | empty
+             ;
+
+assignexplist ::=  ASSIGNMENT explist
+                 | empty
+                 ;
+
 retstat ::=  RETURN explist SEMICOLON
            | RETURN explist
            | RETURN SEMICOLON
            | RETURN
            ;
 
-funcname ::=  Name dotnamelist COLON Name
-            | Name dotnamelist
+funcname ::=  NAME dotnamelist COLON NAME
+            | NAME dotnamelist
             ;
 
-dotnamelist ::=  DOT Name dotnamelist
+dotnamelist ::=  DOT NAME dotnamelist
                | empty
                ;
 
 varlist ::= var varadditlist;
 
-var ::=  Name
+var ::=  NAME
        | prefixexp LBRACKET exp RBRACKET
-       | prefixexp DOT Name
+       | prefixexp DOT NAME
        ;
 
 varadditlist ::=  COMMA var varadditlist
                 | empty
                 ;
 
-namelist ::= Name nameadditlist;
+namelist ::= NAME nameadditlist;
 
-nameadditlist ::=  COMMA Name nameadditlist
+nameadditlist ::=  COMMA NAME nameadditlist
                  | empty
                  ;
 
@@ -210,13 +239,21 @@ expadditlist ::=  COMMA exp expadditlist
                 | empty
                 ;
 
-prefixexp ::=  var
-             | functioncall
-             | LPAREN exp RPAREN
+prefixexp ::=  var:v                            {:
+                                                    System.out.println("Prefixexp var");
+                                                    RESULT = new PrefixExpVar(v);
+                                                :}
+             | functioncall:fc                  {:
+                                                    System.out.println("Prefixexp");
+                                                    RESULT = new PrefixExpFuncCall(fc);
+                                                :}
+             | LPAREN exp:e RPAREN              {:
+                                                    RESULT = new PrefixExpExp(e);
+                                                :}
              ;
 
 functioncall ::=  prefixexp args
-                | prefixexp COLON Name args
+                | prefixexp COLON NAME args
                 ;
 
 args ::=  LPAREN explist RPAREN
@@ -241,7 +278,7 @@ fieldlist ::=  field fieldadditlist fieldsep
              ;
 
 field ::=  LBRACKET exp RBRACKET ASSIGNMENT exp
-         | Name ASSIGNMENT exp
+         | NAME ASSIGNMENT exp
          | exp
          ;
 
@@ -281,7 +318,5 @@ unop ::=  SUB
 		| LENGTH
 		| BXOR
 		;
-
-Name ::= ID;
 
 empty ::= /* empty */;

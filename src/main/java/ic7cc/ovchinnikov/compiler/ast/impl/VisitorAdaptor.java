@@ -269,4 +269,6 @@ public abstract class VisitorAdaptor implements Visitor {
     public void visit(FieldExp fieldExp) {
 
     }
+
+    public void visit() {}
 }

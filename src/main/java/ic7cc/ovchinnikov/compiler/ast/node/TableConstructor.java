@@ -1,10 +1,12 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
 
 public class TableConstructor extends ASTNode {
 
+    @JsonIgnore
     private ASTNode parent;
     public FieldList fieldList;
 

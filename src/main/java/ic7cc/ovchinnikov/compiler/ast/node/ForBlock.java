@@ -1,5 +1,6 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class ForBlock extends Stat {
 
+    @JacksonXmlProperty(isAttribute = true)
     private String ident;
     private Exp startExp;
     private Exp endExp;

@@ -1,14 +1,21 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class LocalFunctionDef extends Stat {
 
-    public String name;
-    public NameList args;
-    public boolean varArgs;
-    public Block block;
+    @JacksonXmlProperty(isAttribute = true)
+    private String name;
+    private NameList args;
+    @JacksonXmlProperty(isAttribute = true)
+    private boolean varArgs;
+    private Block block;
 
     public LocalFunctionDef(String name, NameList args, boolean varArgs, Block block) {
         this.name = name;

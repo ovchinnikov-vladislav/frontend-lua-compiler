@@ -1,1 +1,1 @@
-local id = {}
+a = a and b

@@ -1,8 +1,8 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.VisitedNode;
+import ic7cc.ovchinnikov.compiler.ast.VisitorAdapterGeneric;
 import ic7cc.ovchinnikov.compiler.ast.impl.VisitorAdaptor;
-import ic7cc.ovchinnikov.compiler.ast.serialization.VisitorAdapterGeneric;
 
 public class FuncSyntactic {
 

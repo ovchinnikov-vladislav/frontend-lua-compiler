@@ -280,7 +280,6 @@ args ::=  LPAREN explist:el RPAREN                        {:  RESULT = el; :}
         ;
 
 funcbody ::=  LPAREN parlist:pl RPAREN block:b END        {:  RESULT = new FuncBody(pl, b); :}
-            | LPAREN RPAREN block:b END                   {:  RESULT = new FuncBody(null, b); :}
             ;
 
 parlist ::=  namelist:nl COMMA PARAMS                     {:  RESULT = new ParList(nl, true);  :}
@@ -291,52 +290,65 @@ parlist ::=  namelist:nl COMMA PARAMS                     {:  RESULT = new ParLi
                                                               nl.setEnd(LocationFactory.from(null));
                                                               RESULT = new ParList(nl, true);
                                                           :}
+           |                                              {:
+                                                              NameList nl = new NameList();
+                                                              nl.setStart(LocationFactory.from(null));
+                                                              nl.setEnd(LocationFactory.from(null));
+                                                              RESULT = new ParList(nl, false);
+                                                          :}
            ;
 
 tableconstructor ::=  LBRACE fieldlist:fl RBRACE          {:  RESULT = new TableConstructor(fl); :}
-                    | LBRACE RBRACE                      {:  RESULT = new TableConstructor(new FieldList()); :}
+                    | LBRACE RBRACE                       {:  RESULT = new TableConstructor(new FieldList()); :}
                     ;
 
-fieldlist ::=  field fieldsep fieldlist
-             | field
+fieldlist ::=  field:f fieldsep fieldlist:fl              {:
+                                                              if (fl == null) {
+                                                                  RESULT = new FieldList(f);
+                                                              } else {
+                                                                  fl.addField(0, f);
+                                                                  RESULT = fl;
+                                                              }
+                                                          :}
+             | field:f                                    {:  RESULT = new FieldList(f); :}
              ;
 
-field ::=  LBRACKET exp RBRACKET ASSIGNMENT exp
-         | NAME ASSIGNMENT exp
-         | exp
+field ::=  LBRACKET exp:e1 RBRACKET ASSIGNMENT exp:e2     {:  RESULT = new FieldLeftRightExp(e1, e2); :}
+         | NAME:name ASSIGNMENT exp:e                     {:  RESULT = new FieldNameExp(name, e); :}
+         | exp:e                                          {:  RESULT = new FieldExp(e); :}
          ;
 
 fieldsep ::=  COMMA
             | SEMICOLON
             ;
 
-binop ::=  ADD
-		 | SUB
-		 | MUL
-		 | DIV
-		 | FDIV
-		 | MOD
-		 | POW
-		 | CONCAT
-		 | EQUAL
-		 | LESSEQ
-		 | NOTEQ
-		 | LESS
-		 | MORE
-		 | MOREEQ
-		 | AND
-		 | OR
-		 | BAND
-		 | BOR
-		 | BRIGHT
-		 | BLEFT
-		 | BXOR
+binop ::=  ADD      {: RESULT = Operation.ADD; :}
+		 | SUB      {: RESULT = Operation.SUB; :}
+		 | MUL      {: RESULT = Operation.MUL; :}
+		 | DIV      {: RESULT = Operation.DIV; :}
+		 | FDIV     {: RESULT = Operation.FDIV; :}
+		 | MOD      {: RESULT = Operation.MOD; :}
+		 | POW      {: RESULT = Operation.POW; :}
+		 | CONCAT   {: RESULT = Operation.CONCAT; :}
+		 | EQUAL    {: RESULT = Operation.EQUAL; :}
+		 | LESSEQ   {: RESULT = Operation.LESSEQ; :}
+		 | NOTEQ    {: RESULT = Operation.NOTEQ; :}
+		 | LESS     {: RESULT = Operation.LESS; :}
+		 | MORE     {: RESULT = Operation.MORE; :}
+		 | MOREEQ   {: RESULT = Operation.MOREEQ; :}
+		 | AND      {: RESULT = Operation.AND; :}
+		 | OR       {: RESULT = Operation.OR; :}
+		 | BAND     {: RESULT = Operation.BAND; :}
+		 | BOR      {: RESULT = Operation.BOR; :}
+		 | BRIGHT   {: RESULT = Operation.BRIGHT; :}
+		 | BLEFT    {: RESULT = Operation.BLEFT; :}
+		 | BXOR     {: RESULT = Operation.BXOR; :}
 		 ;
 
-unop ::=  SUB
-		| NOT
-		| LENGTH
-		| BXOR
+unop ::=  SUB       {: RESULT = Operation.UNMINUS; :}
+		| NOT       {: RESULT = Operation.NOT; :}
+		| LENGTH    {: RESULT = Operation.LENGTH; :}
+		| BXOR      {: RESULT = Operation.BNOT; :}
 		;
 
 empty ::= /* empty */;

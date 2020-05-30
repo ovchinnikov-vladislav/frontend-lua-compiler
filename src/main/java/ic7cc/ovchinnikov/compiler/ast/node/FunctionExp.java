@@ -1,12 +1,18 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class FunctionExp extends Exp {
 
-    public NameList args;
-    public boolean varArgs;
-    public Block block;
+    private NameList args;
+    @JacksonXmlProperty(isAttribute = true)
+    private boolean varArgs;
+    private Block block;
 
     public FunctionExp (NameList args, boolean varArgs, Block block) {
         this.args = args;

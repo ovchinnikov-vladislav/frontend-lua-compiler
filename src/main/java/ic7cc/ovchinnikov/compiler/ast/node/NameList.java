@@ -1,19 +1,25 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+@Getter
+@Setter
 public class NameList extends ASTNode {
 
-    private final List<Name> items;
+    private final List<Name> nameList;
+    @JsonIgnore
     private ASTNode parent;
 
     public NameList() {
-        items = new LinkedList<>();
+        nameList = new LinkedList<>();
     }
 
     public NameList(Name anItem) {
@@ -63,49 +69,50 @@ public class NameList extends ASTNode {
         if (anItem == null)
             return this;
         anItem.setParent(this);
-        items.add(anItem);
+        nameList.add(anItem);
         return this;
     }
 
     public List<Name> elements() {
-        return Collections.unmodifiableList(items);
+        return Collections.unmodifiableList(nameList);
     }
 
     public Name getName(int index) {
-        return items.get(index);
+        return nameList.get(index);
     }
 
     public void setName(int index, Name item) {
         item.setParent(this);
-        items.set(index, item);
+        nameList.set(index, item);
     }
 
     public void addName(int index, Name item) {
         item.setParent(this);
-        items.add(index, item);
+        nameList.add(index, item);
     }
 
     public void removeName(int index) {
-        items.remove(index);
+        nameList.remove(index);
     }
 
     public int size() {
-        return items.size();
+        return nameList.size();
     }
 
+    @JsonIgnore
     public boolean isEmpty() {
-        return items.isEmpty();
+        return nameList.isEmpty();
     }
 
     public boolean contains(Name item) {
-        for (Name name : items)
+        for (Name name : nameList)
             if (item.equals(name))
                 return true;
         return false;
     }
 
     public int indexOf(Name item) {
-        return items.indexOf(item);
+        return nameList.indexOf(item);
     }
 
 }

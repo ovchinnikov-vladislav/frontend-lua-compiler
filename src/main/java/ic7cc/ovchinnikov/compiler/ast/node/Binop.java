@@ -1,5 +1,6 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Operation;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import lombok.Getter;
@@ -10,16 +11,17 @@ import lombok.Setter;
 public class Binop extends Exp {
 
     private Exp leftExp;
-    private Operation op;
+    @JacksonXmlProperty(isAttribute = true)
+    private Operation operation;
     private Exp rightExp;
 
-    public Binop(Exp leftExp, Operation op, Exp rightExp) {
+    public Binop(Exp leftExp, Operation operation, Exp rightExp) {
         this.leftExp = leftExp;
 
         if (leftExp != null)
             leftExp.setParent(this);
 
-        this.op = op;
+        this.operation = operation;
         this.rightExp = rightExp;
 
         if (rightExp != null)

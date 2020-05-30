@@ -1,10 +1,12 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
 
 public class Variable extends Var {
 
+    @JacksonXmlProperty(isAttribute = true)
     public String var;
 
     public Variable (String var) {

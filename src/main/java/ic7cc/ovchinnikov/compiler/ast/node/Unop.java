@@ -3,11 +3,15 @@ package ic7cc.ovchinnikov.compiler.ast.node;
 import ic7cc.ovchinnikov.compiler.ast.Operation;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class Unop extends Exp {
 
-    public Operation operation;
-    public Exp exp;
+    private Operation operation;
+    private Exp exp;
 
     public Unop(Operation operation, Exp exp) {
         this.operation = operation;

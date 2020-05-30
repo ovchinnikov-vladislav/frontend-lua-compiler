@@ -1,5 +1,7 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
 import lombok.Getter;
@@ -9,7 +11,9 @@ import lombok.Setter;
 @Setter
 public class Name extends ASTNode {
 
+    @JsonIgnore
     private ASTNode parent;
+    @JacksonXmlProperty(isAttribute = true)
     private String name;
 
     public Name(String name) {

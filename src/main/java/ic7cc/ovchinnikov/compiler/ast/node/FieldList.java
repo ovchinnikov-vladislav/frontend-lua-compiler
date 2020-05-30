@@ -1,20 +1,27 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
 import ic7cc.ovchinnikov.compiler.parser.location.Location;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+@Getter
+@Setter
 public class FieldList extends ASTNode {
 
-    private final List<Field> items;
+    private final List<Field> fieldList;
+
+    @JsonIgnore
     private ASTNode parent;
 
     public FieldList() {
-        items = new LinkedList<>();
+        fieldList = new LinkedList<>();
     }
 
     public FieldList(Field anItem) {
@@ -64,49 +71,50 @@ public class FieldList extends ASTNode {
         if (anItem == null)
             return this;
         anItem.setParent(this);
-        items.add(anItem);
+        fieldList.add(anItem);
         return this;
     }
 
     public List<Field> elements() {
-        return Collections.unmodifiableList(items);
+        return Collections.unmodifiableList(fieldList);
     }
 
     public Field getField(int index) {
-        return items.get(index);
+        return fieldList.get(index);
     }
 
     public void setField(int index, Field item) {
         item.setParent(this);
-        items.set(index, item);
+        fieldList.set(index, item);
     }
 
     public void addField(int index, Field item) {
         item.setParent(this);
-        items.add(index, item);
+        fieldList.add(index, item);
     }
 
     public void remove(int index) {
-        items.remove(index);
+        fieldList.remove(index);
     }
 
     public int size() {
-        return items.size();
+        return fieldList.size();
     }
 
+    @JsonIgnore
     public boolean isEmpty() {
-        return items.isEmpty();
+        return fieldList.isEmpty();
     }
 
     public boolean contains(Field item) {
-        for (Field field : items)
+        for (Field field : fieldList)
             if (item.equals(field))
                 return true;
         return false;
     }
 
     public int indexOf(Field item) {
-        return items.indexOf(item);
+        return fieldList.indexOf(item);
     }
 
 }

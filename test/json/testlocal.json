@@ -1,0 +1,47 @@
+{
+  "statList": {
+    "assignment": {
+      "varList": {
+        "variable": {
+          "var": "a"
+        }
+      },
+      "expList": {
+        "binop": {
+          "leftExp": {
+            "number": 5.0
+          },
+          "operation": "ADD",
+          "rightExp": {
+            "leftExp": {
+              "number": 3.0
+            },
+            "operation": "MUL",
+            "rightExp": {
+              "number": 1.0
+            }
+          }
+        }
+      }
+    },
+    "assignment": {
+      "varList": {
+        "variable": {
+          "var": "b"
+        }
+      },
+      "expList": {
+        "binop": {
+          "leftExp": {
+            "number": 3.0
+          },
+          "operation": "MUL",
+          "rightExp": {
+            "number": 5.0
+          }
+        }
+      }
+    }
+  },
+  "retStat": null
+}

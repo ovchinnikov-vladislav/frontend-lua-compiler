@@ -1,12 +1,16 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class PreExp extends Exp {
 
-    public PrefixExp preExp;
+    private PrefixExp preExp;
 
-    public PreExp (PrefixExp preExp) {
+    public PreExp(PrefixExp preExp) {
         this.preExp = preExp;
 
         if (preExp != null)

@@ -3,15 +3,24 @@
  */
 package ic7cc.ovchinnikov.compiler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import ic7cc.ovchinnikov.compiler.ast.json.*;
+import ic7cc.ovchinnikov.compiler.ast.node.*;
 import ic7cc.ovchinnikov.compiler.lexer.Lexer;
 import ic7cc.ovchinnikov.compiler.parser.Parser;
 
 import java.io.FileReader;
+import java.nio.file.Paths;
 
 public class App {
 
     public static void main(String[] args) throws Exception {
-        Parser parser = new Parser(new Lexer(new FileReader("lua/calculator.lua")));
-        parser.parse();
+//        Parser parser = new Parser(new Lexer(new FileReader("lua/calculator.lua")));
+//        parser.parse();
+        Parser parser = new Parser(new Lexer(new FileReader("lua/testlocal.lua")));
+        Block block = (Block) parser.parse().value;
+
     }
 }

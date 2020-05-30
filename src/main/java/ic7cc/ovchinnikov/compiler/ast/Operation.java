@@ -9,7 +9,10 @@ public enum Operation {
     OR,
     BAND,
     DIV,
+    FDIV,
     BLEFT,
+    BXOR,
+    BNOT,
     MOREEQ,
     LESSEQ,
     EQUAL,
@@ -22,5 +25,5 @@ public enum Operation {
     LENGTH,
     MORE,
     NOTEQ,
-    UNM
+    UNMINUS,
 }

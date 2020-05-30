@@ -1,5 +1,6 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 public class FuncCallSelf extends FunctionCall {
 
     private PrefixExp preExp;
+    @JacksonXmlProperty(isAttribute = true)
     private String name;
     private ExpList expList;
 

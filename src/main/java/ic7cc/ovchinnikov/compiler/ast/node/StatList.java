@@ -1,19 +1,23 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
+@Getter
+@Setter
 public class StatList extends ASTNode {
 
-    private final List<Stat> items;
+    private final List<Stat> statList;
+    @JsonIgnore
     private ASTNode parent;
 
     public StatList() {
-        items = new LinkedList<>();
+        statList = new LinkedList<>();
     }
 
     public StatList(Stat anItem) {
@@ -63,49 +67,54 @@ public class StatList extends ASTNode {
         if (anItem == null)
             return this;
         anItem.setParent(this);
-        items.add(anItem);
+        statList.add(anItem);
         return this;
     }
 
     public List<Stat> elements() {
-        return Collections.unmodifiableList(items);
+        return Collections.unmodifiableList(statList);
     }
 
     public Stat getStat(int index) {
-        return items.get(index);
+        return statList.get(index);
     }
 
     public void setStat(int index, Stat item) {
-        item.setParent(this);
-        items.set(index, item);
+        if (item != null) {
+            item.setParent(this);
+            statList.set(index, item);
+        }
     }
 
     public void addStat(int index, Stat item) {
-        item.setParent(this);
-        items.add(index, item);
+        if (item != null) {
+            item.setParent(this);
+            statList.add(index, item);
+        }
     }
 
     public void removeStat(int index) {
-        items.remove(index);
+        statList.remove(index);
     }
 
     public int size() {
-        return items.size();
+        return statList.size();
     }
 
+    @JsonIgnore
     public boolean isEmpty() {
-        return items.isEmpty();
+        return statList.isEmpty();
     }
 
     public boolean contains(Stat item) {
-        for (Stat stat : items)
+        for (Stat stat : statList)
             if (item.equals(stat))
                 return true;
         return false;
     }
 
     public int indexOf(Stat item) {
-        return items.indexOf(item);
+        return statList.indexOf(item);
     }
-
+    
 }

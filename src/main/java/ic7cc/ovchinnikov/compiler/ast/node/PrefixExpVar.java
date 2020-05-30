@@ -1,10 +1,14 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class PrefixExpVar extends PrefixExp {
 
-    public Var var;
+    private Var var;
 
     public PrefixExpVar(Var var) {
         this.var = var;

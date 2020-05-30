@@ -1,13 +1,15 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
 
 public class NumeralExp extends Exp {
 
-    public double number;
+    @JacksonXmlProperty(isAttribute = true)
+    public Number number;
 
-    public NumeralExp(double number) {
+    public NumeralExp(Number number) {
         this.number = number;
     }
 

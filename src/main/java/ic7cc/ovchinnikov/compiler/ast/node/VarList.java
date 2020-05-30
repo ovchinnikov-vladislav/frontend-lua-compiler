@@ -1,19 +1,25 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+@Getter
+@Setter
 public class VarList extends ASTNode {
 
-    private final List<Var> items;
+    private final List<Var> varList;
+    @JsonIgnore
     private ASTNode parent;
 
     public VarList() {
-        items = new LinkedList<>();
+        varList = new LinkedList<>();
     }
 
     public VarList(Var anItem) {
@@ -25,49 +31,50 @@ public class VarList extends ASTNode {
         if (anItem == null)
             return this;
         anItem.setParent(this);
-        items.add(anItem);
+        varList.add(anItem);
         return this;
     }
 
     public List<Var> elements() {
-        return Collections.unmodifiableList(items);
+        return Collections.unmodifiableList(varList);
     }
 
     public Var getVar(int index) {
-        return items.get(index);
+        return varList.get(index);
     }
 
     public void setVar(int index, Var item) {
         item.setParent(this);
-        items.set(index, item);
+        varList.set(index, item);
     }
 
     public void addVar(int index, Var item) {
         item.setParent(this);
-        items.add(index, item);
+        varList.add(index, item);
     }
 
     public void removeVar(int index) {
-        items.remove(index);
+        varList.remove(index);
     }
 
     public int size() {
-        return items.size();
+        return varList.size();
     }
 
+    @JsonIgnore
     public boolean isEmpty() {
-        return items.isEmpty();
+        return varList.isEmpty();
     }
 
     public boolean contains(Var item) {
-        for (Var var : items)
+        for (Var var : varList)
             if (item.equals(var))
                 return true;
         return false;
     }
 
     public int indexOf(Var item) {
-        return items.indexOf(item);
+        return varList.indexOf(item);
     }
 
     @Override

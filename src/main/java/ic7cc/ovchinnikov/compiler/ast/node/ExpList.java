@@ -1,19 +1,26 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+@Getter
+@Setter
 public class ExpList extends ASTNode {
 
-    private final List<Exp> items;
+    private final List<Exp> expList;
+
+    @JsonIgnore
     private ASTNode parent;
 
     public ExpList() {
-        items = new LinkedList<>();
+        expList = new LinkedList<>();
     }
 
     public ExpList(Exp anItem) {
@@ -63,49 +70,50 @@ public class ExpList extends ASTNode {
         if (anItem == null)
             return this;
         anItem.setParent(this);
-        items.add(anItem);
+        expList.add(anItem);
         return this;
     }
 
     public List<Exp> elements() {
-        return Collections.unmodifiableList(items);
+        return Collections.unmodifiableList(expList);
     }
 
     public Exp getExp(int index) {
-        return items.get(index);
+        return expList.get(index);
     }
 
     public void setExp(int index, Exp item) {
         item.setParent(this);
-        items.set(index, item);
+        expList.set(index, item);
     }
 
     public void addExp(int index, Exp item) {
         item.setParent(this);
-        items.add(index, item);
+        expList.add(index, item);
     }
 
     public void removeExp(int index) {
-        items.remove(index);
+        expList.remove(index);
     }
 
     public int size() {
-        return items.size();
+        return expList.size();
     }
 
+    @JsonIgnore
     public boolean isEmpty() {
-        return items.isEmpty();
+        return expList.isEmpty();
     }
 
     public boolean contains(Exp item) {
-        for (Exp exp : items)
+        for (Exp exp : expList)
             if (item.equals(exp))
                 return true;
         return false;
     }
 
     public int indexOf(Exp item) {
-        return items.indexOf(item);
+        return expList.indexOf(item);
     }
 
 }

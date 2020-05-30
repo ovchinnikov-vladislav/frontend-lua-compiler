@@ -87,7 +87,6 @@ non terminal Operation unop;
 non terminal ParList parlist;
 non terminal FieldList fieldlist;
 non terminal Field field;
-non terminal fieldadditlist;
 non terminal fieldsep;
 non terminal empty;
 
@@ -270,29 +269,36 @@ prefixexp ::=  var:v                            {:
                                                 :}
              ;
 
-functioncall ::=  prefixexp args
-                | prefixexp COLON NAME args
+functioncall ::=  prefixexp:pexp args:ar                  {:  RESULT = new FuncCall(pexp, ar); :}
+                | prefixexp:pexp COLON NAME:name args:ar  {:  RESULT = new FuncCallSelf(pexp, name, ar); :}
                 ;
 
-args ::=  LPAREN explist RPAREN
-        | LPAREN RPAREN
-        | tableconstructor
-        | LITERAL_STRING
+args ::=  LPAREN explist:el RPAREN                        {:  RESULT = el; :}
+        | LPAREN RPAREN                                   {:  RESULT = new ExpList(null); :}
+        | tableconstructor:tc                             {:  RESULT = new ExpList(new TableConstructorExp(tc)); :}
+        | LITERAL_STRING:s                                {:  RESULT = new ExpList(new LiteralStringExp(s)); :}
         ;
 
-funcbody ::=  LPAREN parlist RPAREN block END
-            | LPAREN RPAREN block END
+funcbody ::=  LPAREN parlist:pl RPAREN block:b END        {:  RESULT = new FuncBody(pl, b); :}
+            | LPAREN RPAREN block:b END                   {:  RESULT = new FuncBody(null, b); :}
             ;
 
-parlist ::=  namelist COMMA PARAMS
-           | namelist
-           | PARAMS;
+parlist ::=  namelist:nl COMMA PARAMS                     {:  RESULT = new ParList(nl, true);  :}
+           | namelist:nl                                  {:  RESULT = new ParList(nl, false); :}
+           | PARAMS                                       {:
+                                                              NameList nl = new NameList();
+                                                              nl.setStart(LocationFactory.from(null));
+                                                              nl.setEnd(LocationFactory.from(null));
+                                                              RESULT = new ParList(nl, true);
+                                                          :}
+           ;
 
-tableconstructor ::=  LBRACE fieldlist RBRACE
-                    | LBRACE RBRACE;
+tableconstructor ::=  LBRACE fieldlist:fl RBRACE          {:  RESULT = new TableConstructor(fl); :}
+                    | LBRACE RBRACE                      {:  RESULT = new TableConstructor(new FieldList()); :}
+                    ;
 
-fieldlist ::=  field fieldadditlist fieldsep
-             | field fieldadditlist
+fieldlist ::=  field fieldsep fieldlist
+             | field
              ;
 
 field ::=  LBRACKET exp RBRACKET ASSIGNMENT exp
@@ -303,10 +309,6 @@ field ::=  LBRACKET exp RBRACKET ASSIGNMENT exp
 fieldsep ::=  COMMA
             | SEMICOLON
             ;
-
-fieldadditlist ::=  fieldsep field fieldadditlist
-                  | empty
-                  ;
 
 binop ::=  ADD
 		 | SUB

@@ -1,0 +1,16 @@
+<Block>
+    <StatList>
+        <Local>
+            <NameList>
+                <Name name="a"/>
+                <Name name="b"/>
+                <Name name="c"/>
+            </NameList>
+            <ExpList>
+                <LiteralStringExp string="2"/>
+                <LiteralStringExp string=" 3e0 "/>
+                <LiteralStringExp string=" 10  "/>
+            </ExpList>
+        </Local>
+    </StatList>
+</Block>

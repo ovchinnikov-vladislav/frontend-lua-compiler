@@ -35,8 +35,8 @@ public class StatListSerializer extends StdSerializer<StatList> {
                 gen.writeObjectField("ForInBlock", v);
             else if (v instanceof FuncCallStatement)
                 gen.writeObjectField("FuncCallStatement", v);
-            else if (v instanceof LocalDecl)
-                gen.writeObjectField("LocalDecl", v);
+            else if (v instanceof Local)
+                gen.writeObjectField("Local", v);
             else if (v instanceof LocalFunctionDef)
                 gen.writeObjectField("LocalFunctionDef", v);
             else if (v instanceof RepeatUntil)

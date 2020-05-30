@@ -146,8 +146,8 @@ public abstract class VisitorAdapterGeneric extends VisitorAdaptor {
     }
 
     @Override
-    public void visit(LocalDecl localDecl) {
-        visitGeneric(localDecl);
+    public void visit(Local local) {
+        visitGeneric(local);
     }
 
     @Override

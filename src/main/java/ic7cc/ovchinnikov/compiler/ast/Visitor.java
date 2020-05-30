@@ -30,7 +30,7 @@ public interface Visitor {
      void visit(ForBlock forBlock);
      void visit(ForInBlock forInBlock);
      void visit(LocalFunctionDef localFunctionDef);
-     void visit(LocalDecl localDecl);
+     void visit(Local local);
      void visit(Exp exp);
      void visit(Nil nil);
      void visit(BooleanExp booleanExp);

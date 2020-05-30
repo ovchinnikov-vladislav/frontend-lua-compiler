@@ -5,6 +5,7 @@ import ic7cc.ovchinnikov.compiler.parser.Token;
 import static ic7cc.ovchinnikov.compiler.parser.Token.*;
 import java_cup.runtime.*;
 import java.util.regex.Pattern;
+import java.text.*;
 
 %%
 
@@ -151,7 +152,6 @@ CommentContent = (!("]""="*"]"))*
       "or"                    { return symbol(OR); }
 
   // Унарные операторы (исключение, нет минуса - он входит и в бинарные, и в унарные операторы
- //     "~"                     { return symbol(BNOT); }
       "not"                   { return symbol(NOT); }
       "#"                     { return symbol(LENGTH); } // длина строки
 
@@ -166,7 +166,14 @@ CommentContent = (!("]""="*"]"))*
       {Name}                  { return symbol(NAME, yytext()); }
 
   // Числовой литерал
-      {Number}                { return symbol(NUMERAL, new Double(Double.parseDouble(yytext())));}
+      {Number}                {
+                                if (yytext().matches("\\d+\\.\\d+"))
+                                   return symbol(NUMERAL, Double.parseDouble(yytext()));
+                                else if (yytext().matches("\\d"))
+                                   return symbol(NUMERAL, Long.parseLong(yytext()));
+                                else
+                                   throw new RuntimeException("Expected Numeral");
+                              }
 
   // Пробелы
       {WhiteSpace}            { }

@@ -1,1 +1,35 @@
-<Block><StatList><Assignment><VarList><Variable var="a"/></VarList><ExpList><BinaryOperation operation="MUL"><NumeralExp number="5.0"/><BinaryOperation operation="ADD"><NumeralExp number="4.0"/><NumeralExp number="3.0"/></BinaryOperation></BinaryOperation></ExpList></Assignment></StatList></Block>
+<Block>
+    <StatList>
+        <Assignment>
+            <VarList>
+                <Variable var="a"/>
+            </VarList>
+            <ExpList>
+                <BinaryOperation operation="ADD">
+                    <BinaryOperation operation="DIV">
+                        <BinaryOperation operation="MUL">
+                            <PreExp>
+                                <PrefixExpExp>
+                                    <exp operation="ADD">
+                                        <NumeralExp number="4" type="INTEGER"/>
+                                        <NumeralExp number="3" type="INTEGER"/>
+                                    </exp>
+                                </PrefixExpExp>
+                            </PreExp>
+                            <PreExp>
+                                <PrefixExpExp>
+                                    <exp operation="ADD">
+                                        <NumeralExp number="5" type="INTEGER"/>
+                                        <NumeralExp number="3" type="INTEGER"/>
+                                    </exp>
+                                </PrefixExpExp>
+                            </PreExp>
+                        </BinaryOperation>
+                        <NumeralExp number="3" type="INTEGER"/>
+                    </BinaryOperation>
+                    <NumeralExp number="1.0" type="DOUBLE"/>
+                </BinaryOperation>
+            </ExpList>
+        </Assignment>
+    </StatList>
+</Block>

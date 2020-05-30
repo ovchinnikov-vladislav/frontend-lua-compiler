@@ -1,13 +1,16 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 
-public class LocalDecl extends Stat {
+public class Local extends Stat {
 
+    @JacksonXmlProperty(localName = "NameList")
     public NameList nameList;
+    @JacksonXmlProperty(localName = "ExpList")
     public ExpList expList;
 
-    public LocalDecl(NameList nameList, ExpList expList) {
+    public Local(NameList nameList, ExpList expList) {
         this.nameList = nameList;
         if (nameList != null)
             nameList.setParent(this);

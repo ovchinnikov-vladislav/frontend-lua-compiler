@@ -57,10 +57,10 @@ terminal NIL, FALSE, TRUE, PARAMS;                          // зарезерв�
 terminal ADD, MUL, SUB, DIV, FDIV, MOD, POW, CONCAT;        // арифметические операторы и оператор конкатенации
 terminal EQUAL, LESSEQ, NOTEQ, LESS, MORE, MOREEQ, AND, OR; // операторы отношения
 terminal BAND, BOR, BRIGHT, BLEFT, BXOR;                    // побитовые операторы
-terminal NOT, LENGTH;                                       // унарные операторы
+terminal NOT, LENGTH, UNMINUS, BNOT;                        // унарные операторы
 terminal LPAREN, RPAREN, LBRACKET, RBRACKET, LBRACE, RBRACE;// скобки
 terminal SEMICOLON, COMMA;                                  // точка с запятой и запятая
-terminal Double NUMERAL;                                    // Числовой литерал
+terminal Number NUMERAL;                                    // Числовой литерал
 terminal String LITERAL_STRING;                             // Строковый литерал
 terminal String NAME;                                       // Идентификаторы
 
@@ -101,8 +101,8 @@ precedence left LESSEQ, LESS, MORE, MOREEQ;
 precedence left BRIGHT, BLEFT;
 precedence left ADD, SUB, CONCAT;
 precedence left MUL, DIV, MOD;
-precedence right POW, UMINUS, NOT, BNOT;
-precedence left LENGTH;
+precedence right POW;
+precedence right UNMINUS, NOT, BNOT, LENGTH;
 
 /* Продукции грамматики */
 
@@ -181,7 +181,7 @@ stat ::=  SEMICOLON                                                 {:
                                                                         RESULT = asm;
                                                                     :}
         | LOCAL FUNCTION NAME:name funcbody:fb                      {:  RESULT = new LocalFunctionDef(name, fb.getArgs(), fb.getVarArgs(), fb.getBlock()); :}
-        | LOCAL namelist:nl assignexplist:el                        {:  RESULT = new LocalDecl(nl, el); :}
+        | LOCAL namelist:nl assignexplist:el                        {:  RESULT = new Local(nl, el); :}
         ;
 
 elselist ::=  ELSEIF exp:e THEN block:b elselist:elsel     {:  RESULT = new Block(new StatList(new IfThenElseBlock(e, b, elsel)), null);   :}
@@ -190,7 +190,7 @@ elselist ::=  ELSEIF exp:e THEN block:b elselist:elsel     {:  RESULT = new Bloc
             ;
 
 comforexp ::=  COMMA exp:e                                 {:  RESULT = e;  :}
-             | empty                                       {:  RESULT = new NumeralExp(1.0); :}
+             | empty                                       {:  RESULT = new NumeralExp(1.0, NumeralExp.Type.DOUBLE); :}
              ;
 
 assignexplist ::=  ASSIGNMENT explist:el                   {:  RESULT = el; :}
@@ -244,7 +244,16 @@ explist ::=  exp:e                          {:  RESULT = new ExpList(e); :}
 exp	::=	 NIL                                {:  RESULT = new Nil(); :}
 	   | FALSE                              {:  RESULT = new BooleanExp(false); :}
 	   | TRUE                               {:  RESULT = new BooleanExp(true);  :}
-	   | NUMERAL:num                        {:  RESULT = new NumeralExp(num);    :}
+	   | NUMERAL:num                        {:
+	                                            NumeralExp.Type type = null;
+
+                                                if (num instanceof Double)
+                                                    type = NumeralExp.Type.DOUBLE;
+	                                            else if (num instanceof Integer || num instanceof Long)
+	                                                type = NumeralExp.Type.INTEGER;
+
+	                                            RESULT = new NumeralExp(num, type);
+	                                        :}
 	   | LITERAL_STRING:s                   {:  RESULT = new LiteralStringExp(s); :}
 	   | PARAMS                             {:  RESULT = new Dots();   :}
 	   | FUNCTION funcbody:fb               {:  RESULT = new FunctionExp(fb.getArgs(), fb.getVarArgs(), fb.getBlock()); :}
@@ -271,10 +280,10 @@ exp	::=	 NIL                                {:  RESULT = new Nil(); :}
        | exp:e1 BRIGHT exp:e2               {:  RESULT = new Binop(e1, Operation.BRIGHT, e2); :}
        | exp:e1 BLEFT exp:e2                {:  RESULT = new Binop(e1, Operation.BLEFT, e2); :}
        | exp:e1 BXOR exp:e2                 {:  RESULT = new Binop(e1, Operation.BXOR, e2); :}
-	   | SUB exp:e %prec UNMINUS            {:  RESULT = new Unop(Operation.UNMINUS, e); :}
+	   | SUB exp:e                          {:  RESULT = new Unop(Operation.UNMINUS, e); :} %prec UNMINUS
 	   | NOT exp:e                          {:  RESULT = new Unop(Operation.NOT, e); :}
 	   | LENGTH exp:e                       {:  RESULT = new Unop(Operation.LENGTH, e); :}
-	   | BXOR exp:e %prec BNOT              {:  RESULT = new Unop(Operation.BNOT, e); :}
+	   | BXOR exp:e                         {:  RESULT = new Unop(Operation.BNOT, e); :}    %prec BNOT
 	   ;
 
 prefixexp ::=  var:v                            {:

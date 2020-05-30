@@ -121,7 +121,7 @@ public abstract class VisitorAdaptor implements Visitor {
     }
 
     @Override
-    public void visit(LocalDecl localDecl) {
+    public void visit(Local local) {
 
     }
 

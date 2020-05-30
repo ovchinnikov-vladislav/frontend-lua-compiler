@@ -3,14 +3,21 @@ package ic7cc.ovchinnikov.compiler.ast.node;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class NumeralExp extends Exp {
 
     @JacksonXmlProperty(isAttribute = true)
-    public Number number;
+    private Number number;
+    @JacksonXmlProperty(isAttribute = true)
+    private Type type;
 
-    public NumeralExp(Number number) {
+    public NumeralExp(Number number, Type type) {
         this.number = number;
+        this.type = type;
     }
 
     @Override
@@ -30,5 +37,10 @@ public class NumeralExp extends Exp {
     @Override
     public void traverseBottomUp(Visitor visitor) {
         accept(visitor);
+    }
+
+    public enum Type {
+        INTEGER,
+        DOUBLE
     }
 }

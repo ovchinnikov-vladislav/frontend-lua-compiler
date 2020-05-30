@@ -8,6 +8,7 @@ import java_cup.runtime.*;
 import ic7cc.ovchinnikov.compiler.ast.*;
 import ic7cc.ovchinnikov.compiler.ast.node.*;
 import ic7cc.ovchinnikov.compiler.parser.location.*;
+import ic7cc.ovchinnikov.compiler.parser.grammar.*;
 
 import ic7cc.ovchinnikov.compiler.lexer.Lexer;
 
@@ -60,7 +61,7 @@ terminal NOT, LENGTH;                                       // унарные о
 terminal LPAREN, RPAREN, LBRACKET, RBRACKET, LBRACE, RBRACE;// скобки
 terminal SEMICOLON, COMMA;                                  // точка с запятой и запятая
 terminal NUMERAL, LITERAL_STRING;                           // Числовой и строковый литералы
-terminal NAME;                                              // Идентификаторы
+terminal String NAME;                                       // Идентификаторы
 
  /*Нетерминалы */
 
@@ -76,7 +77,6 @@ non terminal Exp exp, comforexp;
 non terminal NameList namelist;
 non terminal FuncName funcname;
 non terminal FuncBody funcbody;
-non terminal dotnamelist;
 non terminal varadditlist;
 non terminal Var var;
 non terminal nameadditlist;
@@ -129,8 +129,8 @@ block ::=  statlist:sl retstat:rs   {:
                                     :}
          | empty                    {:
 										StatList statlist = new StatList();
-										statlist.setStart(LocationFactory.fromSymbol(null));
-										statlist.setEnd(LocationFactory.fromSymbol(null));
+										statlist.setStart(LocationFactory.from(null));
+										statlist.setEnd(LocationFactory.from(null));
 										System.out.println("Empty block");
 										RESULT = new Block(statlist, null);
                                     :}
@@ -169,11 +169,23 @@ stat ::=  SEMICOLON                                                 {:
         | WHILE exp:e DO block:b END                                {:  RESULT = new WhileBlock(e, b); :}
         | REPEAT block:b UNTIL exp:e                                {:  RESULT = new RepeatUntil(b, e); :}
         | IF exp:e THEN block:b elselist:elsel END                  {:  RESULT = new IfThenElseBlock(e, b, elsel); :}
-        | FOR NAME ASSIGNMENT exp COMMA exp comforexp DO block END
-        | FOR namelist IN explist DO block END
-        | FUNCTION funcname funcbody
-        | LOCAL FUNCTION NAME funcbody
-        | LOCAL namelist assignexplist
+        | FOR NAME:name ASSIGNMENT exp:e1 COMMA exp:e2 comforexp:e3 DO block:b END {:   RESULT = new ForBlock(name, e1, e2, e3, b);  :}
+        | FOR namelist:nl IN explist:el DO block:b END              {:  RESULT = new ForInBlock(nl, el, b);  :}
+        | FUNCTION funcname:fn funcbody:fb                          {:
+                                                                        VarList vl = FuncSyntactic.funcNameToVarList(fn);
+                                                                        vl.setStart(fn.getStart());
+                                                                        vl.setEnd(fn.getEnd());
+
+                                                                        ExpList args = FuncSyntactic.methodDefinitionToExpression(fn, fb);
+                                                                        args.setStart(fb.getStart());
+                                                                        args.setEnd(fb.getEnd());
+
+                                                                        Assignment asm = new Assignment(vl, args);
+
+                                                                        RESULT = asm;
+                                                                    :}
+        | LOCAL FUNCTION NAME:name funcbody:fb                      {:  RESULT = new LocalFunctionDef(name, fb.getArgs(), fb.getVarArgs(), fb.getBlock()); :}
+        | LOCAL namelist:nl assignexplist:el                        {:  RESULT = new LocalDecl(nl, el); :}
         ;
 
 elselist ::=  ELSEIF exp THEN block elselist
@@ -189,19 +201,16 @@ assignexplist ::=  ASSIGNMENT explist
                  | empty
                  ;
 
-retstat ::=  RETURN explist SEMICOLON
-           | RETURN explist
-           | RETURN SEMICOLON
-           | RETURN
+retstat ::=  RETURN explist:el SEMICOLON         {:  RESULT = new Return(el); :}
+           | RETURN explist:el                   {:  RESULT = new Return(el); :}
+           | RETURN SEMICOLON                    {:  RESULT = new Return(null); :}
+           | RETURN                              {:  RESULT = new Return(null); :}
            ;
 
-funcname ::=  NAME dotnamelist COLON NAME
-            | NAME dotnamelist
+funcname ::=  NAME
+            | NAME COLON NAME
+            | NAME DOT funcname
             ;
-
-dotnamelist ::=  DOT NAME dotnamelist
-               | empty
-               ;
 
 varlist ::= var varadditlist;
 

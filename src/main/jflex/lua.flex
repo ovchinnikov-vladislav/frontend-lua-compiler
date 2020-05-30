@@ -163,7 +163,7 @@ CommentContent = (!("]""="*"]"))*
       "="                     { return symbol(ASSIGNMENT); }
 
   // Идентификатор
-      {Name}                  { return symbol(ID, yytext()); }
+      {Name}                  { return symbol(NAME, yytext()); }
 
   // Числовой литерал
       {Number}                { return symbol(NUMERAL, new Double(Double.parseDouble(yytext())));}

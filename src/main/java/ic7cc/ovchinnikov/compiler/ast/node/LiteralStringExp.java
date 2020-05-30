@@ -5,33 +5,28 @@ import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
 
 public class LiteralStringExp extends Exp {
 
-    @Override
-    public ASTNode getParent() {
-        return null;
-    }
+    public String string;
 
-    @Override
-    public void setParent(ASTNode parent) {
-
+    public LiteralStringExp(String string) {
+        this.string = string;
     }
 
     @Override
     public void accept(Visitor visitor) {
-
+        visitor.visit(this);
     }
 
     @Override
     public void childrenAccept(Visitor visitor) {
-
-    }
-
-    @Override
-    public void traverseBottomUp(Visitor visitor) {
-
     }
 
     @Override
     public void traverseTopDown(Visitor visitor) {
+        accept(visitor);
+    }
 
+    @Override
+    public void traverseBottomUp(Visitor visitor) {
+        accept(visitor);
     }
 }

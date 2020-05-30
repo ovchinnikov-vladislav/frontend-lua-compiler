@@ -1,18 +1,14 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public class FuncCallStatement extends Stat {
+public class Return extends RetStat {
 
-    private FunctionCall call;
+    public ExpList expList;
 
-    public FuncCallStatement(FunctionCall call) {
-        this.call = call;
-        if (call != null) call.setParent(this);
+    public Return(ExpList expList) {
+        this.expList = expList;
+        if (expList != null) expList.setParent(this);
     }
 
     @Override
@@ -22,22 +18,22 @@ public class FuncCallStatement extends Stat {
 
     @Override
     public void childrenAccept(Visitor visitor) {
-        if (call != null)
-            call.accept(visitor);
+        if (expList != null)
+            expList.accept(visitor);
     }
 
     @Override
     public void traverseTopDown(Visitor visitor) {
         accept(visitor);
 
-        if (call != null)
-            call.traverseTopDown(visitor);
+        if (expList != null)
+            expList.traverseTopDown(visitor);
     }
 
     @Override
     public void traverseBottomUp(Visitor visitor) {
-        if (call != null)
-            call.traverseBottomUp(visitor);
+        if (expList != null)
+            expList.traverseBottomUp(visitor);
 
         accept(visitor);
     }

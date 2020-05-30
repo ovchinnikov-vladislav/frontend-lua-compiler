@@ -1,12 +1,15 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
-import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class Assignment extends Stat {
 
-    public VarList varList;
-    public ExpList expList;
+    private VarList varList;
+    private ExpList expList;
 
     public Assignment(VarList varList, ExpList expList) {
         this.varList = varList;

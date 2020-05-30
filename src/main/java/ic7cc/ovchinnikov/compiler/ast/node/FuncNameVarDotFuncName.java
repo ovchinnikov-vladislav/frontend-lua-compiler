@@ -1,11 +1,15 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class FuncNameVarDotFuncName extends FuncName {
 
-    public Name name;
-    public FuncName funcNameList;
+    private Name name;
+    private FuncName funcNameList;
 
     public FuncNameVarDotFuncName (Name name, FuncName funcNameList) {
         this.name = name;

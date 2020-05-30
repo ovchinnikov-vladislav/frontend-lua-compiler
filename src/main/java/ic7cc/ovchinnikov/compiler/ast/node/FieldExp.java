@@ -1,10 +1,14 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class FieldExp extends Field {
 
-    public Exp fieldExp;
+    private Exp fieldExp;
 
     public FieldExp(Exp fieldExp) {
         this.fieldExp = fieldExp;

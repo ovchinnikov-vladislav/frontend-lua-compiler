@@ -4,9 +4,6 @@ import ic7cc.ovchinnikov.compiler.ast.Visitor;
 
 public class Dots extends Exp {
 
-    public Dots () {
-    }
-
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);

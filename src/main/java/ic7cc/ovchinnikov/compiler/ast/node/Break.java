@@ -1,15 +1,8 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
-import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
 
-public class NumeralExp extends Exp {
-
-    public double number;
-
-    public NumeralExp(double number) {
-        this.number = number;
-    }
+public class Break extends Stat {
 
     @Override
     public void accept(Visitor visitor) {

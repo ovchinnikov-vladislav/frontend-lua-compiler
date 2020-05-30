@@ -1,10 +1,14 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class DoBlock extends Stat {
 
-    public Block block;
+    private Block block;
 
     public DoBlock(Block block) {
         this.block = block;

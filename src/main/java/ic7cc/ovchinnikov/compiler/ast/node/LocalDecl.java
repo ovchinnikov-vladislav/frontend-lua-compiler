@@ -1,20 +1,16 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public class FuncCall extends FunctionCall {
+public class LocalDecl extends Stat {
 
-    private PrefixExp preExp;
-    private ExpList expList;
+    public NameList nameList;
+    public ExpList expList;
 
-    public FuncCall(PrefixExp preExp, ExpList expList) {
-        this.preExp = preExp;
-        if (preExp != null)
-            preExp.setParent(this);
+    public LocalDecl(NameList nameList, ExpList expList) {
+        this.nameList = nameList;
+        if (nameList != null)
+            nameList.setParent(this);
 
         this.expList = expList;
         if (expList != null)
@@ -28,8 +24,8 @@ public class FuncCall extends FunctionCall {
 
     @Override
     public void childrenAccept(Visitor visitor) {
-        if (preExp != null)
-            preExp.accept(visitor);
+        if (nameList != null)
+            nameList.accept(visitor);
 
         if (expList != null)
             expList.accept(visitor);
@@ -38,9 +34,8 @@ public class FuncCall extends FunctionCall {
     @Override
     public void traverseTopDown(Visitor visitor) {
         accept(visitor);
-
-        if (preExp != null)
-            preExp.traverseTopDown(visitor);
+        if (nameList != null)
+            nameList.traverseTopDown(visitor);
 
         if (expList != null)
             expList.traverseTopDown(visitor);
@@ -48,8 +43,8 @@ public class FuncCall extends FunctionCall {
 
     @Override
     public void traverseBottomUp(Visitor visitor) {
-        if (preExp != null)
-            preExp.traverseBottomUp(visitor);
+        if (nameList != null)
+            nameList.traverseBottomUp(visitor);
 
         if (expList != null)
             expList.traverseBottomUp(visitor);

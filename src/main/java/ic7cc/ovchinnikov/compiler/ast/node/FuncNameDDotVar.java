@@ -1,11 +1,15 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class FuncNameDDotVar extends FuncName {
 
-    public Name selfFuncName;
-    public Name funcName;
+    private Name selfFuncName;
+    private Name funcName;
 
     public FuncNameDDotVar(Name selfFuncName, Name funcName) {
         this.selfFuncName = selfFuncName;

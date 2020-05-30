@@ -1,14 +1,19 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class FuncNameVar extends FuncName {
 
-    public Name name;
+    private Name name;
 
     public FuncNameVar(Name name) {
         this.name = name;
-        if (name != null) name.setParent(this);
+        if (name != null)
+            name.setParent(this);
     }
 
     @Override

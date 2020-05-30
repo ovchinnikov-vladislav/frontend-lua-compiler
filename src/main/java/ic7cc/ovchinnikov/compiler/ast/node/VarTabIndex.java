@@ -6,19 +6,19 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FuncCall extends FunctionCall {
+public class VarTabIndex extends Var {
 
     private PrefixExp preExp;
-    private ExpList expList;
+    private Exp indexExp;
 
-    public FuncCall(PrefixExp preExp, ExpList expList) {
+    public VarTabIndex (PrefixExp preExp, Exp indexExp) {
         this.preExp = preExp;
         if (preExp != null)
             preExp.setParent(this);
 
-        this.expList = expList;
-        if (expList != null)
-            expList.setParent(this);
+        this.indexExp = indexExp;
+        if (indexExp != null)
+            indexExp.setParent(this);
     }
 
     @Override
@@ -31,8 +31,8 @@ public class FuncCall extends FunctionCall {
         if (preExp != null)
             preExp.accept(visitor);
 
-        if (expList != null)
-            expList.accept(visitor);
+        if (indexExp != null)
+            indexExp.accept(visitor);
     }
 
     @Override
@@ -42,8 +42,8 @@ public class FuncCall extends FunctionCall {
         if (preExp != null)
             preExp.traverseTopDown(visitor);
 
-        if (expList != null)
-            expList.traverseTopDown(visitor);
+        if (indexExp != null)
+            indexExp.traverseTopDown(visitor);
     }
 
     @Override
@@ -51,8 +51,8 @@ public class FuncCall extends FunctionCall {
         if (preExp != null)
             preExp.traverseBottomUp(visitor);
 
-        if (expList != null)
-            expList.traverseBottomUp(visitor);
+        if (indexExp != null)
+            indexExp.traverseBottomUp(visitor);
 
         accept(visitor);
     }

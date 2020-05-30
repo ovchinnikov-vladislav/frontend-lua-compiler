@@ -1,11 +1,15 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class FieldLeftRightExp extends Field {
 
-    public Exp leftExp;
-    public Exp rightExp;
+    private Exp leftExp;
+    private Exp rightExp;
 
     public FieldLeftRightExp(Exp leftExp, Exp rightExp) {
         this.leftExp = leftExp;

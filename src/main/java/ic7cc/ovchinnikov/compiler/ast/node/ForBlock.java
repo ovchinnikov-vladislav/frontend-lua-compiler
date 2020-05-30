@@ -1,14 +1,18 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class ForBlock extends Stat {
 
-    public String ident;
-    public Exp start;
-    public Exp end;
-    public Exp step;
-    public Block block;
+    private String ident;
+    private Exp start;
+    private Exp end;
+    private Exp step;
+    private Block block;
 
     public ForBlock(String ident, Exp start, Exp end, Exp step, Block block) {
         this.ident = ident;

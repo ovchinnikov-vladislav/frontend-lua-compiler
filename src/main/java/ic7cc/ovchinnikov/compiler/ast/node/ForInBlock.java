@@ -1,12 +1,16 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class ForInBlock extends Stat {
 
-    public NameList nameList;
-    public ExpList expList;
-    public Block block;
+    private NameList nameList;
+    private ExpList expList;
+    private Block block;
 
     public ForInBlock(NameList nameList, ExpList expList, Block block) {
         this.nameList = nameList;

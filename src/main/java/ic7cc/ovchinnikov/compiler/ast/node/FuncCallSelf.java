@@ -1,12 +1,16 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class FuncCallSelf extends FunctionCall {
 
-    public PrefixExp preExp;
-    public String name;
-    public ExpList expList;
+    private PrefixExp preExp;
+    private String name;
+    private ExpList expList;
 
     public FuncCallSelf(PrefixExp preExp, String name, ExpList expList) {
         this.preExp = preExp;
@@ -15,6 +19,7 @@ public class FuncCallSelf extends FunctionCall {
             preExp.setParent(this);
 
         this.name = name;
+
         this.expList = expList;
         if (expList != null)
             expList.setParent(this);

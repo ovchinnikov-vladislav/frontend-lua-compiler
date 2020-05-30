@@ -1,18 +1,16 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public class FuncCallStatement extends Stat {
+public class PrefixExpFuncCall extends PrefixExp {
 
-    private FunctionCall call;
+    public FunctionCall call;
 
-    public FuncCallStatement(FunctionCall call) {
+    public PrefixExpFuncCall (FunctionCall call) {
         this.call = call;
-        if (call != null) call.setParent(this);
+
+        if (call != null)
+            call.setParent(this);
     }
 
     @Override

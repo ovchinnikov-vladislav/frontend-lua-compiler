@@ -2,12 +2,16 @@ package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Operation;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class Binop extends Exp {
 
-    public Exp leftExp;
-    public Operation op;
-    public Exp rightExp;
+    private Exp leftExp;
+    private Operation op;
+    private Exp rightExp;
 
     public Binop(Exp leftExp, Operation op, Exp rightExp) {
         this.leftExp = leftExp;

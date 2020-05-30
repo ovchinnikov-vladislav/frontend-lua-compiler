@@ -11,23 +11,38 @@ import ic7cc.ovchinnikov.compiler.parser.location.*;
 
 import ic7cc.ovchinnikov.compiler.lexer.Lexer;
 
+scan with {: return lexer.next_token(); :};
 
 parser code {:
+  public boolean syntaxErrors;
+  DefaultProductionRuleBroadcaster productionRuleBroadcaster;
+  Lexer lexer;
+
+  public Parser(Lexer lex) {
+    super(lex);
+    productionRuleBroadcaster = new DefaultProductionRuleBroadcaster();
+
+    symbolFactory = lex.getSymbolFactory();
+
+    lexer = lex;
+
+  }
+
+  public int line, column;
+
   public void report_error(String message, Object info) {
-      StringBuilder m = new StringBuilder("Error ");
+    syntaxErrors = true;
 
-      if (info instanceof java_cup.runtime.Symbol)
-        m.append( "("+info.toString()+")" );
+    if (!(info instanceof Symbol) ) return;
 
-      m.append(" : "+message);
+    Symbol symbol = (Symbol) info;
+    line = symbol.left;
+    column = symbol.right;
 
-      System.out.println(m);
-    }
+    if (symbol.left < 0 || symbol.right < 0) return;
 
-    public void report_fatal_error(String message, Object info) {
-      report_error(message, info);
-
-    }
+    System.out.println(message + " at line " + symbol.left + ", column " + symbol.right);
+  }
 :};
 
 /* Терминалы (токены, которые будут прочитаны лексером). */
@@ -49,7 +64,7 @@ terminal ID;                                                // Идентифи�
 
  /*Нетерминалы */
 
-non terminal Block block;
+non terminal Block block, elselist;
 non terminal StatList statlist;
 non terminal RetStat retstat;
 non terminal Stat stat;
@@ -59,7 +74,6 @@ non terminal ExpList explist;
 non terminal FunctionCall functioncall;
 non terminal Name;
 non terminal Exp exp;
-non terminal elseiflist;
 non terminal NameList namelist;
 non terminal FuncName funcname;
 non terminal funcbody;
@@ -132,8 +146,7 @@ stat ::=  SEMICOLON
         | DO block END
         | WHILE exp DO block END
         | REPEAT block UNTIL exp
-        | IF exp THEN block elseiflist END
-        | IF exp THEN block elseiflist ELSE block END
+        | IF exp THEN block elselist END
         | FOR Name ASSIGNMENT exp COMMA exp DO block END
         | FOR Name ASSIGNMENT exp COMMA exp COMMA exp DO block END
         | FOR namelist IN explist DO block END
@@ -143,8 +156,9 @@ stat ::=  SEMICOLON
         | LOCAL namelist ASSIGNMENT explist
         ;
 
-elseiflist ::=  ELSEIF exp THEN block elseiflist
-              | empty
+elselist ::=  ELSEIF exp THEN block elselist
+            | ELSE block
+            | empty
               ;
 
 retstat ::=  RETURN explist SEMICOLON

@@ -82,8 +82,6 @@ non terminal Var var;
 non terminal expadditlist;
 non terminal PrefixExp prefixexp;
 non terminal TableConstructor tableconstructor;
-non terminal Operation binop;
-non terminal Operation unop;
 non terminal ParList parlist;
 non terminal FieldList fieldlist;
 non terminal Field field;
@@ -103,7 +101,7 @@ precedence left LESSEQ, LESS, MORE, MOREEQ;
 precedence left BRIGHT, BLEFT;
 precedence left ADD, SUB, CONCAT;
 precedence left MUL, DIV, MOD;
-precedence right POW;
+precedence right POW, UMINUS, NOT, BNOT;
 precedence left LENGTH;
 
 /* Продукции грамматики */
@@ -252,8 +250,31 @@ exp	::=	 NIL                                {:  RESULT = new Nil(); :}
 	   | FUNCTION funcbody:fb               {:  RESULT = new FunctionExp(fb.getArgs(), fb.getVarArgs(), fb.getBlock()); :}
 	   | prefixexp:pe                       {:  RESULT = new PreExp(pe); :}
 	   | tableconstructor:tc                {:  RESULT = new TableConstructorExp(tc); :}
-       | exp:e1 binop:op exp:e2             {:  RESULT = new Binop(e1, op, e2); :}
-	   | unop:op exp:e                      {:  RESULT = new Unop(op, e); :}
+       | exp:e1 ADD exp:e2                  {:  RESULT = new Binop(e1, Operation.ADD, e2); :}
+       | exp:e1 SUB exp:e2                  {:  RESULT = new Binop(e1, Operation.SUB, e2); :}
+       | exp:e1 MUL exp:e2                  {:  RESULT = new Binop(e1, Operation.MUL, e2); :}
+       | exp:e1 DIV exp:e2                  {:  RESULT = new Binop(e1, Operation.DIV, e2); :}
+       | exp:e1 FDIV exp:e2                 {:  RESULT = new Binop(e1, Operation.FDIV, e2); :}
+       | exp:e1 MOD exp:e2                  {:  RESULT = new Binop(e1, Operation.MOD, e2); :}
+       | exp:e1 POW exp:e2                  {:  RESULT = new Binop(e1, Operation.POW, e2); :}
+       | exp:e1 CONCAT exp:e2               {:  RESULT = new Binop(e1, Operation.CONCAT, e2); :}
+       | exp:e1 EQUAL exp:e2                {:  RESULT = new Binop(e1, Operation.EQUAL, e2); :}
+       | exp:e1 LESSEQ exp:e2               {:  RESULT = new Binop(e1, Operation.LESSEQ, e2); :}
+       | exp:e1 NOTEQ exp:e2                {:  RESULT = new Binop(e1, Operation.NOTEQ, e2); :}
+       | exp:e1 LESS exp:e2                 {:  RESULT = new Binop(e1, Operation.LESS, e2); :}
+       | exp:e1 MORE exp:e2                 {:  RESULT = new Binop(e1, Operation.MORE, e2); :}
+       | exp:e1 MOREEQ exp:e2               {:  RESULT = new Binop(e1, Operation.MOREEQ, e2); :}
+       | exp:e1 AND exp:e2                  {:  RESULT = new Binop(e1, Operation.AND, e2); :}
+       | exp:e1 OR exp:e2                   {:  RESULT = new Binop(e1, Operation.OR, e2); :}
+       | exp:e1 BAND exp:e2                 {:  RESULT = new Binop(e1, Operation.BAND, e2); :}
+       | exp:e1 BOR exp:e2                  {:  RESULT = new Binop(e1, Operation.BOR, e2); :}
+       | exp:e1 BRIGHT exp:e2               {:  RESULT = new Binop(e1, Operation.BRIGHT, e2); :}
+       | exp:e1 BLEFT exp:e2                {:  RESULT = new Binop(e1, Operation.BLEFT, e2); :}
+       | exp:e1 BXOR exp:e2                 {:  RESULT = new Binop(e1, Operation.BXOR, e2); :}
+	   | SUB exp:e %prec UNMINUS            {:  RESULT = new Unop(Operation.UNMINUS, e); :}
+	   | NOT exp:e                          {:  RESULT = new Unop(Operation.NOT, e); :}
+	   | LENGTH exp:e                       {:  RESULT = new Unop(Operation.LENGTH, e); :}
+	   | BXOR exp:e %prec BNOT              {:  RESULT = new Unop(Operation.BNOT, e); :}
 	   ;
 
 prefixexp ::=  var:v                            {:
@@ -321,34 +342,5 @@ field ::=  LBRACKET exp:e1 RBRACKET ASSIGNMENT exp:e2     {:  RESULT = new Field
 fieldsep ::=  COMMA
             | SEMICOLON
             ;
-
-binop ::=  ADD      {: RESULT = Operation.ADD; :}
-		 | SUB      {: RESULT = Operation.SUB; :}
-		 | MUL      {: RESULT = Operation.MUL; :}
-		 | DIV      {: RESULT = Operation.DIV; :}
-		 | FDIV     {: RESULT = Operation.FDIV; :}
-		 | MOD      {: RESULT = Operation.MOD; :}
-		 | POW      {: RESULT = Operation.POW; :}
-		 | CONCAT   {: RESULT = Operation.CONCAT; :}
-		 | EQUAL    {: RESULT = Operation.EQUAL; :}
-		 | LESSEQ   {: RESULT = Operation.LESSEQ; :}
-		 | NOTEQ    {: RESULT = Operation.NOTEQ; :}
-		 | LESS     {: RESULT = Operation.LESS; :}
-		 | MORE     {: RESULT = Operation.MORE; :}
-		 | MOREEQ   {: RESULT = Operation.MOREEQ; :}
-		 | AND      {: RESULT = Operation.AND; :}
-		 | OR       {: RESULT = Operation.OR; :}
-		 | BAND     {: RESULT = Operation.BAND; :}
-		 | BOR      {: RESULT = Operation.BOR; :}
-		 | BRIGHT   {: RESULT = Operation.BRIGHT; :}
-		 | BLEFT    {: RESULT = Operation.BLEFT; :}
-		 | BXOR     {: RESULT = Operation.BXOR; :}
-		 ;
-
-unop ::=  SUB       {: RESULT = Operation.UNMINUS; :}
-		| NOT       {: RESULT = Operation.NOT; :}
-		| LENGTH    {: RESULT = Operation.LENGTH; :}
-		| BXOR      {: RESULT = Operation.BNOT; :}
-		;
 
 empty ::= /* empty */;

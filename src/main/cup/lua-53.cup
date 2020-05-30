@@ -60,7 +60,8 @@ terminal BAND, BOR, BRIGHT, BLEFT, BXOR;                    // побитовы�
 terminal NOT, LENGTH;                                       // унарные операторы
 terminal LPAREN, RPAREN, LBRACKET, RBRACKET, LBRACE, RBRACE;// скобки
 terminal SEMICOLON, COMMA;                                  // точка с запятой и запятая
-terminal NUMERAL, LITERAL_STRING;                           // Числовой и строковый литералы
+terminal Double NUMERAL;                                    // Числовой литерал
+terminal String LITERAL_STRING;                             // Строковый литерал
 terminal String NAME;                                       // Идентификаторы
 
  /*Нетерминалы */
@@ -78,7 +79,6 @@ non terminal NameList namelist;
 non terminal FuncName funcname;
 non terminal FuncBody funcbody;
 non terminal Var var;
-non terminal nameadditlist;
 non terminal expadditlist;
 non terminal PrefixExp prefixexp;
 non terminal TableConstructor tableconstructor;
@@ -187,16 +187,16 @@ stat ::=  SEMICOLON                                                 {:
         | LOCAL namelist:nl assignexplist:el                        {:  RESULT = new LocalDecl(nl, el); :}
         ;
 
-elselist ::=  ELSEIF exp THEN block elselist
-            | ELSE block
+elselist ::=  ELSEIF exp:e THEN block:b elselist:elsel     {:  RESULT = new Block(new StatList(new IfThenElseBlock(e, b, elsel)), null);   :}
+            | ELSE block:b                                 {:  RESULT = b;  :}
             | empty
             ;
 
-comforexp ::=  COMMA exp
-             | empty
+comforexp ::=  COMMA exp:e                                 {:  RESULT = e;  :}
+             | empty                                       {:  RESULT = new NumeralExp(1.0); :}
              ;
 
-assignexplist ::=  ASSIGNMENT explist
+assignexplist ::=  ASSIGNMENT explist:el                   {:  RESULT = el; :}
                  | empty
                  ;
 
@@ -211,39 +211,51 @@ funcname ::=  NAME:name                          {:  RESULT = new FuncNameVar(ne
             | NAME:name DOT funcname:fn          {:  RESULT = new FuncNameVarDotFuncName(new Name(name), fn); :}
             ;
 
-varlist ::=  var
-           | var COMMA varlist
+varlist ::=  var:v                               {:  RESULT = new VarList(v); :}
+           | var:v COMMA varlist:vl              {:
+                                                     if (vl == null) {
+                                                        vl = new VarList(v);
+                                                        RESULT = vl;
+                                                     } else {
+                                                        vl.addVar(0, v);
+                                                        RESULT = vl;
+                                                     }
+                                                 :}
            ;
 
-var ::=  NAME
-       | prefixexp LBRACKET exp RBRACKET
-       | prefixexp DOT NAME
+var ::=  NAME:name                              {:  RESULT = new Variable(name); :}
+       | prefixexp:pe LBRACKET exp:e RBRACKET   {:  RESULT = new VarTabIndex(pe, e); :}
+       | prefixexp:pe DOT NAME:name             {:  RESULT = new VarTabIndex(pe,  new LiteralStringExp(name)); :}
        ;
 
-namelist ::= NAME nameadditlist;
+namelist ::=  NAME:name                         {:  RESULT = new NameList(new Name(name)); :}
+            | namelist:nl COMMA NAME:name       {:  nl.append(new Name(name)); RESULT = nl; :}
+            ;
 
-nameadditlist ::=  COMMA NAME nameadditlist
-                 | empty
-                 ;
+explist ::=  exp:e                          {:  RESULT = new ExpList(e); :}
+           | exp:e COMMA explist:el         {:
+                                                if (el == null) {
+                                                    el = new ExpList(e);
+                                                    RESULT = el;
+                                                } else {
+                                                    el.addExp(0, e);
+                                                    RESULT = el;
+                                                }
+                                            :}
+           ;
 
-explist ::= exp expadditlist;
-
-exp	::=	 NIL
-	   | FALSE
-	   | TRUE
-	   | NUMERAL
-	   | LITERAL_STRING
-	   | PARAMS
-	   | FUNCTION funcbody // functiondef
-	   | prefixexp
-	   | tableconstructor
-       | exp binop exp
-	   | unop exp
+exp	::=	 NIL                                {:  RESULT = new Nil(); :}
+	   | FALSE                              {:  RESULT = new BooleanExp(false); :}
+	   | TRUE                               {:  RESULT = new BooleanExp(true);  :}
+	   | NUMERAL:num                        {:  RESULT = new NumeralExp(num);    :}
+	   | LITERAL_STRING:s                   {:  RESULT = new LiteralStringExp(s); :}
+	   | PARAMS                             {:  RESULT = new Dots();   :}
+	   | FUNCTION funcbody:fb               {:  RESULT = new FunctionExp(fb.getArgs(), fb.getVarArgs(), fb.getBlock()); :}
+	   | prefixexp:pe                       {:  RESULT = new PreExp(pe); :}
+	   | tableconstructor:tc                {:  RESULT = new TableConstructorExp(tc); :}
+       | exp:e1 binop:op exp:e2             {:  RESULT = new Binop(e1, op, e2); :}
+	   | unop:op exp:e                      {:  RESULT = new Unop(op, e); :}
 	   ;
-
-expadditlist ::=  COMMA exp expadditlist
-                | empty
-                ;
 
 prefixexp ::=  var:v                            {:
                                                     System.out.println("Prefixexp var");

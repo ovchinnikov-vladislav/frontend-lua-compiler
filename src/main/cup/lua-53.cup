@@ -49,7 +49,6 @@ terminal ID;                                                // Идентифи�
 
  /*Нетерминалы */
 
-non terminal chunk;
 non terminal Block block;
 non terminal StatList statlist;
 non terminal RetStat retstat;
@@ -99,9 +98,7 @@ precedence left LENGTH;
 
 /* Продукции грамматики */
 
-start with chunk;
-
-chunk ::= block  {: System.out.println("Chunk with block"); :};
+start with block;
 
 block ::=  statlist:sl retstat:rs   {:
                                         //System.out.println("Block with statlist and retstat");

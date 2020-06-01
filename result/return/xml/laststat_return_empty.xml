@@ -1,1 +1,4 @@
-<BlockNode><StatList/><RetStat/></BlockNode>
+<BlockNode>
+  <StatList/>
+  <Return/>
+</BlockNode>

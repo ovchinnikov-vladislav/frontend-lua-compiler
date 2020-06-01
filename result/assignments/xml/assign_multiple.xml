@@ -1,16 +1,16 @@
 <BlockNode>
-    <StatList>
-        <Local>
-            <NameList>
-                <Name name="a"/>
-                <Name name="b"/>
-                <Name name="c"/>
-            </NameList>
-            <ExpList>
-                <LiteralStringExpression string="2"/>
-                <LiteralStringExpression string=" 3e0 "/>
-                <LiteralStringExpression string=" 10  "/>
-            </ExpList>
-        </Local>
-    </StatList>
+  <StatList>
+    <Local>
+      <NameList>
+        <Name name="a"/>
+        <Name name="b"/>
+        <Name name="c"/>
+      </NameList>
+      <ExpList>
+        <LiteralStringExpression string="2"/>
+        <LiteralStringExpression string=" 3e0 "/>
+        <LiteralStringExpression string=" 10  "/>
+      </ExpList>
+    </Local>
+  </StatList>
 </BlockNode>

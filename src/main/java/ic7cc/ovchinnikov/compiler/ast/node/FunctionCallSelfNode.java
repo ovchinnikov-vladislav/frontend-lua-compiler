@@ -10,7 +10,6 @@ import lombok.Setter;
 public class FunctionCallSelfNode extends FunctionCall {
 
     private PrefixExpression preExp;
-    @JacksonXmlProperty(isAttribute = true)
     private String name;
     private ExpressionListNode expressionListNode;
 

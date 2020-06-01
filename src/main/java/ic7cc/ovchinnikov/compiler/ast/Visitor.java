@@ -48,7 +48,7 @@ public interface Visitor {
      void visit(PrefixExpression prefixExpression);
      void visit(PrefixExpressionVariableNode prefixExpressionVariableNode);
      void visit(PrefixExpressionFunctionCallNode prefixExpressionFunctionCallNode);
-     void visit(PrefixExpressionExpressionNode prefixExpressionExpressionNode);
+     void visit(PrefixExpressionLPExpressionRPNode prefixExpressionLPExpressionRPNode);
      void visit(FunctionCall functionCall);
      void visit(FunctionCallNode functionCallNode);
      void visit(FunctionCallSelfNode functionCallSelfNode);

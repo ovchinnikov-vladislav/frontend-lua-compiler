@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import ic7cc.ovchinnikov.compiler.ast.node.*;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 public class SerializeDefinedType {
 
@@ -42,8 +43,8 @@ public class SerializeDefinedType {
     public static void serializePreExp(PrefixExpression v, JsonGenerator gen) throws IOException {
         if (v instanceof PrefixExpressionVariableNode)
             gen.writeObjectField("PrefixExpressionVariable", v);
-        else if (v instanceof PrefixExpressionExpressionNode)
-            gen.writeObjectField("PrefixExpressionExpression", v);
+        else if (v instanceof PrefixExpressionLPExpressionRPNode)
+            gen.writeObjectField("PrefixExpressionLParenExpressionRParen", v);
         else if (v instanceof PrefixExpressionFunctionCallNode)
             gen.writeObjectField("PrefixExpressionFunctionCall", v);
     }
@@ -59,22 +60,42 @@ public class SerializeDefinedType {
         if (v instanceof AssignmentNode)
             gen.writeObjectField("Assignment", v);
         else if (v instanceof IfThenElseBlockNode)
-            gen.writeObjectField("IfThenElseBlock", v);
+            gen.writeObjectField("IfThenElse", v);
         else if (v instanceof BreakNode)
             gen.writeObjectField("Break", v);
         else if (v instanceof DoBlockNode)
-            gen.writeObjectField("DoBlock", v);
+            gen.writeObjectField("Do", v);
         else if (v instanceof ForBlockNode)
-            gen.writeObjectField("ForBlock", v);
+            gen.writeObjectField("For", v);
         else if (v instanceof ForInBlockNode)
-            gen.writeObjectField("ForInBlock", v);
+            gen.writeObjectField("ForIn", v);
         else if (v instanceof FunctionCallStatementNode)
-            gen.writeObjectField("FuncCallStatement", v);
+            gen.writeObjectField("FunctionCallStatement", v);
         else if (v instanceof LocalNode)
             gen.writeObjectField("Local", v);
         else if (v instanceof LocalFunctionDefinitionNode)
-            gen.writeObjectField("LocalFunctionDef", v);
+            gen.writeObjectField("LocalFunctionDefinition", v);
         else if (v instanceof RepeatUntilNode)
             gen.writeObjectField("RepeatUntil", v);
+        else if (v instanceof WhileBlockNode)
+            gen.writeObjectField("While", v);
+        else if (v instanceof FunctionDefinitionNode)
+            gen.writeObjectField("FunctionDefinition", v);
+    }
+
+    public static void serializeFunctionCall(FunctionCall v, JsonGenerator gen) throws IOException {
+        if (v instanceof FunctionCallNode)
+            gen.writeObjectField("FunctionCall", v);
+        else if (v instanceof FunctionCallSelfNode)
+            gen.writeObjectField("FunctionCallSelf", v);
+    }
+
+    public static void serializeFunctionName(FunctionName v, JsonGenerator gen) throws IOException {
+        if (v instanceof FunctionNameColonVarNode)
+            gen.writeObjectField("FunctionNameColonVariable", v);
+        else if (v instanceof FunctionNameVarDotFunctionNameNode)
+            gen.writeObjectField("FunctionNameVariableDotFunctionName", v);
+        else if (v instanceof FunctionNameVarNode)
+            gen.writeObjectField("FunctionNameVariable", v);
     }
 }

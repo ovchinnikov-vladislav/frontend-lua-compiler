@@ -1,41 +1,19 @@
 <BlockNode>
-    <StatList>
-        <Assignment>
-            <VarList>
-                <Variable var="table1"/>
-            </VarList>
-            <ExpList>
-                <TableConstructor>
-                    <FieldList>
-                        <FieldLeftRightExpression>
-                            <leftExpression operation="ADD">
-                                <PrefixExpression>
-                                    <PrefixExpressionVariable>
-                                        <Variable var="a"/>
-                                    </PrefixExpressionVariable>
-                                </PrefixExpression>
-                                <PrefixExpression>
-                                    <PrefixExpressionVariable>
-                                        <Variable var="b"/>
-                                    </PrefixExpressionVariable>
-                                </PrefixExpression>
-                            </leftExpression>
-                            <rightExpression operation="ADD">
-                                <PrefixExpression>
-                                    <PrefixExpressionVariable>
-                                        <Variable var="a"/>
-                                    </PrefixExpressionVariable>
-                                </PrefixExpression>
-                                <PrefixExpression>
-                                    <PrefixExpressionVariable>
-                                        <Variable var="b"/>
-                                    </PrefixExpressionVariable>
-                                </PrefixExpression>
-                            </rightExpression>
-                        </FieldLeftRightExpression>
-                    </FieldList>
-                </TableConstructor>
-            </ExpList>
-        </Assignment>
-    </StatList>
+  <StatList>
+    <FunctionDefinition>
+      <FunctionNameVariable>
+        <Name name="a"/>
+      </FunctionNameVariable>
+      <FunctionBody>
+        <ParList varPar="true">
+          <NameList>
+            <Name name="a"/>
+          </NameList>
+        </ParList>
+        <BlockNode>
+          <StatList/>
+        </BlockNode>
+      </FunctionBody>
+    </FunctionDefinition>
+  </StatList>
 </BlockNode>

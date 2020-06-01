@@ -1,1 +1,17 @@
-<BlockNode><StatList/><RetStat><expressionListNode><PrefixExpression><PrefixExpressionVariable><Variable var="a"/></PrefixExpressionVariable></PrefixExpression><PrefixExpression><PrefixExpressionVariable><Variable var="b"/></PrefixExpressionVariable></PrefixExpression></expressionListNode></RetStat></BlockNode>
+<BlockNode>
+  <StatList/>
+  <Return>
+    <ExpList>
+      <PrefixExpression>
+        <PrefixExpressionVariable>
+          <Variable var="a"/>
+        </PrefixExpressionVariable>
+      </PrefixExpression>
+      <PrefixExpression>
+        <PrefixExpressionVariable>
+          <Variable var="b"/>
+        </PrefixExpressionVariable>
+      </PrefixExpression>
+    </ExpList>
+  </Return>
+</BlockNode>

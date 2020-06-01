@@ -1,1 +1,2 @@
-table1 = {[a + b] = a + b};
+function a(a, ...)
+end

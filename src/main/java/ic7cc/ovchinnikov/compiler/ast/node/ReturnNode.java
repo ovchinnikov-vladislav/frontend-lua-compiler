@@ -1,11 +1,13 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReturnNode extends ReturnStatement {
 
+    @JacksonXmlProperty(localName = "ExpList")
     public ExpressionListNode expressionListNode;
 
     public ReturnNode(ExpressionListNode expressionListNode) {

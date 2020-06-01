@@ -1,6 +1,7 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
 import lombok.Getter;
@@ -12,8 +13,11 @@ public class FunctionBodyNode extends ASTNode {
 
     @JsonIgnore
     private ASTNode parent;
+    @JacksonXmlProperty(localName = "ParList")
     private final ParListNode parListNode;
+    @JacksonXmlProperty(localName = "BlockNode")
     private final BlockNode blockNode;
+
 
     public FunctionBodyNode(ParListNode parListNode, BlockNode blockNode) {
         this.parListNode = parListNode;
@@ -50,13 +54,13 @@ public class FunctionBodyNode extends ASTNode {
         throw new RuntimeException("Should not be here!");
     }
 
-    public NameListNode getArgs() {
-        return parListNode.getNameListNode();
-    }
-
-    public boolean getVarArgs() {
-        return parListNode.getVarParList();
-    }
+//    public NameListNode getArgs() {
+//        return parListNode.getNameListNode();
+//    }
+//
+//    public boolean getVarArgs() {
+//        return parListNode.getVarParList();
+//    }
 
     public BlockNode getBlockNode() {
         return blockNode;

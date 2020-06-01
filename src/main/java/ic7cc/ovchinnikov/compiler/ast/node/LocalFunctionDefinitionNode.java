@@ -11,9 +11,11 @@ public class LocalFunctionDefinitionNode extends Statement {
 
     @JacksonXmlProperty(isAttribute = true)
     private String name;
+    @JacksonXmlProperty(localName = "NameList")
     private NameListNode args;
     @JacksonXmlProperty(isAttribute = true)
     private boolean varArgs;
+    @JacksonXmlProperty(localName = "BlockNode")
     private BlockNode blockNode;
 
     public LocalFunctionDefinitionNode(String name, NameListNode args, boolean varArgs, BlockNode blockNode) {

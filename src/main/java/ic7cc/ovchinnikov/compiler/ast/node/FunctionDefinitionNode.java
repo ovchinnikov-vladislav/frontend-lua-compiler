@@ -7,21 +7,19 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FunctionNameVarDotFunctionNameNode extends FunctionName {
+public class FunctionDefinitionNode extends Statement {
 
-    @JacksonXmlProperty(localName = "Name")
-    private NameNode nameNode;
-    @JacksonXmlProperty(localName = "FunctionName")
     private FunctionName functionName;
+    private FunctionBodyNode functionBody;
 
-    public FunctionNameVarDotFunctionNameNode(NameNode nameNode, FunctionName functionName) {
-        this.nameNode = nameNode;
-        if (nameNode != null)
-            nameNode.setParent(this);
-        
+    public FunctionDefinitionNode(FunctionName functionName, FunctionBodyNode functionBody) {
         this.functionName = functionName;
         if (functionName != null)
             functionName.setParent(this);
+
+        this.functionBody = functionBody;
+        if (functionBody != null)
+            functionBody.setParent(this);
     }
 
     @Override
@@ -31,32 +29,33 @@ public class FunctionNameVarDotFunctionNameNode extends FunctionName {
 
     @Override
     public void childrenAccept(Visitor visitor) {
-        if (nameNode != null)
-            nameNode.accept(visitor);
-        
         if (functionName != null)
             functionName.accept(visitor);
+
+        if (functionBody != null)
+            functionBody.accept(visitor);
     }
 
     @Override
     public void traverseTopDown(Visitor visitor) {
         accept(visitor);
-        
-        if (nameNode != null)
-            nameNode.traverseTopDown(visitor);
-        
+
         if (functionName != null)
             functionName.traverseTopDown(visitor);
+
+        if (functionBody != null)
+            functionBody.traverseTopDown(visitor);
     }
 
     @Override
     public void traverseBottomUp(Visitor visitor) {
-        if (nameNode != null)
-            nameNode.traverseBottomUp(visitor);
-        
         if (functionName != null)
             functionName.traverseBottomUp(visitor);
-        
+
+        if (functionBody != null)
+            functionBody.traverseBottomUp(visitor);
+
         accept(visitor);
     }
+    
 }

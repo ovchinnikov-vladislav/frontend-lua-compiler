@@ -1,11 +1,15 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class WhileBlockNode extends Statement {
 
-    public Expression expression;
-    public BlockNode blockNode;
+    private Expression expression;
+    private BlockNode blockNode;
 
     public WhileBlockNode(Expression expression, BlockNode blockNode) {
         this.expression = expression;

@@ -1,12 +1,16 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
-public class PrefixExpressionExpressionNode extends PrefixExpression {
+@Getter
+@Setter
+public class PrefixExpressionLPExpressionRPNode extends PrefixExpression {
 
-    public Expression expression;
+    private Expression expression;
 
-    public PrefixExpressionExpressionNode(Expression expression) {
+    public PrefixExpressionLPExpressionRPNode(Expression expression) {
         this.expression = expression;
         if (expression != null)
             expression.setParent(this);

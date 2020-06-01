@@ -231,8 +231,8 @@ public abstract class VisitorAdapterGeneric extends VisitorAdaptor {
     }
 
     @Override
-    public void visit(PrefixExpressionExpressionNode prefixExpressionExpressionNode) {
-        visitGeneric(prefixExpressionExpressionNode);
+    public void visit(PrefixExpressionLPExpressionRPNode prefixExpressionLPExpressionRPNode) {
+        visitGeneric(prefixExpressionLPExpressionRPNode);
     }
 
     @Override

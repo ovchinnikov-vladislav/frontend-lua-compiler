@@ -3,29 +3,31 @@ package ic7cc.ovchinnikov.compiler.ast.xml;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import ic7cc.ovchinnikov.compiler.ast.node.*;
+import ic7cc.ovchinnikov.compiler.ast.node.Expression;
+import ic7cc.ovchinnikov.compiler.ast.node.RepeatUntilNode;
+import ic7cc.ovchinnikov.compiler.ast.node.WhileBlockNode;
 import ic7cc.ovchinnikov.compiler.ast.xml.util.SerializeDefinedType;
 
 import java.io.IOException;
 
-public class RepeatUntilSerializer extends StdSerializer<RepeatUntilNode> {
+public class WhileSerializer extends StdSerializer<WhileBlockNode> {
 
-    public RepeatUntilSerializer() {
+    public WhileSerializer() {
         this(null);
     }
 
-    public RepeatUntilSerializer(Class<RepeatUntilNode> t) {
+    public WhileSerializer(Class<WhileBlockNode> t) {
         super(t);
     }
 
     @Override
-    public void serialize(RepeatUntilNode value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+    public void serialize(WhileBlockNode value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStartObject();
-
-        gen.writeObjectField("BlockNode", value.getBlockNode());
 
         Expression v = value.getExpression();
         SerializeDefinedType.serializeExpression(v, gen);
+
+        gen.writeObjectField("BlockNode", value.getBlockNode());
 
         gen.writeEndObject();
     }

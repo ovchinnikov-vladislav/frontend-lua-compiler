@@ -211,7 +211,7 @@ public abstract class VisitorAdaptor implements Visitor {
     }
 
     @Override
-    public void visit(PrefixExpressionExpressionNode prefixExpressionExpressionNode) {
+    public void visit(PrefixExpressionLPExpressionRPNode prefixExpressionLPExpressionRPNode) {
 
     }
 

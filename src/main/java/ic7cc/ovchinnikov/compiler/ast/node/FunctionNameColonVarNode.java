@@ -1,5 +1,6 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +9,9 @@ import lombok.Setter;
 @Setter
 public class FunctionNameColonVarNode extends FunctionName {
 
+    @JacksonXmlProperty(localName = "SelfFunctionName")
     private NameNode selfFuncNameNode;
+    @JacksonXmlProperty(localName = "FunctionName")
     private NameNode funcNameNode;
 
     public FunctionNameColonVarNode(NameNode selfFuncNameNode, NameNode funcNameNode) {

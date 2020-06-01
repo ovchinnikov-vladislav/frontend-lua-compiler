@@ -1,1 +1,23 @@
-<BlockNode><StatList><Assignment><VarList><Variable var="a"/></VarList><ExpList><BinaryOperation operation="AND"><PrefixExpression><PrefixExpressionVariable><Variable var="b"/></PrefixExpressionVariable></PrefixExpression><PrefixExpression><PrefixExpressionVariable><Variable var="c"/></PrefixExpressionVariable></PrefixExpression></BinaryOperation></ExpList></Assignment></StatList></BlockNode>
+<BlockNode>
+  <StatList>
+    <Assignment>
+      <VarList>
+        <Variable var="a"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="AND">
+          <PrefixExpression>
+            <PrefixExpressionVariable>
+              <Variable var="b"/>
+            </PrefixExpressionVariable>
+          </PrefixExpression>
+          <PrefixExpression>
+            <PrefixExpressionVariable>
+              <Variable var="c"/>
+            </PrefixExpressionVariable>
+          </PrefixExpression>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+  </StatList>
+</BlockNode>

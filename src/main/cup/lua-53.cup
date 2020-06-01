@@ -167,7 +167,7 @@ stat ::=  SEMICOLON                                                 {:
         | FOR NAME:nameNode ASSIGNMENT expression:e1 COMMA expression:e2 comforexp:e3 DO blockNode:b END {:   RESULT = new ForBlockNode(nameNode, e1, e2, e3, b);  :}
         | FOR namelist:nl IN explist:el DO blockNode:b END              {:  RESULT = new ForInBlockNode(nl, el, b);  :}
         | FUNCTION funcname:fn funcbody:fb                          {:
-                                                                        VariableListNode vl = FunctionSyntactic.funcNameToVarList(fn);
+                                                                       /* VariableListNode vl = FunctionSyntactic.funcNameToVarList(fn);
                                                                         vl.setStart(fn.getStart());
                                                                         vl.setEnd(fn.getEnd());
 
@@ -177,9 +177,10 @@ stat ::=  SEMICOLON                                                 {:
 
                                                                         AssignmentNode asm = new AssignmentNode(vl, args);
 
-                                                                        RESULT = asm;
+                                                                        RESULT = asm; */
+                                                                        RESULT = new FunctionDefinitionNode(fn, fb);
                                                                     :}
-        | LOCAL FUNCTION NAME:nameNode funcbody:fb                      {:  RESULT = new LocalFunctionDefinitionNode(nameNode, fb.getArgs(), fb.getVarArgs(), fb.getBlockNode()); :}
+        | LOCAL FUNCTION NAME:nameNode funcbody:fb                      {:  RESULT = new LocalFunctionDefinitionNode(nameNode, fb.getParListNode().getNameListNode(), fb.getParListNode().getVarParList(), fb.getBlockNode()); :}
         | LOCAL namelist:nl assignexplist:el                        {:  RESULT = new LocalNode(nl, el); :}
         ;
 
@@ -189,7 +190,7 @@ elselist ::=  ELSEIF expression:e THEN blockNode:b elselist:elsel     {:  RESULT
             ;
 
 comforexp ::=  COMMA expression:e                                 {:  RESULT = e;  :}
-             | empty                                       {:  RESULT = new NumeralExpressionNode(1.0, NumeralExpressionNode.Type.DOUBLE); :}
+             | empty                                       {:  RESULT = new NumeralExpressionNode(1, NumeralExpressionNode.Type.INTEGER); :}
              ;
 
 assignexplist ::=  ASSIGNMENT explist:el                   {:  RESULT = el; :}
@@ -255,7 +256,7 @@ expression	::=	 NIL                                {:  RESULT = new NilNode(); :
 	                                        :}
 	   | LITERAL_STRING:s                   {:  RESULT = new LiteralStringExpressionNode(s); :}
 	   | PARAMS                             {:  RESULT = new DotDotDotNode();   :}
-	   | FUNCTION funcbody:fb               {:  RESULT = new FunctionExpressionNode(fb.getArgs(), fb.getVarArgs(), fb.getBlockNode()); :}
+	   | FUNCTION funcbody:fb               {:  RESULT = new FunctionExpressionNode(fb.getParListNode().getNameListNode(), fb.getParListNode().getVarParList(), fb.getBlockNode()); :}
 	   | prefixexp:pe                       {:  RESULT = new PrefixExpressionNode(pe); :}
 	   | tableconstructor:tc                {:  RESULT = new TableConstructorExpressionNode(tc); :}
        | expression:e1 ADD expression:e2                  {:  RESULT = new BinaryOperationNode(e1, Operation.ADD, e2); :}
@@ -293,8 +294,8 @@ prefixexp ::=  var:v                       {:
                                                     System.out.println("Prefixexp");
                                                     RESULT = new PrefixExpressionFunctionCallNode(fc);
                                                 :}
-             | LPAREN expression:e RPAREN              {:
-                                                    RESULT = new PrefixExpressionExpressionNode(e);
+             | LPAREN expression:e RPAREN       {:
+                                                    RESULT = new PrefixExpressionLPExpressionRPNode(e);
                                                 :}
              ;
 

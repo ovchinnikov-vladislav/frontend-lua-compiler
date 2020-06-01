@@ -13,6 +13,7 @@ public class ForInBlockNode extends Statement {
     private NameListNode nameListNode;
     @JacksonXmlProperty(localName = "ExpList")
     private ExpressionListNode expressionListNode;
+    @JacksonXmlProperty(localName = "BlockNode")
     private BlockNode blockNode;
 
     public ForInBlockNode(NameListNode nameListNode, ExpressionListNode expressionListNode, BlockNode blockNode) {

@@ -17,7 +17,7 @@ public class BlockNode extends ASTNode {
     private ASTNode parent;
     @JacksonXmlProperty(localName = "StatList")
     private StatementListNode statementListNode;
-    @JacksonXmlProperty(localName = "RetStat")
+    @JacksonXmlProperty(localName = "Return")
     private ReturnStatement returnStatement;
 
     public BlockNode(StatementListNode statementListNode, ReturnStatement returnStatement) {

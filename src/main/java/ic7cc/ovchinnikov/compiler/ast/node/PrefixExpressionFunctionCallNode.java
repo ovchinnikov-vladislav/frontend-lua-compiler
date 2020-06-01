@@ -1,10 +1,14 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class PrefixExpressionFunctionCallNode extends PrefixExpression {
 
-    public FunctionCall call;
+    private FunctionCall call;
 
     public PrefixExpressionFunctionCallNode(FunctionCall call) {
         this.call = call;

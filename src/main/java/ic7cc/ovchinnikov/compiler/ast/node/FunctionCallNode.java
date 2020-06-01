@@ -1,5 +1,6 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import lombok.Getter;
 import lombok.Setter;

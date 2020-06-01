@@ -66,24 +66,23 @@ terminal String NAME;                                       // Идентифи�
 
  /*Нетерминалы */
 
-non terminal Block block, elselist;
-non terminal StatList statlist;
-non terminal RetStat retstat;
-non terminal Stat stat;
+non terminal BlockNode blockNode, elselist;
+non terminal StatementListNode statlist;
+non terminal ReturnStatement retstat;
+non terminal Statement stat;
 
-non terminal VarList varlist;
-non terminal ExpList explist, args, assignexplist;
+non terminal VariableListNode varlist;
+non terminal ExpressionListNode explist, args, assignexplist;
 non terminal FunctionCall functioncall;
-non terminal Exp exp, comforexp;
-non terminal NameList namelist;
-non terminal FuncName funcname;
-non terminal FuncBody funcbody;
-non terminal Var var;
-non terminal expadditlist;
-non terminal PrefixExp prefixexp;
-non terminal TableConstructor tableconstructor;
-non terminal ParList parlist;
-non terminal FieldList fieldlist;
+non terminal Expression expression, comforexp;
+non terminal NameListNode namelist;
+non terminal FunctionName funcname;
+non terminal FunctionBodyNode funcbody;
+non terminal Variable var;
+non terminal PrefixExpression prefixexp;
+non terminal TableConstructorNode tableconstructor;
+non terminal ParListNode parlist;
+non terminal FieldListNode fieldlist;
 non terminal Field field;
 non terminal fieldsep;
 non terminal empty;
@@ -106,40 +105,40 @@ precedence right UNMINUS, NOT, BNOT, LENGTH;
 
 /* Продукции грамматики */
 
-start with block;
+start with blockNode;
 
-block ::=  statlist:sl retstat:rs   {:
-                                        System.out.println("Block with statlist and retstat");
-                                        RESULT = new Block(sl, rs);
+blockNode ::=  statlist:sl retstat:rs   {:
+                                        System.out.println("BlockNode with statlist and retstat");
+                                        RESULT = new BlockNode(sl, rs);
                                     :}
          | statlist:sl              {:
-                                        System.out.println("Block with statlist");
-                                        RESULT = new Block(sl, null);
+                                        System.out.println("BlockNode with statlist");
+                                        RESULT = new BlockNode(sl, null);
                                     :}
          | retstat:rs               {:
-                                        System.out.println("Block with retstat");
-                                        StatList sl = new StatList();
+                                        System.out.println("BlockNode with retstat");
+                                        StatementListNode sl = new StatementListNode();
                                         sl.setStart(rs.getStart());
                                         sl.setEnd(rs.getStart());
-                                        RESULT = new Block(sl, rs);
+                                        RESULT = new BlockNode(sl, rs);
                                     :}
          | empty                    {:
-										StatList statlist = new StatList();
+										StatementListNode statlist = new StatementListNode();
 										statlist.setStart(LocationFactory.from(null));
 										statlist.setEnd(LocationFactory.from(null));
-										System.out.println("Empty block");
-										RESULT = new Block(statlist, null);
+										System.out.println("Empty blockNode");
+										RESULT = new BlockNode(statlist, null);
                                     :}
          ;
 
 statlist ::=  stat:s			    {:
 									    System.out.println("Single stat");
-									    RESULT = new StatList(s);
+									    RESULT = new StatementListNode(s);
 								    :}
             | stat:s statlist:sl    {:
                                         System.out.println("Recurrent stat");
 									    if (sl == null) {
-										    sl = new StatList(s);
+										    sl = new StatementListNode(s);
 										    RESULT = sl;
 		                                } else {
 		                                    sl.addStat(0, s);
@@ -153,65 +152,65 @@ stat ::=  SEMICOLON                                                 {:
                                                                         System.out.println("SEMICOLON");
                                                                     :}
         | varlist:vl ASSIGNMENT explist:el                          {:
-                                                                        System.out.println("stat");
-                                                                        RESULT = new Assignment(vl, el);
+                                                                        System.out.println("statement");
+                                                                        RESULT = new AssignmentNode(vl, el);
                                                                     :}
-        | functioncall:fc                                           {:  RESULT = new FuncCallStatement(fc); :}
-        | BREAK                                                     {:  RESULT = new Break(); :}
-        | DO block:b END                                            {:
-                                                                        System.out.println("stat - do end");
-                                                                        RESULT = new DoBlock(b);
+        | functioncall:fc                                           {:  RESULT = new FunctionCallStatementNode(fc); :}
+        | BREAK                                                     {:  RESULT = new BreakNode(); :}
+        | DO blockNode:b END                                            {:
+                                                                        System.out.println("statement - do end");
+                                                                        RESULT = new DoBlockNode(b);
                                                                     :}
-        | WHILE exp:e DO block:b END                                {:  RESULT = new WhileBlock(e, b); :}
-        | REPEAT block:b UNTIL exp:e                                {:  RESULT = new RepeatUntil(b, e); :}
-        | IF exp:e THEN block:b elselist:elsel END                  {:  RESULT = new IfThenElseBlock(e, b, elsel); :}
-        | FOR NAME:name ASSIGNMENT exp:e1 COMMA exp:e2 comforexp:e3 DO block:b END {:   RESULT = new ForBlock(name, e1, e2, e3, b);  :}
-        | FOR namelist:nl IN explist:el DO block:b END              {:  RESULT = new ForInBlock(nl, el, b);  :}
+        | WHILE expression:e DO blockNode:b END                                {:  RESULT = new WhileBlockNode(e, b); :}
+        | REPEAT blockNode:b UNTIL expression:e                                {:  RESULT = new RepeatUntilNode(b, e); :}
+        | IF expression:e THEN blockNode:b elselist:elsel END                  {:  RESULT = new IfThenElseBlockNode(e, b, elsel); :}
+        | FOR NAME:nameNode ASSIGNMENT expression:e1 COMMA expression:e2 comforexp:e3 DO blockNode:b END {:   RESULT = new ForBlockNode(nameNode, e1, e2, e3, b);  :}
+        | FOR namelist:nl IN explist:el DO blockNode:b END              {:  RESULT = new ForInBlockNode(nl, el, b);  :}
         | FUNCTION funcname:fn funcbody:fb                          {:
-                                                                        VarList vl = FuncSyntactic.funcNameToVarList(fn);
+                                                                        VariableListNode vl = FunctionSyntactic.funcNameToVarList(fn);
                                                                         vl.setStart(fn.getStart());
                                                                         vl.setEnd(fn.getEnd());
 
-                                                                        ExpList args = FuncSyntactic.methodDefinitionToExpression(fn, fb);
+                                                                        ExpressionListNode args = FunctionSyntactic.methodDefinitionToExpression(fn, fb);
                                                                         args.setStart(fb.getStart());
                                                                         args.setEnd(fb.getEnd());
 
-                                                                        Assignment asm = new Assignment(vl, args);
+                                                                        AssignmentNode asm = new AssignmentNode(vl, args);
 
                                                                         RESULT = asm;
                                                                     :}
-        | LOCAL FUNCTION NAME:name funcbody:fb                      {:  RESULT = new LocalFunctionDef(name, fb.getArgs(), fb.getVarArgs(), fb.getBlock()); :}
-        | LOCAL namelist:nl assignexplist:el                        {:  RESULT = new Local(nl, el); :}
+        | LOCAL FUNCTION NAME:nameNode funcbody:fb                      {:  RESULT = new LocalFunctionDefinitionNode(nameNode, fb.getArgs(), fb.getVarArgs(), fb.getBlockNode()); :}
+        | LOCAL namelist:nl assignexplist:el                        {:  RESULT = new LocalNode(nl, el); :}
         ;
 
-elselist ::=  ELSEIF exp:e THEN block:b elselist:elsel     {:  RESULT = new Block(new StatList(new IfThenElseBlock(e, b, elsel)), null);   :}
-            | ELSE block:b                                 {:  RESULT = b;  :}
+elselist ::=  ELSEIF expression:e THEN blockNode:b elselist:elsel     {:  RESULT = new BlockNode(new StatementListNode(new IfThenElseBlockNode(e, b, elsel)), null);   :}
+            | ELSE blockNode:b                                 {:  RESULT = b;  :}
             | empty
             ;
 
-comforexp ::=  COMMA exp:e                                 {:  RESULT = e;  :}
-             | empty                                       {:  RESULT = new NumeralExp(1.0, NumeralExp.Type.DOUBLE); :}
+comforexp ::=  COMMA expression:e                                 {:  RESULT = e;  :}
+             | empty                                       {:  RESULT = new NumeralExpressionNode(1.0, NumeralExpressionNode.Type.DOUBLE); :}
              ;
 
 assignexplist ::=  ASSIGNMENT explist:el                   {:  RESULT = el; :}
                  | empty
                  ;
 
-retstat ::=  RETURN explist:el SEMICOLON         {:  RESULT = new Return(el); :}
-           | RETURN explist:el                   {:  RESULT = new Return(el); :}
-           | RETURN SEMICOLON                    {:  RESULT = new Return(null); :}
-           | RETURN                              {:  RESULT = new Return(null); :}
+retstat ::=  RETURN explist:el SEMICOLON         {:  RESULT = new ReturnNode(el); :}
+           | RETURN explist:el                   {:  RESULT = new ReturnNode(el); :}
+           | RETURN SEMICOLON                    {:  RESULT = new ReturnNode(null); :}
+           | RETURN                              {:  RESULT = new ReturnNode(null); :}
            ;
 
-funcname ::=  NAME:name                          {:  RESULT = new FuncNameVar(new Name(name)); :}
-            | NAME:name1 COLON NAME:name2        {:  RESULT = new FuncNameColonVar(new Name(name1), new Name(name2)); :}
-            | NAME:name DOT funcname:fn          {:  RESULT = new FuncNameVarDotFuncName(new Name(name), fn); :}
+funcname ::=  NAME:nameNode                          {:  RESULT = new FunctionNameVarNode(new NameNode(nameNode)); :}
+            | NAME:name1 COLON NAME:name2        {:  RESULT = new FunctionNameColonVarNode(new NameNode(name1), new NameNode(name2)); :}
+            | NAME:nameNode DOT funcname:fn          {:  RESULT = new FunctionNameVarDotFunctionNameNode(new NameNode(nameNode), fn); :}
             ;
 
-varlist ::=  var:v                               {:  RESULT = new VarList(v); :}
+varlist ::=  var:v                               {:  RESULT = new VariableListNode(v); :}
            | var:v COMMA varlist:vl              {:
                                                      if (vl == null) {
-                                                        vl = new VarList(v);
+                                                        vl = new VariableListNode(v);
                                                         RESULT = vl;
                                                      } else {
                                                         vl.addVar(0, v);
@@ -220,19 +219,19 @@ varlist ::=  var:v                               {:  RESULT = new VarList(v); :}
                                                  :}
            ;
 
-var ::=  NAME:name                              {:  RESULT = new Variable(name); :}
-       | prefixexp:pe LBRACKET exp:e RBRACKET   {:  RESULT = new VarTabIndex(pe, e); :}
-       | prefixexp:pe DOT NAME:name             {:  RESULT = new VarTabIndex(pe,  new LiteralStringExp(name)); :}
+var ::=  NAME:nameNode                              {:  RESULT = new VariableNode(nameNode); :}
+       | prefixexp:pe LBRACKET expression:e RBRACKET   {:  RESULT = new VariableTabIndexNode(pe, e); :}
+       | prefixexp:pe DOT NAME:nameNode             {:  RESULT = new VariableTabIndexNode(pe,  new LiteralStringExpressionNode(nameNode)); :}
        ;
 
-namelist ::=  NAME:name                         {:  RESULT = new NameList(new Name(name)); :}
-            | namelist:nl COMMA NAME:name       {:  nl.append(new Name(name)); RESULT = nl; :}
+namelist ::=  NAME:nameNode                         {:  RESULT = new NameListNode(new NameNode(nameNode)); :}
+            | namelist:nl COMMA NAME:nameNode       {:  nl.append(new NameNode(nameNode)); RESULT = nl; :}
             ;
 
-explist ::=  exp:e                          {:  RESULT = new ExpList(e); :}
-           | exp:e COMMA explist:el         {:
+explist ::=  expression:e                          {:  RESULT = new ExpressionListNode(e); :}
+           | expression:e COMMA explist:el         {:
                                                 if (el == null) {
-                                                    el = new ExpList(e);
+                                                    el = new ExpressionListNode(e);
                                                     RESULT = el;
                                                 } else {
                                                     el.addExp(0, e);
@@ -241,111 +240,112 @@ explist ::=  exp:e                          {:  RESULT = new ExpList(e); :}
                                             :}
            ;
 
-exp	::=	 NIL                                {:  RESULT = new Nil(); :}
-	   | FALSE                              {:  RESULT = new BooleanExp(false); :}
-	   | TRUE                               {:  RESULT = new BooleanExp(true);  :}
+expression	::=	 NIL                                {:  RESULT = new NilNode(); :}
+	   | FALSE                              {:  RESULT = new BooleanExpressionNode(false); :}
+	   | TRUE                               {:  RESULT = new BooleanExpressionNode(true);  :}
 	   | NUMERAL:num                        {:
-	                                            NumeralExp.Type type = null;
+	                                            NumeralExpressionNode.Type type = null;
 
                                                 if (num instanceof Double)
-                                                    type = NumeralExp.Type.DOUBLE;
+                                                    type = NumeralExpressionNode.Type.DOUBLE;
 	                                            else if (num instanceof Integer || num instanceof Long)
-	                                                type = NumeralExp.Type.INTEGER;
+	                                                type = NumeralExpressionNode.Type.INTEGER;
 
-	                                            RESULT = new NumeralExp(num, type);
+	                                            RESULT = new NumeralExpressionNode(num, type);
 	                                        :}
-	   | LITERAL_STRING:s                   {:  RESULT = new LiteralStringExp(s); :}
-	   | PARAMS                             {:  RESULT = new Dots();   :}
-	   | FUNCTION funcbody:fb               {:  RESULT = new FunctionExp(fb.getArgs(), fb.getVarArgs(), fb.getBlock()); :}
-	   | prefixexp:pe                       {:  RESULT = new PreExp(pe); :}
-	   | tableconstructor:tc                {:  RESULT = new TableConstructorExp(tc); :}
-       | exp:e1 ADD exp:e2                  {:  RESULT = new Binop(e1, Operation.ADD, e2); :}
-       | exp:e1 SUB exp:e2                  {:  RESULT = new Binop(e1, Operation.SUB, e2); :}
-       | exp:e1 MUL exp:e2                  {:  RESULT = new Binop(e1, Operation.MUL, e2); :}
-       | exp:e1 DIV exp:e2                  {:  RESULT = new Binop(e1, Operation.DIV, e2); :}
-       | exp:e1 FDIV exp:e2                 {:  RESULT = new Binop(e1, Operation.FDIV, e2); :}
-       | exp:e1 MOD exp:e2                  {:  RESULT = new Binop(e1, Operation.MOD, e2); :}
-       | exp:e1 POW exp:e2                  {:  RESULT = new Binop(e1, Operation.POW, e2); :}
-       | exp:e1 CONCAT exp:e2               {:  RESULT = new Binop(e1, Operation.CONCAT, e2); :}
-       | exp:e1 EQUAL exp:e2                {:  RESULT = new Binop(e1, Operation.EQUAL, e2); :}
-       | exp:e1 LESSEQ exp:e2               {:  RESULT = new Binop(e1, Operation.LESSEQ, e2); :}
-       | exp:e1 NOTEQ exp:e2                {:  RESULT = new Binop(e1, Operation.NOTEQ, e2); :}
-       | exp:e1 LESS exp:e2                 {:  RESULT = new Binop(e1, Operation.LESS, e2); :}
-       | exp:e1 MORE exp:e2                 {:  RESULT = new Binop(e1, Operation.MORE, e2); :}
-       | exp:e1 MOREEQ exp:e2               {:  RESULT = new Binop(e1, Operation.MOREEQ, e2); :}
-       | exp:e1 AND exp:e2                  {:  RESULT = new Binop(e1, Operation.AND, e2); :}
-       | exp:e1 OR exp:e2                   {:  RESULT = new Binop(e1, Operation.OR, e2); :}
-       | exp:e1 BAND exp:e2                 {:  RESULT = new Binop(e1, Operation.BAND, e2); :}
-       | exp:e1 BOR exp:e2                  {:  RESULT = new Binop(e1, Operation.BOR, e2); :}
-       | exp:e1 BRIGHT exp:e2               {:  RESULT = new Binop(e1, Operation.BRIGHT, e2); :}
-       | exp:e1 BLEFT exp:e2                {:  RESULT = new Binop(e1, Operation.BLEFT, e2); :}
-       | exp:e1 BXOR exp:e2                 {:  RESULT = new Binop(e1, Operation.BXOR, e2); :}
-	   | SUB exp:e                          {:  RESULT = new Unop(Operation.UNMINUS, e); :} %prec UNMINUS
-	   | NOT exp:e                          {:  RESULT = new Unop(Operation.NOT, e); :}
-	   | LENGTH exp:e                       {:  RESULT = new Unop(Operation.LENGTH, e); :}
-	   | BXOR exp:e                         {:  RESULT = new Unop(Operation.BNOT, e); :}    %prec BNOT
+	   | LITERAL_STRING:s                   {:  RESULT = new LiteralStringExpressionNode(s); :}
+	   | PARAMS                             {:  RESULT = new DotDotDotNode();   :}
+	   | FUNCTION funcbody:fb               {:  RESULT = new FunctionExpressionNode(fb.getArgs(), fb.getVarArgs(), fb.getBlockNode()); :}
+	   | prefixexp:pe                       {:  RESULT = new PrefixExpressionNode(pe); :}
+	   | tableconstructor:tc                {:  RESULT = new TableConstructorExpressionNode(tc); :}
+       | expression:e1 ADD expression:e2                  {:  RESULT = new BinaryOperationNode(e1, Operation.ADD, e2); :}
+       | expression:e1 SUB expression:e2                  {:  RESULT = new BinaryOperationNode(e1, Operation.SUB, e2); :}
+       | expression:e1 MUL expression:e2                  {:  RESULT = new BinaryOperationNode(e1, Operation.MUL, e2); :}
+       | expression:e1 DIV expression:e2                  {:  RESULT = new BinaryOperationNode(e1, Operation.DIV, e2); :}
+       | expression:e1 FDIV expression:e2                 {:  RESULT = new BinaryOperationNode(e1, Operation.FDIV, e2); :}
+       | expression:e1 MOD expression:e2                  {:  RESULT = new BinaryOperationNode(e1, Operation.MOD, e2); :}
+       | expression:e1 POW expression:e2                  {:  RESULT = new BinaryOperationNode(e1, Operation.POW, e2); :}
+       | expression:e1 CONCAT expression:e2               {:  RESULT = new BinaryOperationNode(e1, Operation.CONCAT, e2); :}
+       | expression:e1 EQUAL expression:e2                {:  RESULT = new BinaryOperationNode(e1, Operation.EQUAL, e2); :}
+       | expression:e1 LESSEQ expression:e2               {:  RESULT = new BinaryOperationNode(e1, Operation.LESSEQ, e2); :}
+       | expression:e1 NOTEQ expression:e2                {:  RESULT = new BinaryOperationNode(e1, Operation.NOTEQ, e2); :}
+       | expression:e1 LESS expression:e2                 {:  RESULT = new BinaryOperationNode(e1, Operation.LESS, e2); :}
+       | expression:e1 MORE expression:e2                 {:  RESULT = new BinaryOperationNode(e1, Operation.MORE, e2); :}
+       | expression:e1 MOREEQ expression:e2               {:  RESULT = new BinaryOperationNode(e1, Operation.MOREEQ, e2); :}
+       | expression:e1 AND expression:e2                  {:  RESULT = new BinaryOperationNode(e1, Operation.AND, e2); :}
+       | expression:e1 OR expression:e2                   {:  RESULT = new BinaryOperationNode(e1, Operation.OR, e2); :}
+       | expression:e1 BAND expression:e2                 {:  RESULT = new BinaryOperationNode(e1, Operation.BAND, e2); :}
+       | expression:e1 BOR expression:e2                  {:  RESULT = new BinaryOperationNode(e1, Operation.BOR, e2); :}
+       | expression:e1 BRIGHT expression:e2               {:  RESULT = new BinaryOperationNode(e1, Operation.BRIGHT, e2); :}
+       | expression:e1 BLEFT expression:e2                {:  RESULT = new BinaryOperationNode(e1, Operation.BLEFT, e2); :}
+       | expression:e1 BXOR expression:e2                 {:  RESULT = new BinaryOperationNode(e1, Operation.BXOR, e2); :}
+	   | SUB expression:e                          {:  RESULT = new UnaryOperationNode(Operation.UNMINUS, e); :} %prec UNMINUS
+	   | NOT expression:e                          {:  RESULT = new UnaryOperationNode(Operation.NOT, e); :}
+	   | LENGTH expression:e                       {:  RESULT = new UnaryOperationNode(Operation.LENGTH, e); :}
+	   | BXOR expression:e                         {:  RESULT = new UnaryOperationNode(Operation.BNOT, e); :}    %prec BNOT
 	   ;
 
-prefixexp ::=  var:v                            {:
+prefixexp ::=  var:v                       {:
                                                     System.out.println("Prefixexp var");
-                                                    RESULT = new PrefixExpVar(v);
+                                                    RESULT = new PrefixExpressionVariableNode(v);
                                                 :}
              | functioncall:fc                  {:
                                                     System.out.println("Prefixexp");
-                                                    RESULT = new PrefixExpFuncCall(fc);
+                                                    RESULT = new PrefixExpressionFunctionCallNode(fc);
                                                 :}
-             | LPAREN exp:e RPAREN              {:
-                                                    RESULT = new PrefixExpExp(e);
+             | LPAREN expression:e RPAREN              {:
+                                                    RESULT = new PrefixExpressionExpressionNode(e);
                                                 :}
              ;
 
-functioncall ::=  prefixexp:pexp args:ar                  {:  RESULT = new FuncCall(pexp, ar); :}
-                | prefixexp:pexp COLON NAME:name args:ar  {:  RESULT = new FuncCallSelf(pexp, name, ar); :}
+functioncall ::=  prefixexp:pexp args:ar                  {:  RESULT = new FunctionCallNode(pexp, ar); :}
+                | prefixexp:pexp COLON NAME:nameNode args:ar  {:  RESULT = new FunctionCallSelfNode(pexp, nameNode, ar); :}
                 ;
 
 args ::=  LPAREN explist:el RPAREN                        {:  RESULT = el; :}
-        | LPAREN RPAREN                                   {:  RESULT = new ExpList(null); :}
-        | tableconstructor:tc                             {:  RESULT = new ExpList(new TableConstructorExp(tc)); :}
-        | LITERAL_STRING:s                                {:  RESULT = new ExpList(new LiteralStringExp(s)); :}
+        | LPAREN RPAREN                                   {:  RESULT = new ExpressionListNode(null); :}
+        | tableconstructor:tc                             {:  RESULT = new ExpressionListNode(new TableConstructorExpressionNode(tc)); :}
+        | LITERAL_STRING:s                                {:  RESULT = new ExpressionListNode(new LiteralStringExpressionNode(s)); :}
         ;
 
-funcbody ::=  LPAREN parlist:pl RPAREN block:b END        {:  RESULT = new FuncBody(pl, b); :}
+funcbody ::=  LPAREN parlist:pl RPAREN blockNode:b END        {:  RESULT = new FunctionBodyNode(pl, b); :}
             ;
 
-parlist ::=  namelist:nl COMMA PARAMS                     {:  RESULT = new ParList(nl, true);  :}
-           | namelist:nl                                  {:  RESULT = new ParList(nl, false); :}
+parlist ::=  namelist:nl COMMA PARAMS                     {:  RESULT = new ParListNode(nl, true);  :}
+           | namelist:nl                                  {:  RESULT = new ParListNode(nl, false); :}
            | PARAMS                                       {:
-                                                              NameList nl = new NameList();
+                                                              System.out.println("parlist -> PARAMS");
+                                                              NameListNode nl = new NameListNode();
                                                               nl.setStart(LocationFactory.from(null));
                                                               nl.setEnd(LocationFactory.from(null));
-                                                              RESULT = new ParList(nl, true);
+                                                              RESULT = new ParListNode(nl, true);
                                                           :}
            |                                              {:
-                                                              NameList nl = new NameList();
+                                                              NameListNode nl = new NameListNode();
                                                               nl.setStart(LocationFactory.from(null));
                                                               nl.setEnd(LocationFactory.from(null));
-                                                              RESULT = new ParList(nl, false);
+                                                              RESULT = new ParListNode(nl, false);
                                                           :}
            ;
 
-tableconstructor ::=  LBRACE fieldlist:fl RBRACE          {:  RESULT = new TableConstructor(fl); :}
-                    | LBRACE RBRACE                       {:  RESULT = new TableConstructor(new FieldList()); :}
+tableconstructor ::=  LBRACE fieldlist:fl RBRACE          {:  RESULT = new TableConstructorNode(fl); :}
+                    | LBRACE RBRACE                       {:  RESULT = new TableConstructorNode(new FieldListNode()); :}
                     ;
 
 fieldlist ::=  field:f fieldsep fieldlist:fl              {:
                                                               if (fl == null) {
-                                                                  RESULT = new FieldList(f);
+                                                                  RESULT = new FieldListNode(f);
                                                               } else {
                                                                   fl.addField(0, f);
                                                                   RESULT = fl;
                                                               }
                                                           :}
-             | field:f                                    {:  RESULT = new FieldList(f); :}
+             | field:f                                    {:  RESULT = new FieldListNode(f); :}
              ;
 
-field ::=  LBRACKET exp:e1 RBRACKET ASSIGNMENT exp:e2     {:  RESULT = new FieldLeftRightExp(e1, e2); :}
-         | NAME:name ASSIGNMENT exp:e                     {:  RESULT = new FieldNameExp(name, e); :}
-         | exp:e                                          {:  RESULT = new FieldExp(e); :}
+field ::=  LBRACKET expression:e1 RBRACKET ASSIGNMENT expression:e2     {:  RESULT = new FieldLeftRightExpressionNode(e1, e2); :}
+         | NAME:nameNode ASSIGNMENT expression:e                     {:  RESULT = new FieldNameExpressionNode(nameNode, e); :}
+         | expression:e                                          {:  RESULT = new FieldExpressionNode(e); :}
          ;
 
 fieldsep ::=  COMMA

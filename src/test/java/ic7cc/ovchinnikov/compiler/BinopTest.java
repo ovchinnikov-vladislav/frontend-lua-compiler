@@ -1,6 +1,6 @@
 package ic7cc.ovchinnikov.compiler;
 
-import ic7cc.ovchinnikov.compiler.ast.node.Block;
+import ic7cc.ovchinnikov.compiler.ast.node.BlockNode;
 import ic7cc.ovchinnikov.compiler.lexer.Lexer;
 import ic7cc.ovchinnikov.compiler.parser.Parser;
 import ic7cc.ovchinnikov.compiler.util.XmlSerializer;
@@ -25,7 +25,7 @@ public class BinopTest {
         File file = Path.of("lua/binop/binop_and.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_and.xml").toFile());
     }
@@ -35,7 +35,7 @@ public class BinopTest {
         File file = Path.of("lua/binop/binop_concat.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_concat.xml").toFile());
     }
@@ -45,7 +45,7 @@ public class BinopTest {
         File file = Path.of("lua/binop/binop_div.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_div.xml").toFile());
     }
@@ -55,7 +55,7 @@ public class BinopTest {
         File file = Path.of("lua/binop/binop_eq.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_equal.xml").toFile());
     }
@@ -65,7 +65,7 @@ public class BinopTest {
         File file = Path.of("lua/binop/binop_ge.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_more_equal.xml").toFile());
     }
@@ -75,7 +75,7 @@ public class BinopTest {
         File file = Path.of("lua/binop/binop_gt.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_more.xml").toFile());
     }
@@ -85,7 +85,7 @@ public class BinopTest {
         File file = Path.of("lua/binop/binop_lt.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_less.xml").toFile());
     }
@@ -96,7 +96,7 @@ public class BinopTest {
         File file = Path.of("lua/binop/binop_le.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_less_equal.xml").toFile());
     }
@@ -106,7 +106,7 @@ public class BinopTest {
         File file = Path.of("lua/binop/binop_mod.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_mod.xml").toFile());
     }
@@ -116,7 +116,7 @@ public class BinopTest {
         File file = Path.of("lua/binop/binop_neq.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_not_equal.xml").toFile());
     }
@@ -126,7 +126,7 @@ public class BinopTest {
         File file = Path.of("lua/binop/binop_or.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_or.xml").toFile());
     }
@@ -136,7 +136,7 @@ public class BinopTest {
         File file = Path.of("lua/binop/binop_plus.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_add.xml").toFile());
     }
@@ -146,7 +146,7 @@ public class BinopTest {
         File file = Path.of("lua/binop/binop_pow.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_pow.xml").toFile());
     }
@@ -156,7 +156,7 @@ public class BinopTest {
         File file = Path.of("lua/binop/binop_sub.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_sub.xml").toFile());
     }
@@ -166,7 +166,7 @@ public class BinopTest {
         File file = Path.of("lua/binop/binop_times.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_times.xml").toFile());
     }

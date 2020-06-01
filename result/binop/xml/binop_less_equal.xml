@@ -1,1 +1,1 @@
-<Block><StatList><Assignment><VarList><Variable var="a"/></VarList><ExpList><BinaryOperation operation="LESSEQ"><NumeralExp number="1" type="INTEGER"/><NumeralExp number="2" type="INTEGER"/></BinaryOperation></ExpList></Assignment></StatList></Block>
+<BlockNode><StatList><Assignment><VarList><Variable var="a"/></VarList><ExpList><BinaryOperation operation="LESSEQ"><NumeralExpression number="1" type="INTEGER"/><NumeralExpression number="2" type="INTEGER"/></BinaryOperation></ExpList></Assignment></StatList></BlockNode>

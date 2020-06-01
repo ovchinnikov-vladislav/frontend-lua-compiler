@@ -3,16 +3,13 @@
  */
 package ic7cc.ovchinnikov.compiler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import ic7cc.ovchinnikov.compiler.ast.json.*;
 import ic7cc.ovchinnikov.compiler.ast.node.*;
 import ic7cc.ovchinnikov.compiler.lexer.Lexer;
 import ic7cc.ovchinnikov.compiler.parser.Parser;
+import ic7cc.ovchinnikov.compiler.util.XmlSerializer;
 
+import java.io.File;
 import java.io.FileReader;
-import java.nio.file.Paths;
 
 public class App {
 
@@ -20,7 +17,10 @@ public class App {
 //        Parser parser = new Parser(new Lexer(new FileReader("lua/calculator.lua")));
 //        parser.parse();
         Parser parser = new Parser(new Lexer(new FileReader("lua/testlocal.lua")));
-        Block block = (Block) parser.parse().value;
+        BlockNode blockNode = (BlockNode) parser.parse().value;
 
+        XmlSerializer serializer = new XmlSerializer();
+
+        serializer.save(blockNode, new File("result/xml/testlocal.xml"));
     }
 }

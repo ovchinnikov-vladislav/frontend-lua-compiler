@@ -1,1 +1,1 @@
-<Block><StatList><Assignment><VarList><Variable var="i"/></VarList><ExpList><NumeralExp number="0" type="INTEGER"/></ExpList></Assignment></StatList></Block>
+<BlockNode><StatList><Assignment><VarList><Variable var="i"/></VarList><ExpList><NumeralExpression number="0" type="INTEGER"/></ExpList></Assignment></StatList></BlockNode>

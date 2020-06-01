@@ -1,1 +1,1 @@
-a = a and b
+table1 = {[a + b] = a + b};

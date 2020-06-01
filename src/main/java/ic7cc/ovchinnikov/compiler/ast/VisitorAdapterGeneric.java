@@ -6,38 +6,38 @@ import ic7cc.ovchinnikov.compiler.ast.node.*;
 public abstract class VisitorAdapterGeneric extends VisitorAdaptor {
 
     @Override
-    public void visit(StatList statList) {
-        visitGeneric(statList);
+    public void visit(StatementListNode statementListNode) {
+        visitGeneric(statementListNode);
     }
 
     @Override
-    public void visit(VarList varList) {
-        visitGeneric(varList);
+    public void visit(VariableListNode variableListNode) {
+        visitGeneric(variableListNode);
     }
 
     @Override
-    public void visit(NameList nameList) {
-        visitGeneric(nameList);
+    public void visit(NameListNode nameListNode) {
+        visitGeneric(nameListNode);
     }
 
     @Override
-    public void visit(ExpList expList) {
-        visitGeneric(expList);
+    public void visit(ExpressionListNode expressionListNode) {
+        visitGeneric(expressionListNode);
     }
 
     @Override
-    public void visit(FieldList fieldList) {
-        visitGeneric(fieldList);
+    public void visit(FieldListNode fieldListNode) {
+        visitGeneric(fieldListNode);
     }
 
     @Override
-    public void visit(Block block) {
-        visitGeneric(block);
+    public void visit(BlockNode blockNode) {
+        visitGeneric(blockNode);
     }
 
     @Override
-    public void visit(Name name) {
-        visitGeneric(name);
+    public void visit(NameNode nameNode) {
+        visitGeneric(nameNode);
     }
 
     @Override
@@ -46,163 +46,158 @@ public abstract class VisitorAdapterGeneric extends VisitorAdaptor {
     }
 
     @Override
-    public void visit(FunctionExp functionExp) {
+    public void visit(FunctionExpressionNode functionExp) {
         visitGeneric(functionExp);
     }
 
     @Override
-    public void visit(TableConstructor tableConstructor) {
-        visitGeneric(tableConstructor);
+    public void visit(TableConstructorNode tableConstructorNode) {
+        visitGeneric(tableConstructorNode);
     }
 
     @Override
-    public void visit(RetStat lastStat) {
+    public void visit(ReturnStatement lastStat) {
         visitGeneric(lastStat);
     }
 
     @Override
-    public void visit(Return lastReturn) {
-        visitGeneric(lastReturn);
+    public void visit(ReturnNode lastReturnNode) {
+        visitGeneric(lastReturnNode);
     }
 
     @Override
-    public void visit(Break lastBreak) {
-        visitGeneric(lastBreak);
+    public void visit(BreakNode lastBreakNode) {
+        visitGeneric(lastBreakNode);
     }
 
     @Override
-    public void visit(Stat stat) {
-        visitGeneric(stat);
+    public void visit(Statement statement) {
+        visitGeneric(statement);
     }
 
     @Override
-    public void visit(Assignment asm) {
+    public void visit(AssignmentNode asm) {
         visitGeneric(asm);
     }
 
     @Override
-    public void visit(FuncCallStatement funcCallStmt) {
+    public void visit(FunctionCallStatementNode funcCallStmt) {
         visitGeneric(funcCallStmt);
     }
 
     @Override
-    public void visit(FuncCall funcCall) {
-        visitGeneric(funcCall);
+    public void visit(FunctionCallNode functionCallNode) {
+        visitGeneric(functionCallNode);
     }
 
     @Override
-    public void visit(DoBlock doExp) {
+    public void visit(DoBlockNode doExp) {
         visitGeneric(doExp);
     }
 
     @Override
-    public void visit(WhileBlock whileExp) {
+    public void visit(WhileBlockNode whileExp) {
         visitGeneric(whileExp);
     }
 
     @Override
-    public void visit(RepeatUntil repeatUntil) {
-        visitGeneric(repeatUntil);
+    public void visit(RepeatUntilNode repeatUntilNode) {
+        visitGeneric(repeatUntilNode);
     }
 
     @Override
-    public void visit(IfThenElseBlock ifThenElse) {
+    public void visit(IfThenElseBlockNode ifThenElse) {
         visitGeneric(ifThenElse);
     }
 
     @Override
-    public void visit(ForBlock forExp) {
+    public void visit(ForBlockNode forExp) {
         visitGeneric(forExp);
     }
 
     @Override
-    public void visit(ForInBlock forIn) {
+    public void visit(ForInBlockNode forIn) {
         visitGeneric(forIn);
     }
 
     @Override
-    public void visit(FuncName funcName) {
-        visitGeneric(funcName);
+    public void visit(FunctionName functionName) {
+        visitGeneric(functionName);
     }
 
     @Override
-    public void visit(FuncNameVar funcNameVar) {
+    public void visit(FunctionNameVarNode funcNameVar) {
         visitGeneric(funcNameVar);
     }
 
     @Override
-    public void visit(FuncNameColonVar funcNameVar) {
+    public void visit(FunctionNameColonVarNode funcNameVar) {
         visitGeneric(funcNameVar);
     }
 
     @Override
-    public void visit(FuncNameVarDotFuncName funcNameVar) {
+    public void visit(FunctionNameVarDotFunctionNameNode funcNameVar) {
         visitGeneric(funcNameVar);
     }
 
     @Override
-    public void visit(LocalFunctionDef localFuncDef) {
+    public void visit(LocalFunctionDefinitionNode localFuncDef) {
         visitGeneric(localFuncDef);
     }
 
     @Override
-    public void visit(Local local) {
-        visitGeneric(local);
+    public void visit(LocalNode localNode) {
+        visitGeneric(localNode);
     }
 
     @Override
-    public void visit(Exp exp) {
-        visitGeneric(exp);
+    public void visit(Expression expression) {
+        visitGeneric(expression);
     }
 
     @Override
-    public void visit(Nil nil) {
-        visitGeneric(nil);
+    public void visit(NilNode nilNode) {
+        visitGeneric(nilNode);
     }
 
     @Override
-    public void visit(BooleanExp booleanExp) {
-        visitGeneric(booleanExp);
+    public void visit(BooleanExpressionNode booleanExpressionNode) {
+        visitGeneric(booleanExpressionNode);
     }
 
     @Override
-    public void visit(NumeralExp numberExp) {
+    public void visit(NumeralExpressionNode numberExp) {
         visitGeneric(numberExp);
     }
 
     @Override
-    public void visit(LiteralStringExp textExp) {
+    public void visit(LiteralStringExpressionNode textExp) {
         visitGeneric(textExp);
     }
 
     @Override
-    public void visit(Dots dots) {
-        visitGeneric(dots);
+    public void visit(DotDotDotNode dotDotDotNode) {
+        visitGeneric(dotDotDotNode);
     }
 
     @Override
-    public void visit(PreExp preExp) {
+    public void visit(PrefixExpressionNode preExp) {
         visitGeneric(preExp);
     }
 
     @Override
-    public void visit(TableConstructorExp tableConstructorExp) {
+    public void visit(TableConstructorExpressionNode tableConstructorExp) {
         visitGeneric(tableConstructorExp);
     }
 
     @Override
-    public void visit(Binop binop) {
-        visitGeneric(binop);
+    public void visit(BinaryOperationNode binaryOperationNode) {
+        visitGeneric(binaryOperationNode);
     }
 
     @Override
-    public void visit(Unop unop) {
-        visitGeneric(unop);
-    }
-
-    @Override
-    public void visit(Var var) {
-        visitGeneric(var);
+    public void visit(UnaryOperationNode unaryOperationNode) {
+        visitGeneric(unaryOperationNode);
     }
 
     @Override
@@ -211,28 +206,33 @@ public abstract class VisitorAdapterGeneric extends VisitorAdaptor {
     }
 
     @Override
-    public void visit(VarTabIndex varTabIndex) {
+    public void visit(VariableNode variableNode) {
+        visitGeneric(variableNode);
+    }
+
+    @Override
+    public void visit(VariableTabIndexNode varTabIndex) {
         visitGeneric(varTabIndex);
     }
 
     @Override
-    public void visit(PrefixExp prefixExp) {
-        visitGeneric(prefixExp);
+    public void visit(PrefixExpression prefixExpression) {
+        visitGeneric(prefixExpression);
     }
 
     @Override
-    public void visit(PrefixExpVar prefixExpVar) {
-        visitGeneric(prefixExpVar);
+    public void visit(PrefixExpressionVariableNode prefixExpressionVariableNode) {
+        visitGeneric(prefixExpressionVariableNode);
     }
 
     @Override
-    public void visit(PrefixExpFuncCall prefixExpFuncCall) {
-        visitGeneric(prefixExpFuncCall);
+    public void visit(PrefixExpressionFunctionCallNode prefixExpressionFunctionCallNode) {
+        visitGeneric(prefixExpressionFunctionCallNode);
     }
 
     @Override
-    public void visit(PrefixExpExp prefixExpExp) {
-        visitGeneric(prefixExpExp);
+    public void visit(PrefixExpressionExpressionNode prefixExpressionExpressionNode) {
+        visitGeneric(prefixExpressionExpressionNode);
     }
 
     @Override
@@ -241,18 +241,18 @@ public abstract class VisitorAdapterGeneric extends VisitorAdaptor {
     }
 
     @Override
-    public void visit(FieldLeftRightExp fieldLRExp) {
+    public void visit(FieldLeftRightExpressionNode fieldLRExp) {
         visitGeneric(fieldLRExp);
     }
 
     @Override
-    public void visit(FieldNameExp fieldNameExp) {
-        visitGeneric(fieldNameExp);
+    public void visit(FieldNameExpressionNode fieldNameExpressionNode) {
+        visitGeneric(fieldNameExpressionNode);
     }
 
     @Override
-    public void visit(FieldExp fieldExp) {
-        visitGeneric(fieldExp);
+    public void visit(FieldExpressionNode fieldExpressionNode) {
+        visitGeneric(fieldExpressionNode);
     }
 
     @SuppressWarnings("unused")

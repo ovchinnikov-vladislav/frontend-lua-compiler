@@ -1,6 +1,6 @@
 package ic7cc.ovchinnikov.compiler;
 
-import ic7cc.ovchinnikov.compiler.ast.node.Block;
+import ic7cc.ovchinnikov.compiler.ast.node.BlockNode;
 import ic7cc.ovchinnikov.compiler.lexer.Lexer;
 import ic7cc.ovchinnikov.compiler.parser.Parser;
 import ic7cc.ovchinnikov.compiler.util.XmlSerializer;
@@ -25,7 +25,7 @@ public class AssignmentsTest {
         File file = Path.of("lua/assignments/assignments_simple.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/assignments/xml/assign_simple.xml").toFile());
     }
@@ -35,7 +35,7 @@ public class AssignmentsTest {
         File file = Path.of("lua/assignments/assignments_multiple.lua").toFile();
 
         Parser parser = new Parser(new Lexer(new FileReader(file)));
-        Block block = (Block) parser.parse().value;
+        BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/assignments/xml/assign_multiple.xml").toFile());
     }

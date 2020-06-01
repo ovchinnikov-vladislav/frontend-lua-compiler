@@ -1,23 +1,41 @@
-<Block>
+<BlockNode>
     <StatList>
         <Assignment>
             <VarList>
-                <Variable var="a"/>
+                <Variable var="table1"/>
             </VarList>
             <ExpList>
-                <BinaryOperation operation="AND">
-                    <PreExp>
-                        <PrefixExpVar>
-                            <Variable var="a"/>
-                        </PrefixExpVar>
-                    </PreExp>
-                    <PreExp>
-                        <PrefixExpVar>
-                            <Variable var="b"/>
-                        </PrefixExpVar>
-                    </PreExp>
-                </BinaryOperation>
+                <TableConstructor>
+                    <FieldList>
+                        <FieldLeftRightExpression>
+                            <leftExpression operation="ADD">
+                                <PrefixExpression>
+                                    <PrefixExpressionVariable>
+                                        <Variable var="a"/>
+                                    </PrefixExpressionVariable>
+                                </PrefixExpression>
+                                <PrefixExpression>
+                                    <PrefixExpressionVariable>
+                                        <Variable var="b"/>
+                                    </PrefixExpressionVariable>
+                                </PrefixExpression>
+                            </leftExpression>
+                            <rightExpression operation="ADD">
+                                <PrefixExpression>
+                                    <PrefixExpressionVariable>
+                                        <Variable var="a"/>
+                                    </PrefixExpressionVariable>
+                                </PrefixExpression>
+                                <PrefixExpression>
+                                    <PrefixExpressionVariable>
+                                        <Variable var="b"/>
+                                    </PrefixExpressionVariable>
+                                </PrefixExpression>
+                            </rightExpression>
+                        </FieldLeftRightExpression>
+                    </FieldList>
+                </TableConstructor>
             </ExpList>
         </Assignment>
     </StatList>
-</Block>
+</BlockNode>

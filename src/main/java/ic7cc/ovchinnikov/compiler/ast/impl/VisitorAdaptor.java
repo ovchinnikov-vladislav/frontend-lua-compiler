@@ -16,172 +16,167 @@ public abstract class VisitorAdaptor implements Visitor {
     }
 
     @Override
-    public void visit(StatList statList) {
+    public void visit(StatementListNode statementListNode) {
 
     }
 
     @Override
-    public void visit(VarList varList) {
+    public void visit(VariableListNode variableListNode) {
 
     }
 
     @Override
-    public void visit(NameList nameList) {
+    public void visit(NameListNode nameListNode) {
 
     }
 
     @Override
-    public void visit(ExpList expList) {
+    public void visit(ExpressionListNode expressionListNode) {
 
     }
 
     @Override
-    public void visit(FieldList fieldList) {
+    public void visit(FieldListNode fieldListNode) {
 
     }
 
     @Override
-    public void visit(Block block) {
+    public void visit(BlockNode blockNode) {
 
     }
 
     @Override
-    public void visit(Name name) {
+    public void visit(NameNode nameNode) {
 
     }
 
     @Override
-    public void visit(TableConstructor tableConstructor) {
+    public void visit(TableConstructorNode tableConstructorNode) {
 
     }
 
     @Override
-    public void visit(RetStat retStat) {
+    public void visit(ReturnStatement returnStatement) {
 
     }
 
     @Override
-    public void visit(Return reTurn) {
+    public void visit(ReturnNode reTurn) {
 
     }
 
     @Override
-    public void visit(Break bReak) {
+    public void visit(BreakNode bReak) {
 
     }
 
     @Override
-    public void visit(Stat stat) {
+    public void visit(Statement statement) {
 
     }
 
     @Override
-    public void visit(Assignment asm) {
+    public void visit(AssignmentNode asm) {
 
     }
 
     @Override
-    public void visit(FuncCallStatement funcCallStatement) {
+    public void visit(FunctionCallStatementNode functionCallStatementNode) {
 
     }
 
     @Override
-    public void visit(DoBlock doBlock) {
+    public void visit(DoBlockNode doBlockNode) {
 
     }
 
     @Override
-    public void visit(WhileBlock whileBlock) {
+    public void visit(WhileBlockNode whileBlockNode) {
 
     }
 
     @Override
-    public void visit(RepeatUntil repeatUntil) {
+    public void visit(RepeatUntilNode repeatUntilNode) {
 
     }
 
     @Override
-    public void visit(IfThenElseBlock ifThenElseBlock) {
+    public void visit(IfThenElseBlockNode ifThenElseBlockNode) {
 
     }
 
     @Override
-    public void visit(ForBlock forBlock) {
+    public void visit(ForBlockNode forBlockNode) {
 
     }
 
     @Override
-    public void visit(ForInBlock forInBlock) {
+    public void visit(ForInBlockNode forInBlockNode) {
 
     }
 
     @Override
-    public void visit(LocalFunctionDef localFunctionDef) {
+    public void visit(LocalFunctionDefinitionNode localFunctionDefinitionNode) {
 
     }
 
     @Override
-    public void visit(Local local) {
+    public void visit(LocalNode localNode) {
 
     }
 
     @Override
-    public void visit(Exp exp) {
+    public void visit(Expression expression) {
 
     }
 
     @Override
-    public void visit(Nil nil) {
+    public void visit(NilNode nilNode) {
 
     }
 
     @Override
-    public void visit(BooleanExp booleanExp) {
+    public void visit(BooleanExpressionNode booleanExpressionNode) {
 
     }
 
     @Override
-    public void visit(NumeralExp numeralExp) {
+    public void visit(NumeralExpressionNode numeralExp) {
 
     }
 
     @Override
-    public void visit(LiteralStringExp literalStringExp) {
+    public void visit(LiteralStringExpressionNode literalStringExp) {
 
     }
 
     @Override
-    public void visit(Dots dots) {
+    public void visit(DotDotDotNode dotDotDotNode) {
 
     }
 
     @Override
-    public void visit(PreExp preExp) {
+    public void visit(PrefixExpressionNode preExp) {
 
     }
 
     @Override
-    public void visit(TableConstructorExp tableConstructorExp) {
+    public void visit(TableConstructorExpressionNode tableConstructorExp) {
 
     }
 
     @Override
-    public void visit(Binop binop) {
+    public void visit(BinaryOperationNode binaryOperationNode) {
 
     }
 
     @Override
-    public void visit(Unop unop) {
+    public void visit(UnaryOperationNode unaryOperationNode) {
 
     }
 
     @Override
-    public void visit(FunctionExp functionExp) {
-
-    }
-
-    @Override
-    public void visit(Var var) {
+    public void visit(FunctionExpressionNode functionExp) {
 
     }
 
@@ -191,27 +186,32 @@ public abstract class VisitorAdaptor implements Visitor {
     }
 
     @Override
-    public void visit(VarTabIndex varTabIndex) {
+    public void visit(VariableNode variableNode) {
 
     }
 
     @Override
-    public void visit(PrefixExp prefixExp) {
+    public void visit(VariableTabIndexNode varTabIndex) {
 
     }
 
     @Override
-    public void visit(PrefixExpVar prefixExpVar) {
+    public void visit(PrefixExpression prefixExpression) {
 
     }
 
     @Override
-    public void visit(PrefixExpFuncCall prefixExpFuncCall) {
+    public void visit(PrefixExpressionVariableNode prefixExpressionVariableNode) {
 
     }
 
     @Override
-    public void visit(PrefixExpExp prefixExpExp) {
+    public void visit(PrefixExpressionFunctionCallNode prefixExpressionFunctionCallNode) {
+
+    }
+
+    @Override
+    public void visit(PrefixExpressionExpressionNode prefixExpressionExpressionNode) {
 
     }
 
@@ -221,32 +221,32 @@ public abstract class VisitorAdaptor implements Visitor {
     }
 
     @Override
-    public void visit(FuncCall funcCall) {
+    public void visit(FunctionCallNode functionCallNode) {
 
     }
 
     @Override
-    public void visit(FuncCallSelf funcCallSelf) {
+    public void visit(FunctionCallSelfNode functionCallSelfNode) {
 
     }
 
     @Override
-    public void visit(FuncName funcName) {
+    public void visit(FunctionName functionName) {
 
     }
 
     @Override
-    public void visit(FuncNameVar funcNameVar) {
+    public void visit(FunctionNameVarNode funcNameVar) {
 
     }
 
     @Override
-    public void visit(FuncNameVarDotFuncName funcNameVarDotFuncName) {
+    public void visit(FunctionNameVarDotFunctionNameNode funcNameVarDotFuncName) {
 
     }
 
     @Override
-    public void visit(FuncNameColonVar funcNameColonVar) {
+    public void visit(FunctionNameColonVarNode functionNameColonVarNode) {
 
     }
 
@@ -256,17 +256,17 @@ public abstract class VisitorAdaptor implements Visitor {
     }
 
     @Override
-    public void visit(FieldLeftRightExp fieldLeftRightExp) {
+    public void visit(FieldLeftRightExpressionNode fieldLeftRightExpressionNode) {
 
     }
 
     @Override
-    public void visit(FieldNameExp fieldNameExp) {
+    public void visit(FieldNameExpressionNode fieldNameExpressionNode) {
 
     }
 
     @Override
-    public void visit(FieldExp fieldExp) {
+    public void visit(FieldExpressionNode fieldExpressionNode) {
 
     }
 

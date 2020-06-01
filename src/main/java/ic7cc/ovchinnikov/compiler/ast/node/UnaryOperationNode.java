@@ -45,4 +45,9 @@ public class UnaryOperationNode extends Expression {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return operation + expression.toString();
+    }
 }

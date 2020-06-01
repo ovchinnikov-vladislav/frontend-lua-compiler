@@ -43,4 +43,9 @@ public class TableConstructorExpressionNode extends Expression {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return tableCons.toString();
+    }
 }

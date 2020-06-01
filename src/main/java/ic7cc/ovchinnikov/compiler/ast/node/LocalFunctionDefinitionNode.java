@@ -65,4 +65,12 @@ public class LocalFunctionDefinitionNode extends Statement {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        if (varArgs)
+            return "local function " + name + "(" + args + ",...)\n" + blockNode;
+        else
+            return "local function " + name + "(" + args + ")\n" + blockNode;
+    }
 }

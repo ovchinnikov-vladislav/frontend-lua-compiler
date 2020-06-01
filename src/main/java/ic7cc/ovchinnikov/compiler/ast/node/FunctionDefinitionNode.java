@@ -57,5 +57,9 @@ public class FunctionDefinitionNode extends Statement {
 
         accept(visitor);
     }
-    
+
+    @Override
+    public String toString() {
+        return "function " + functionName + " " + functionBody;
+    }
 }

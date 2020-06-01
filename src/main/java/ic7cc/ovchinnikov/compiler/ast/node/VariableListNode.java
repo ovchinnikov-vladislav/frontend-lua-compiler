@@ -114,4 +114,17 @@ public class VariableListNode extends ASTNode {
                 getVar(i).traverseBottomUp(visitor);
         this.accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (Variable var : variableList) {
+            builder.append(var).append(",");
+        }
+        String args = builder.toString();
+        if (!args.trim().isEmpty() && args.charAt(args.length() - 1) == ',')
+            args = args.substring(0, args.length() - 1);
+
+        return args;
+    }
 }

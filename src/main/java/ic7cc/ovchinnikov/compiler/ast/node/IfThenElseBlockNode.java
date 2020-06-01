@@ -70,4 +70,9 @@ public class IfThenElseBlockNode extends Statement {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return "if " + ifExpression + " then\n" + thenBlockNode + "else\n" + elseBlockNode;
+    }
 }

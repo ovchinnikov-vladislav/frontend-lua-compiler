@@ -40,7 +40,7 @@ public class NumeralExpressionNode extends Expression {
 
     @Override
     public String toString() {
-        return number + "";
+        return number.toString();
     }
 
     public enum Type {

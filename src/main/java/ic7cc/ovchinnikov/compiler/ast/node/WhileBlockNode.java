@@ -45,4 +45,9 @@ public class WhileBlockNode extends Statement {
         if (blockNode != null) blockNode.traverseBottomUp(visitor);
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return "while " + expression + " do \n" + blockNode + "\nend";
+    }
 }

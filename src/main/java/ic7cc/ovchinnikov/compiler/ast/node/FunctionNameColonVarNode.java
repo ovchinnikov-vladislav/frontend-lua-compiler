@@ -59,4 +59,9 @@ public class FunctionNameColonVarNode extends FunctionName {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return selfFuncNameNode + ":" + funcNameNode;
+    }
 }

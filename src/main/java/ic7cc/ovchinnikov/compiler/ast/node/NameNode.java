@@ -48,4 +48,9 @@ public class NameNode extends ASTNode {
     public void traverseBottomUp(Visitor visitor) {
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

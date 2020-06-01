@@ -60,4 +60,10 @@ public class FunctionCallSelfNode extends FunctionCall {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return preExp + ":" + name  + " " + expressionListNode;
+    }
+
 }

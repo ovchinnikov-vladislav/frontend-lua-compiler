@@ -41,4 +41,9 @@ public class FunctionCallStatementNode extends Statement {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return call.toString();
+    }
 }

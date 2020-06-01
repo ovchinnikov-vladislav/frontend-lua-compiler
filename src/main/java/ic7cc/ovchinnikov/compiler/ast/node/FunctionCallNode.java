@@ -59,6 +59,6 @@ public class FunctionCallNode extends FunctionCall {
 
     @Override
     public String toString() {
-        return preExp + "(" + expressionListNode + ")";
+        return preExp + " " + expressionListNode;
     }
 }

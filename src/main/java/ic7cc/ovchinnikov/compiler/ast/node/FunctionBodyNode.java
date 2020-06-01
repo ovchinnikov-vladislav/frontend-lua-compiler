@@ -66,4 +66,8 @@ public class FunctionBodyNode extends ASTNode {
         return blockNode;
     }
 
+    @Override
+    public String toString() {
+        return "("+parListNode+")\n" + blockNode + "\nend";
+    }
 }

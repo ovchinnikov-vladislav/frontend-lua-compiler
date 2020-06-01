@@ -66,4 +66,9 @@ public class ForInBlockNode extends Statement {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return "for " + nameListNode + " in " + expressionListNode + " do \n" + blockNode + "\nend";
+    }
 }

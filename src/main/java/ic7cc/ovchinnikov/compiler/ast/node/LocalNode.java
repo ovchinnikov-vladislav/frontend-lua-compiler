@@ -58,4 +58,9 @@ public class LocalNode extends Statement {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return "local" + nameListNode + " = " + expressionListNode;
+    }
 }

@@ -44,4 +44,9 @@ public class FunctionNameVarNode extends FunctionName {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return nameNode.toString();
+    }
 }

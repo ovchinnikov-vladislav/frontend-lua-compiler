@@ -59,4 +59,9 @@ public class FunctionNameVarDotFunctionNameNode extends FunctionName {
         
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return nameNode + "." + functionName;
+    }
 }

@@ -115,4 +115,16 @@ public class NameListNode extends ASTNode {
         return nameNodeList.indexOf(item);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (NameNode nameNode : nameNodeList) {
+            builder.append(nameNode).append(",");
+        }
+        String names = builder.toString();
+        if (!names.trim().isEmpty() && names.charAt(names.length() - 1) == ',')
+            names = names.substring(0, names.length() - 1);
+
+        return names;
+    }
 }

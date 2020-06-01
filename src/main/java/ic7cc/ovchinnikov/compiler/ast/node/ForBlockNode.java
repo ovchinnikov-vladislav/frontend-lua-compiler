@@ -74,4 +74,9 @@ public class ForBlockNode extends Statement {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return "for " + ident + " = " + startExpression + ", " + endExpression + ", " + stepExpression + " do \n" + blockNode +"\nend";
+    }
 }

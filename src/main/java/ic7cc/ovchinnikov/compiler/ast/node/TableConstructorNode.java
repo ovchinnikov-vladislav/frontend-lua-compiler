@@ -59,5 +59,9 @@ public class TableConstructorNode extends ASTNode {
 
         accept(visitor);
     }
-    
+
+    @Override
+    public String toString() {
+        return "{" + fieldListNode + "}";
+    }
 }

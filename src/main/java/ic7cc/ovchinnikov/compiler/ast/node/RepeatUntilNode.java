@@ -55,4 +55,9 @@ public class RepeatUntilNode extends Statement {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return "repeat\n" + blockNode + "\nuntil " + expression;
+    }
 }

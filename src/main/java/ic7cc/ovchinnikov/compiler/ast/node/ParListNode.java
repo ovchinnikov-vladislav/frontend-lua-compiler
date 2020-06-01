@@ -43,4 +43,13 @@ public class ParListNode extends ASTNode {
     public void traverseTopDown(Visitor visitor) {
         throw new RuntimeException("Should not be here!");
     }
+
+    @Override
+    public String toString() {
+        String string = nameListNode.toString();
+        if (varParList)
+            string += ",...";
+
+        return string;
+    }
 }

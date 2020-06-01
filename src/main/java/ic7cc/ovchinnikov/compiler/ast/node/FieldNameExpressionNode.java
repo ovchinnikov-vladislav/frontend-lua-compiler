@@ -46,4 +46,9 @@ public class FieldNameExpressionNode extends Field {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return ident + " = " + expression;
+    }
 }

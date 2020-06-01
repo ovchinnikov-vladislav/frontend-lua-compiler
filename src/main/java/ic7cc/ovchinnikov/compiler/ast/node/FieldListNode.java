@@ -116,5 +116,15 @@ public class FieldListNode extends ASTNode {
         return fieldList.indexOf(item);
     }
 
-
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (Field field : fieldList) {
+            builder.append(field).append(",");
+        }
+        String args = builder.toString();
+        if (!args.trim().isEmpty() && args.charAt(args.length() - 1) == ',')
+            args = args.substring(0, args.length() - 1);
+        return args;
+    }
 }

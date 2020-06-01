@@ -916,7 +916,7 @@ public class Lexer implements java_cup.runtime.Scanner, Token {
         case 3: 
           { if (yytext().matches("\\d+\\.\\d+"))
                                    return symbol(NUMERAL, Double.parseDouble(yytext()));
-                                else if (yytext().matches("\\d"))
+                                else if (yytext().matches("\\d+"))
                                    return symbol(NUMERAL, Long.parseLong(yytext()));
                                 else
                                    throw new RuntimeException("Expected Numeral");

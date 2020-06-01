@@ -1,19 +1,21 @@
 <BlockNode>
   <StatList>
-    <FunctionDefinition>
-      <FunctionNameVariable>
-        <Name name="a"/>
-      </FunctionNameVariable>
-      <FunctionBody>
-        <ParList varPar="true">
-          <NameList>
-            <Name name="a"/>
-          </NameList>
-        </ParList>
-        <BlockNode>
-          <StatList/>
-        </BlockNode>
-      </FunctionBody>
-    </FunctionDefinition>
+    <For ident="i">
+      <NumeralExpression number="0" type="INTEGER"/>
+      <NumeralExpression number="10" type="INTEGER"/>
+      <NumeralExpression number="1" type="INTEGER"/>
+      <BlockNode>
+        <StatList>
+          <Assignment>
+            <VarList>
+              <Variable var="x"/>
+            </VarList>
+            <ExpList>
+              <NumeralExpression number="1" type="INTEGER"/>
+            </ExpList>
+          </Assignment>
+        </StatList>
+      </BlockNode>
+    </For>
   </StatList>
 </BlockNode>

@@ -1,21 +1,13 @@
 <BlockNode>
   <StatList>
-    <For ident="i">
-      <NumeralExpression number="0" type="INTEGER"/>
-      <NumeralExpression number="10" type="INTEGER"/>
-      <NumeralExpression number="1" type="INTEGER"/>
-      <BlockNode>
-        <StatList>
-          <Assignment>
-            <VarList>
-              <Variable var="x"/>
-            </VarList>
-            <ExpList>
-              <NumeralExpression number="1" type="INTEGER"/>
-            </ExpList>
-          </Assignment>
-        </StatList>
-      </BlockNode>
-    </For>
+    <Assignment>
+      <VarList>
+        <Variable var="a"/>
+        <Variable var="b"/>
+      </VarList>
+      <ExpList>
+        <NumeralExpression number="5" type="INTEGER"/>
+      </ExpList>
+    </Assignment>
   </StatList>
 </BlockNode>

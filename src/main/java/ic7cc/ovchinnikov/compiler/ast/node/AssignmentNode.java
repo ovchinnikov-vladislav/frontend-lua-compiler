@@ -60,4 +60,8 @@ public class AssignmentNode extends Statement {
         accept(visitor);
     }
 
+    @Override
+    public String toString() {
+        return variableListNode + " = " + expressionListNode;
+    }
 }

@@ -299,7 +299,7 @@ prefixexp ::=  var:v                       {:
                                                 :}
              ;
 
-functioncall ::=  prefixexp:pexp args:ar                  {:  RESULT = new FunctionCallNode(pexp, ar); :}
+functioncall ::=  prefixexp:pexp args:ar                      {:  RESULT = new FunctionCallNode(pexp, ar); :}
                 | prefixexp:pexp COLON NAME:nameNode args:ar  {:  RESULT = new FunctionCallSelfNode(pexp, nameNode, ar); :}
                 ;
 

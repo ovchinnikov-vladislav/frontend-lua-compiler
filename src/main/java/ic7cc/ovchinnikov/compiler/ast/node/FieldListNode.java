@@ -116,4 +116,5 @@ public class FieldListNode extends ASTNode {
         return fieldList.indexOf(item);
     }
 
+
 }

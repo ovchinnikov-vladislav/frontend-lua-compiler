@@ -70,4 +70,9 @@ public class BlockNode extends ASTNode {
             returnStatement.traverseTopDown(visitor);
     }
 
+    @Override
+    public String toString() {
+        return  statementListNode +
+                "\n" + returnStatement;
+    }
 }

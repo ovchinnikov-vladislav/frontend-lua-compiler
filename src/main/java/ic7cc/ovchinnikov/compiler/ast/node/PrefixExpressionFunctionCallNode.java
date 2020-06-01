@@ -43,4 +43,10 @@ public class PrefixExpressionFunctionCallNode extends PrefixExpression {
 
         accept(visitor);
     }
+
+
+    @Override
+    public String toString() {
+        return call.toString();
+    }
 }

@@ -116,5 +116,14 @@ public class StatementListNode extends ASTNode {
     public int indexOf(Statement item) {
         return statementList.indexOf(item);
     }
-    
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (Statement statement : statementList) {
+            result.append(statement).append("\n");
+        }
+
+        return result.toString();
+    }
 }

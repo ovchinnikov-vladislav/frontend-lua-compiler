@@ -2,13 +2,17 @@ package ic7cc.ovchinnikov.compiler.ast.node;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class LocalNode extends Statement {
 
     @JacksonXmlProperty(localName = "NameList")
-    public NameListNode nameListNode;
+    private NameListNode nameListNode;
     @JacksonXmlProperty(localName = "ExpList")
-    public ExpressionListNode expressionListNode;
+    private ExpressionListNode expressionListNode;
 
     public LocalNode(NameListNode nameListNode, ExpressionListNode expressionListNode) {
         this.nameListNode = nameListNode;

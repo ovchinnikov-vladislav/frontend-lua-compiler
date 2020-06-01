@@ -40,4 +40,9 @@ public class DoBlockNode extends Statement {
             blockNode.traverseBottomUp(visitor);
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return blockNode.toString();
+    }
 }

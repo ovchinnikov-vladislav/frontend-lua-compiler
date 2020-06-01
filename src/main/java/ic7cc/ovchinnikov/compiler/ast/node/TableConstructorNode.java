@@ -4,13 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class TableConstructorNode extends ASTNode {
 
     @JsonIgnore
     private ASTNode parent;
     @JacksonXmlProperty(localName = "FieldList")
-    public FieldListNode fieldListNode;
+    private FieldListNode fieldListNode;
 
     public TableConstructorNode(FieldListNode fieldListNode) {
         this.fieldListNode = fieldListNode;

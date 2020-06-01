@@ -40,4 +40,9 @@ public class FieldExpressionNode extends Field {
             fieldExpression.traverseBottomUp(visitor);
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return fieldExpression.toString();
+    }
 }

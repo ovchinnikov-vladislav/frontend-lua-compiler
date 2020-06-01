@@ -1,10 +1,14 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class TableConstructorExpressionNode extends Expression {
 
-    public TableConstructorNode tableCons;
+    private TableConstructorNode tableCons;
 
     public TableConstructorExpressionNode(TableConstructorNode tableCons) {
         this.tableCons = tableCons;

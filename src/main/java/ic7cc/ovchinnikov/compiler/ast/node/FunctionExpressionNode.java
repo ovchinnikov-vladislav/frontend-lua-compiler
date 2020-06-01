@@ -5,6 +5,8 @@ import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class FunctionExpressionNode extends Expression {
@@ -58,5 +60,22 @@ public class FunctionExpressionNode extends Expression {
             blockNode.traverseBottomUp(visitor);
 
         accept(visitor);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        List<NameNode> nameNodes = args.getNameNodeList();
+        for (NameNode nameNode : nameNodes) {
+            builder.append(nameNode);
+            builder.append(",");
+        }
+        String args = builder.toString();
+        if (varArgs)
+            args = builder.append("...").toString();
+        else if (!args.trim().isEmpty() && args.charAt(args.length() - 1) == ',')
+            args = args.substring(0, args.length() - 1);
+
+        return "function (" + args + ")" + "\n" + blockNode;
     }
 }

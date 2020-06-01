@@ -42,4 +42,9 @@ public class PrefixExpressionLPExpressionRPNode extends PrefixExpression {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return "(" + expression + ")";
+    }
 }

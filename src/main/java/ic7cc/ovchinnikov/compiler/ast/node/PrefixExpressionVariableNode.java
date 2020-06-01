@@ -43,4 +43,9 @@ public class PrefixExpressionVariableNode extends PrefixExpression {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return variable.toString();
+    }
 }

@@ -24,9 +24,9 @@ public class SerializeDefinedType {
         else if (v instanceof NumeralExpressionNode)
             gen.writeObjectField("NumeralExpression", v);
         else if (v instanceof PrefixExpressionNode)
-            gen.writeObjectField("PrefixExpression", v);
+            serializePreExp(((PrefixExpressionNode) v).getPreExp(), gen);
         else if (v instanceof TableConstructorExpressionNode)
-            gen.writeObjectField("TableConstructor", ((TableConstructorExpressionNode) v).tableCons);
+            gen.writeObjectField("TableConstructor", ((TableConstructorExpressionNode) v).getTableCons());
         else if (v instanceof UnaryOperationNode)
             gen.writeObjectField("UnaryOperation", v);
     }
@@ -42,11 +42,11 @@ public class SerializeDefinedType {
 
     public static void serializePreExp(PrefixExpression v, JsonGenerator gen) throws IOException {
         if (v instanceof PrefixExpressionVariableNode)
-            gen.writeObjectField("PrefixExpressionVariable", v);
+            gen.writeObjectField("Variable", ((PrefixExpressionVariableNode) v).getVariable());
         else if (v instanceof PrefixExpressionLPExpressionRPNode)
-            gen.writeObjectField("PrefixExpressionLParenExpressionRParen", v);
+            SerializeDefinedType.serializeExpression(((PrefixExpressionLPExpressionRPNode) v).getExpression(), gen);
         else if (v instanceof PrefixExpressionFunctionCallNode)
-            gen.writeObjectField("PrefixExpressionFunctionCall", v);
+            SerializeDefinedType.serializeFunctionCall(((PrefixExpressionFunctionCallNode) v).getCall(), gen);
     }
 
     public static void serializeVariable(Variable v, JsonGenerator gen) throws IOException {

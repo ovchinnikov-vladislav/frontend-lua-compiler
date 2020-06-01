@@ -38,6 +38,11 @@ public class NumeralExpressionNode extends Expression {
         accept(visitor);
     }
 
+    @Override
+    public String toString() {
+        return number + "";
+    }
+
     public enum Type {
         INTEGER,
         DOUBLE

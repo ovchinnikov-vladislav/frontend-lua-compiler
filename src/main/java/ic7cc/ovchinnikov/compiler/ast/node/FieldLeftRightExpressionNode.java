@@ -56,4 +56,9 @@ public class FieldLeftRightExpressionNode extends Field {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return "[" + leftExpression + "] = " + rightExpression;
+    }
 }

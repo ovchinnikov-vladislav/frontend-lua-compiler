@@ -62,4 +62,9 @@ public class BinaryOperationNode extends Expression {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return leftExpression + " " +  operation + " " + rightExpression;
+    }
 }

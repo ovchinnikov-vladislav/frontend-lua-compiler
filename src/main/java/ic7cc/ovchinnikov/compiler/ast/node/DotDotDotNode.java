@@ -22,4 +22,9 @@ public class DotDotDotNode extends Expression {
     public void traverseBottomUp(Visitor visitor) {
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return "...";
+    }
 }

@@ -56,4 +56,9 @@ public class VariableTabIndexNode extends Variable {
 
         accept(visitor);
     }
+
+    @Override
+    public String toString() {
+        return preExp + " [" + indexExpression + "]";
+    }
 }

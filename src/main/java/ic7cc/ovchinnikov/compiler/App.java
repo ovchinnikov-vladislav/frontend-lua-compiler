@@ -6,6 +6,7 @@ package ic7cc.ovchinnikov.compiler;
 import ic7cc.ovchinnikov.compiler.ast.node.*;
 import ic7cc.ovchinnikov.compiler.lexer.Lexer;
 import ic7cc.ovchinnikov.compiler.parser.Parser;
+import ic7cc.ovchinnikov.compiler.semantic.ExpressionDataTypeTableBuilder;
 import ic7cc.ovchinnikov.compiler.util.XmlSerializer;
 
 import java.io.File;
@@ -18,6 +19,9 @@ public class App {
 //        parser.parse();
         Parser parser = new Parser(new Lexer(new FileReader("lua/testlocal.lua")));
         BlockNode blockNode = (BlockNode) parser.parse().value;
+
+        ExpressionDataTypeTableBuilder builder = new ExpressionDataTypeTableBuilder();
+        builder.analyze(blockNode);
 
         XmlSerializer serializer = new XmlSerializer();
 

@@ -3,12 +3,16 @@ package ic7cc.ovchinnikov.compiler.ast.node;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ic7cc.ovchinnikov.compiler.ast.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Getter
+@Setter
 public class ReturnNode extends ReturnStatement {
 
     @JacksonXmlProperty(localName = "ExpList")
-    public ExpressionListNode expressionListNode;
+    private ExpressionListNode expressionListNode;
 
     public ReturnNode(ExpressionListNode expressionListNode) {
         this.expressionListNode = expressionListNode;
@@ -40,5 +44,10 @@ public class ReturnNode extends ReturnStatement {
             expressionListNode.traverseBottomUp(visitor);
 
         accept(visitor);
+    }
+
+    @Override
+    public String toString() {
+        return "return " + expressionListNode;
     }
 }

@@ -1,0 +1,1293 @@
+<BlockNode>
+  <StatList>
+    <FunctionDefinition>
+      <FunctionNameVariable>
+        <Name name="characterPresent"/>
+      </FunctionNameVariable>
+      <FunctionBody>
+        <ParList varPar="false">
+          <NameList>
+            <Name name="stringParam"/>
+            <Name name="character"/>
+          </NameList>
+        </ParList>
+        <BlockNode>
+          <StatList>
+            <For ident="i">
+              <NumeralExpression number="1" type="INTEGER"/>
+              <UnaryOperation operation="LENGTH">
+                <Variable var="stringParam"/>
+              </UnaryOperation>
+              <NumeralExpression number="1" type="INTEGER"/>
+              <BlockNode>
+                <StatList>
+                  <IfThenElse>
+                    <BinaryOperation operation="EQUAL">
+                      <FunctionCallSelf name="sub">
+                        <Variable var="stringParam"/>
+                        <ExpList>
+                          <Variable var="i"/>
+                          <Variable var="i"/>
+                        </ExpList>
+                      </FunctionCallSelf>
+                      <Variable var="character"/>
+                    </BinaryOperation>
+                    <BlockNode>
+                      <StatList/>
+                      <Return>
+                        <ExpList>
+                          <BooleanExpression value="true"/>
+                        </ExpList>
+                      </Return>
+                    </BlockNode>
+                    <BlockNode/>
+                  </IfThenElse>
+                </StatList>
+              </BlockNode>
+            </For>
+          </StatList>
+          <Return>
+            <ExpList>
+              <BooleanExpression value="true"/>
+            </ExpList>
+          </Return>
+        </BlockNode>
+      </FunctionBody>
+    </FunctionDefinition>
+    <FunctionDefinition>
+      <FunctionNameVariable>
+        <Name name="getNumber"/>
+      </FunctionNameVariable>
+      <FunctionBody>
+        <ParList varPar="false">
+          <NameList>
+            <Name name="stringParam"/>
+          </NameList>
+        </ParList>
+        <BlockNode>
+          <StatList>
+            <Local>
+              <NameList>
+                <Name name="validCharacters"/>
+              </NameList>
+              <ExpList>
+                <LiteralStringExpression string="0123456789.-"/>
+              </ExpList>
+            </Local>
+            <Local>
+              <NameList>
+                <Name name="foundDigit"/>
+              </NameList>
+              <ExpList>
+                <BooleanExpression value="false"/>
+              </ExpList>
+            </Local>
+            <Local>
+              <NameList>
+                <Name name="i"/>
+              </NameList>
+              <ExpList>
+                <NumeralExpression number="1" type="INTEGER"/>
+              </ExpList>
+            </Local>
+            <Local>
+              <NameList>
+                <Name name="currentCharacter"/>
+              </NameList>
+              <ExpList>
+                <FunctionCallSelf name="sub">
+                  <Variable var="stringParam"/>
+                  <ExpList>
+                    <Variable var="i"/>
+                    <Variable var="i"/>
+                  </ExpList>
+                </FunctionCallSelf>
+              </ExpList>
+            </Local>
+            <While>
+              <FunctionCall>
+                <Variable var="characterPresent"/>
+                <ExpList>
+                  <Variable var="validCharacters"/>
+                  <Variable var="currentCharacter"/>
+                </ExpList>
+              </FunctionCall>
+              <BlockNode>
+                <StatList>
+                  <IfThenElse>
+                    <BinaryOperation operation="EQUAL">
+                      <Variable var="i"/>
+                      <NumeralExpression number="1" type="INTEGER"/>
+                    </BinaryOperation>
+                    <BlockNode>
+                      <StatList>
+                        <Assignment>
+                          <VarList>
+                            <Variable var="validCharacters"/>
+                          </VarList>
+                          <ExpList>
+                            <LiteralStringExpression string="0123456789."/>
+                          </ExpList>
+                        </Assignment>
+                      </StatList>
+                    </BlockNode>
+                    <BlockNode/>
+                  </IfThenElse>
+                  <IfThenElse>
+                    <BinaryOperation operation="EQUAL">
+                      <Variable var="currentCharacter"/>
+                      <LiteralStringExpression string="."/>
+                    </BinaryOperation>
+                    <BlockNode>
+                      <StatList>
+                        <Assignment>
+                          <VarList>
+                            <Variable var="validCharacters"/>
+                          </VarList>
+                          <ExpList>
+                            <LiteralStringExpression string="0123456789"/>
+                          </ExpList>
+                        </Assignment>
+                      </StatList>
+                    </BlockNode>
+                    <BlockNode/>
+                  </IfThenElse>
+                  <IfThenElse>
+                    <FunctionCall>
+                      <Variable var="characterPresent"/>
+                      <ExpList>
+                        <LiteralStringExpression string="0123456789"/>
+                        <Variable var="currentCharacter"/>
+                      </ExpList>
+                    </FunctionCall>
+                    <BlockNode>
+                      <StatList>
+                        <Assignment>
+                          <VarList>
+                            <Variable var="foundDigit"/>
+                          </VarList>
+                          <ExpList>
+                            <BooleanExpression value="true"/>
+                          </ExpList>
+                        </Assignment>
+                      </StatList>
+                    </BlockNode>
+                    <BlockNode/>
+                  </IfThenElse>
+                  <Assignment>
+                    <VarList>
+                      <Variable var="i"/>
+                    </VarList>
+                    <ExpList>
+                      <BinaryOperation operation="ADD">
+                        <Variable var="i"/>
+                        <NumeralExpression number="1" type="INTEGER"/>
+                      </BinaryOperation>
+                    </ExpList>
+                  </Assignment>
+                  <IfThenElse>
+                    <BinaryOperation operation="MORE">
+                      <Variable var="i"/>
+                      <UnaryOperation operation="LENGTH">
+                        <Variable var="stringParam"/>
+                      </UnaryOperation>
+                    </BinaryOperation>
+                    <BlockNode>
+                      <StatList>
+                        <Break/>
+                      </StatList>
+                    </BlockNode>
+                    <BlockNode/>
+                  </IfThenElse>
+                  <Assignment>
+                    <VarList>
+                      <Variable var="currentCharacter"/>
+                    </VarList>
+                    <ExpList>
+                      <FunctionCallSelf name="sub">
+                        <Variable var="stringParam"/>
+                        <ExpList>
+                          <Variable var="i"/>
+                          <Variable var="i"/>
+                        </ExpList>
+                      </FunctionCallSelf>
+                    </ExpList>
+                  </Assignment>
+                </StatList>
+              </BlockNode>
+            </While>
+            <IfThenElse>
+              <UnaryOperation operation="NOT">
+                <Variable var="foundDigit"/>
+              </UnaryOperation>
+              <BlockNode>
+                <StatList>
+                  <Assignment>
+                    <VarList>
+                      <Variable var="i"/>
+                    </VarList>
+                    <ExpList>
+                      <NumeralExpression number="1" type="INTEGER"/>
+                    </ExpList>
+                  </Assignment>
+                </StatList>
+              </BlockNode>
+              <BlockNode/>
+            </IfThenElse>
+            <Local>
+              <NameList>
+                <Name name="number"/>
+              </NameList>
+              <ExpList>
+                <FunctionCall>
+                  <Variable var="tonumber"/>
+                  <ExpList>
+                    <FunctionCallSelf name="sub">
+                      <Variable var="stringParam"/>
+                      <ExpList>
+                        <NumeralExpression number="1" type="INTEGER"/>
+                        <BinaryOperation operation="SUB">
+                          <Variable var="i"/>
+                          <NumeralExpression number="1" type="INTEGER"/>
+                        </BinaryOperation>
+                      </ExpList>
+                    </FunctionCallSelf>
+                  </ExpList>
+                </FunctionCall>
+              </ExpList>
+            </Local>
+          </StatList>
+          <Return>
+            <ExpList>
+              <Variable var="number"/>
+              <FunctionCallSelf name="sub">
+                <Variable var="stringParam"/>
+                <ExpList>
+                  <Variable var="i"/>
+                  <UnaryOperation operation="LENGTH">
+                    <Variable var="stringParam"/>
+                  </UnaryOperation>
+                </ExpList>
+              </FunctionCallSelf>
+            </ExpList>
+          </Return>
+        </BlockNode>
+      </FunctionBody>
+    </FunctionDefinition>
+    <FunctionDefinition>
+      <FunctionNameVariable>
+        <Name name="parseExpression"/>
+      </FunctionNameVariable>
+      <FunctionBody>
+        <ParList varPar="false">
+          <NameList>
+            <Name name="expression"/>
+            <Name name="expectEndParentheses"/>
+          </NameList>
+        </ParList>
+        <BlockNode>
+          <StatList>
+            <Local>
+              <NameList>
+                <Name name="expectingExpression"/>
+              </NameList>
+              <ExpList>
+                <BooleanExpression value="true"/>
+              </ExpList>
+            </Local>
+            <Local>
+              <NameList>
+                <Name name="lastExpressionWasParenthetical"/>
+              </NameList>
+              <ExpList>
+                <BooleanExpression value="false"/>
+              </ExpList>
+            </Local>
+            <Local>
+              <NameList>
+                <Name name="operators"/>
+              </NameList>
+              <ExpList>
+                <LiteralStringExpression string="+-/*^"/>
+              </ExpList>
+            </Local>
+            <Local>
+              <NameList>
+                <Name name="parts"/>
+              </NameList>
+              <ExpList>
+                <TableConstructor>
+                  <FieldList/>
+                </TableConstructor>
+              </ExpList>
+            </Local>
+            <Local>
+              <NameList>
+                <Name name="foundEndParentheses"/>
+              </NameList>
+              <ExpList>
+                <BooleanExpression value="false"/>
+              </ExpList>
+            </Local>
+            <Assignment>
+              <VarList>
+                <Variable var="expectEndParentheses"/>
+              </VarList>
+              <ExpList>
+                <BinaryOperation operation="OR">
+                  <Variable var="expectEndParentheses"/>
+                  <BooleanExpression value="false"/>
+                </BinaryOperation>
+              </ExpList>
+            </Assignment>
+            <While>
+              <BinaryOperation operation="NOTEQ">
+                <Variable var="expression"/>
+                <LiteralStringExpression string=""/>
+              </BinaryOperation>
+              <BlockNode>
+                <StatList>
+                  <Local>
+                    <NameList>
+                      <Name name="nextNumber"/>
+                      <Name name="expressionAfterNumber"/>
+                    </NameList>
+                    <ExpList>
+                      <FunctionCall>
+                        <Variable var="getNumber"/>
+                        <ExpList>
+                          <Variable var="expression"/>
+                        </ExpList>
+                      </FunctionCall>
+                    </ExpList>
+                  </Local>
+                  <Local>
+                    <NameList>
+                      <Name name="nextCharacter"/>
+                    </NameList>
+                    <ExpList>
+                      <FunctionCallSelf name="sub">
+                        <Variable var="expression"/>
+                        <ExpList>
+                          <NumeralExpression number="1" type="INTEGER"/>
+                          <NumeralExpression number="1" type="INTEGER"/>
+                        </ExpList>
+                      </FunctionCallSelf>
+                    </ExpList>
+                  </Local>
+                  <Local>
+                    <NameList>
+                      <Name name="nextPiece"/>
+                    </NameList>
+                    <ExpList>
+                      <FunctionCallSelf name="sub">
+                        <Variable var="expression"/>
+                        <ExpList>
+                          <NumeralExpression number="1" type="INTEGER"/>
+                          <NumeralExpression number="5" type="INTEGER"/>
+                        </ExpList>
+                      </FunctionCallSelf>
+                    </ExpList>
+                  </Local>
+                  <IfThenElse>
+                    <BinaryOperation operation="LESSEQ">
+                      <UnaryOperation operation="LENGTH">
+                        <Variable var="expression"/>
+                      </UnaryOperation>
+                      <NumeralExpression number="5" type="INTEGER"/>
+                    </BinaryOperation>
+                    <BlockNode>
+                      <StatList>
+                        <Assignment>
+                          <VarList>
+                            <Variable var="nextPiece"/>
+                          </VarList>
+                          <ExpList>
+                            <BinaryOperation operation="CONCAT">
+                              <Variable var="nextPiece"/>
+                              <LiteralStringExpression string=" [end]"/>
+                            </BinaryOperation>
+                          </ExpList>
+                        </Assignment>
+                      </StatList>
+                    </BlockNode>
+                    <BlockNode/>
+                  </IfThenElse>
+                  <IfThenElse>
+                    <Variable var="expectingExpression"/>
+                    <BlockNode>
+                      <StatList>
+                        <IfThenElse>
+                          <BinaryOperation operation="EQUAL">
+                            <Variable var="nextCharacter"/>
+                            <LiteralStringExpression string="("/>
+                          </BinaryOperation>
+                          <BlockNode>
+                            <StatList>
+                              <Local>
+                                <NameList>
+                                  <Name name="nestedExpressionValue"/>
+                                  <Name name="expressionAfterParentheses"/>
+                                </NameList>
+                                <ExpList>
+                                  <FunctionCall>
+                                    <Variable var="parseExpression"/>
+                                    <ExpList>
+                                      <FunctionCallSelf name="sub">
+                                        <Variable var="expression"/>
+                                        <ExpList>
+                                          <NumeralExpression number="2" type="INTEGER"/>
+                                          <UnaryOperation operation="LENGTH">
+                                            <Variable var="expression"/>
+                                          </UnaryOperation>
+                                        </ExpList>
+                                      </FunctionCallSelf>
+                                      <BooleanExpression value="true"/>
+                                    </ExpList>
+                                  </FunctionCall>
+                                </ExpList>
+                              </Local>
+                              <IfThenElse>
+                                <BinaryOperation operation="EQUAL">
+                                  <Variable var="nestedExpressionValue"/>
+                                  <Nil/>
+                                </BinaryOperation>
+                                <BlockNode>
+                                  <StatList/>
+                                  <Return>
+                                    <ExpList>
+                                      <Variable var="nestedExpressionValue"/>
+                                      <Variable var="expressionAfterParentheses"/>
+                                    </ExpList>
+                                  </Return>
+                                </BlockNode>
+                                <BlockNode/>
+                              </IfThenElse>
+                              <FunctionCallStatement>
+                                <FunctionCall>
+                                  <Variable>
+                                    <Variable var="table"/>
+                                    <LiteralStringExpression string="insert"/>
+                                  </Variable>
+                                  <ExpList>
+                                    <Variable var="parts"/>
+                                    <Variable var="nestedExpressionValue"/>
+                                  </ExpList>
+                                </FunctionCall>
+                              </FunctionCallStatement>
+                              <Assignment>
+                                <VarList>
+                                  <Variable var="expression"/>
+                                </VarList>
+                                <ExpList>
+                                  <Variable var="expressionAfterParentheses"/>
+                                </ExpList>
+                              </Assignment>
+                              <Assignment>
+                                <VarList>
+                                  <Variable var="lastExpressionWasParenthetical"/>
+                                </VarList>
+                                <ExpList>
+                                  <BooleanExpression value="true"/>
+                                </ExpList>
+                              </Assignment>
+                            </StatList>
+                          </BlockNode>
+                          <BlockNode>
+                            <StatList>
+                              <IfThenElse>
+                                <BinaryOperation operation="EQUAL">
+                                  <Variable var="nextNumber"/>
+                                  <Nil/>
+                                </BinaryOperation>
+                                <BlockNode>
+                                  <StatList/>
+                                  <Return>
+                                    <ExpList>
+                                      <Nil/>
+                                      <BinaryOperation operation="CONCAT">
+                                        <BinaryOperation operation="CONCAT">
+                                          <LiteralStringExpression string="Expected number or '(', but found '"/>
+                                          <Variable var="nextPiece"/>
+                                        </BinaryOperation>
+                                        <LiteralStringExpression string="'"/>
+                                      </BinaryOperation>
+                                    </ExpList>
+                                  </Return>
+                                </BlockNode>
+                                <BlockNode/>
+                              </IfThenElse>
+                              <FunctionCallStatement>
+                                <FunctionCall>
+                                  <Variable>
+                                    <Variable var="table"/>
+                                    <LiteralStringExpression string="insert"/>
+                                  </Variable>
+                                  <ExpList>
+                                    <Variable var="parts"/>
+                                    <Variable var="nextNumber"/>
+                                  </ExpList>
+                                </FunctionCall>
+                              </FunctionCallStatement>
+                              <Assignment>
+                                <VarList>
+                                  <Variable var="expression"/>
+                                </VarList>
+                                <ExpList>
+                                  <Variable var="expressionAfterNumber"/>
+                                </ExpList>
+                              </Assignment>
+                              <Assignment>
+                                <VarList>
+                                  <Variable var="lastExpressionWasParenthetical"/>
+                                </VarList>
+                                <ExpList>
+                                  <BooleanExpression value="false"/>
+                                </ExpList>
+                              </Assignment>
+                            </StatList>
+                          </BlockNode>
+                        </IfThenElse>
+                      </StatList>
+                    </BlockNode>
+                    <BlockNode>
+                      <StatList>
+                        <IfThenElse>
+                          <FunctionCall>
+                            <Variable var="characterPresent"/>
+                            <ExpList>
+                              <Variable var="operators"/>
+                              <Variable var="nextCharacter"/>
+                            </ExpList>
+                          </FunctionCall>
+                          <BlockNode>
+                            <StatList>
+                              <FunctionCallStatement>
+                                <FunctionCall>
+                                  <Variable>
+                                    <Variable var="table"/>
+                                    <LiteralStringExpression string="insert"/>
+                                  </Variable>
+                                  <ExpList>
+                                    <Variable var="parts"/>
+                                    <Variable var="nextCharacter"/>
+                                  </ExpList>
+                                </FunctionCall>
+                              </FunctionCallStatement>
+                              <Assignment>
+                                <VarList>
+                                  <Variable var="expression"/>
+                                </VarList>
+                                <ExpList>
+                                  <FunctionCallSelf name="sub">
+                                    <Variable var="expression"/>
+                                    <ExpList>
+                                      <NumeralExpression number="2" type="INTEGER"/>
+                                      <UnaryOperation operation="LENGTH">
+                                        <Variable var="expression"/>
+                                      </UnaryOperation>
+                                    </ExpList>
+                                  </FunctionCallSelf>
+                                </ExpList>
+                              </Assignment>
+                            </StatList>
+                          </BlockNode>
+                          <BlockNode>
+                            <StatList>
+                              <IfThenElse>
+                                <BinaryOperation operation="OR">
+                                  <BinaryOperation operation="EQUAL">
+                                    <Variable var="nextCharacter"/>
+                                    <LiteralStringExpression string="("/>
+                                  </BinaryOperation>
+                                  <BinaryOperation operation="AND">
+                                    <Variable var="lastExpressionWasParenthetical"/>
+                                    <BinaryOperation operation="NOTEQ">
+                                      <Variable var="nextNumber"/>
+                                      <Nil/>
+                                    </BinaryOperation>
+                                  </BinaryOperation>
+                                </BinaryOperation>
+                                <BlockNode>
+                                  <StatList>
+                                    <FunctionCallStatement>
+                                      <FunctionCall>
+                                        <Variable>
+                                          <Variable var="table"/>
+                                          <LiteralStringExpression string="insert"/>
+                                        </Variable>
+                                        <ExpList>
+                                          <Variable var="parts"/>
+                                          <LiteralStringExpression string="*"/>
+                                        </ExpList>
+                                      </FunctionCall>
+                                    </FunctionCallStatement>
+                                  </StatList>
+                                </BlockNode>
+                                <BlockNode>
+                                  <StatList>
+                                    <IfThenElse>
+                                      <BinaryOperation operation="EQUAL">
+                                        <Variable var="nextCharacter"/>
+                                        <LiteralStringExpression string=")"/>
+                                      </BinaryOperation>
+                                      <BlockNode>
+                                        <StatList>
+                                          <IfThenElse>
+                                            <Variable var="expectEndParentheses"/>
+                                            <BlockNode>
+                                              <StatList>
+                                                <Assignment>
+                                                  <VarList>
+                                                    <Variable var="expression"/>
+                                                  </VarList>
+                                                  <ExpList>
+                                                    <FunctionCallSelf name="sub">
+                                                      <Variable var="expression"/>
+                                                      <ExpList>
+                                                        <NumeralExpression number="2" type="INTEGER"/>
+                                                        <UnaryOperation operation="LENGTH">
+                                                          <Variable var="expression"/>
+                                                        </UnaryOperation>
+                                                      </ExpList>
+                                                    </FunctionCallSelf>
+                                                  </ExpList>
+                                                </Assignment>
+                                                <Assignment>
+                                                  <VarList>
+                                                    <Variable var="foundEndParentheses"/>
+                                                  </VarList>
+                                                  <ExpList>
+                                                    <BooleanExpression value="true"/>
+                                                  </ExpList>
+                                                </Assignment>
+                                                <Break/>
+                                              </StatList>
+                                            </BlockNode>
+                                            <BlockNode>
+                                              <StatList/>
+                                              <Return>
+                                                <ExpList>
+                                                  <Nil/>
+                                                  <BinaryOperation operation="CONCAT">
+                                                    <BinaryOperation operation="CONCAT">
+                                                      <LiteralStringExpression string="')' present without matching '(' at '"/>
+                                                      <Variable var="nextPiece"/>
+                                                    </BinaryOperation>
+                                                    <LiteralStringExpression string="'"/>
+                                                  </BinaryOperation>
+                                                </ExpList>
+                                              </Return>
+                                            </BlockNode>
+                                          </IfThenElse>
+                                        </StatList>
+                                      </BlockNode>
+                                      <BlockNode>
+                                        <StatList/>
+                                        <Return>
+                                          <ExpList>
+                                            <Nil/>
+                                            <BinaryOperation operation="CONCAT">
+                                              <BinaryOperation operation="CONCAT">
+                                                <LiteralStringExpression string="Expected expression, but found '"/>
+                                                <Variable var="nextPiece"/>
+                                              </BinaryOperation>
+                                              <LiteralStringExpression string="'"/>
+                                            </BinaryOperation>
+                                          </ExpList>
+                                        </Return>
+                                      </BlockNode>
+                                    </IfThenElse>
+                                  </StatList>
+                                </BlockNode>
+                              </IfThenElse>
+                            </StatList>
+                          </BlockNode>
+                        </IfThenElse>
+                      </StatList>
+                    </BlockNode>
+                  </IfThenElse>
+                  <Assignment>
+                    <VarList>
+                      <Variable var="expectingExpression"/>
+                    </VarList>
+                    <ExpList>
+                      <UnaryOperation operation="NOT">
+                        <Variable var="expectingExpression"/>
+                      </UnaryOperation>
+                    </ExpList>
+                  </Assignment>
+                </StatList>
+              </BlockNode>
+            </While>
+            <IfThenElse>
+              <BinaryOperation operation="AND">
+                <Variable var="expectEndParentheses"/>
+                <UnaryOperation operation="NOT">
+                  <Variable var="foundEndParentheses"/>
+                </UnaryOperation>
+              </BinaryOperation>
+              <BlockNode>
+                <StatList/>
+                <Return>
+                  <ExpList>
+                    <Nil/>
+                    <LiteralStringExpression string="Expression unexpectedly ended ('(' present without matching ')')"/>
+                  </ExpList>
+                </Return>
+              </BlockNode>
+              <BlockNode/>
+            </IfThenElse>
+            <IfThenElse>
+              <Variable var="expectingExpression"/>
+              <BlockNode>
+                <StatList/>
+                <Return>
+                  <ExpList>
+                    <Nil/>
+                    <LiteralStringExpression string="Expression unexpectedly ended"/>
+                  </ExpList>
+                </Return>
+              </BlockNode>
+              <BlockNode/>
+            </IfThenElse>
+            <Local>
+              <NameList>
+                <Name name="i"/>
+              </NameList>
+              <ExpList>
+                <UnaryOperation operation="LENGTH">
+                  <Variable var="parts"/>
+                </UnaryOperation>
+              </ExpList>
+            </Local>
+            <While>
+              <BinaryOperation operation="MOREEQ">
+                <Variable var="i"/>
+                <NumeralExpression number="1" type="INTEGER"/>
+              </BinaryOperation>
+              <BlockNode>
+                <StatList>
+                  <IfThenElse>
+                    <BinaryOperation operation="EQUAL">
+                      <Variable>
+                        <Variable var="parts"/>
+                        <Variable var="i"/>
+                      </Variable>
+                      <LiteralStringExpression string="^"/>
+                    </BinaryOperation>
+                    <BlockNode>
+                      <StatList>
+                        <Assignment>
+                          <VarList>
+                            <VariableTableIndex>
+                              <Variable var="parts"/>
+                              <BinaryOperation operation="SUB">
+                                <Variable var="i"/>
+                                <NumeralExpression number="1" type="INTEGER"/>
+                              </BinaryOperation>
+                            </VariableTableIndex>
+                          </VarList>
+                          <ExpList>
+                            <BinaryOperation operation="POW">
+                              <Variable>
+                                <Variable var="parts"/>
+                                <BinaryOperation operation="SUB">
+                                  <Variable var="i"/>
+                                  <NumeralExpression number="1" type="INTEGER"/>
+                                </BinaryOperation>
+                              </Variable>
+                              <Variable>
+                                <Variable var="parts"/>
+                                <BinaryOperation operation="ADD">
+                                  <Variable var="i"/>
+                                  <NumeralExpression number="1" type="INTEGER"/>
+                                </BinaryOperation>
+                              </Variable>
+                            </BinaryOperation>
+                          </ExpList>
+                        </Assignment>
+                        <FunctionCallStatement>
+                          <FunctionCall>
+                            <Variable>
+                              <Variable var="table"/>
+                              <LiteralStringExpression string="remove"/>
+                            </Variable>
+                            <ExpList>
+                              <Variable var="parts"/>
+                              <BinaryOperation operation="ADD">
+                                <Variable var="i"/>
+                                <NumeralExpression number="1" type="INTEGER"/>
+                              </BinaryOperation>
+                            </ExpList>
+                          </FunctionCall>
+                        </FunctionCallStatement>
+                        <FunctionCallStatement>
+                          <FunctionCall>
+                            <Variable>
+                              <Variable var="table"/>
+                              <LiteralStringExpression string="remove"/>
+                            </Variable>
+                            <ExpList>
+                              <Variable var="parts"/>
+                              <Variable var="i"/>
+                            </ExpList>
+                          </FunctionCall>
+                        </FunctionCallStatement>
+                      </StatList>
+                    </BlockNode>
+                    <BlockNode/>
+                  </IfThenElse>
+                  <Assignment>
+                    <VarList>
+                      <Variable var="i"/>
+                    </VarList>
+                    <ExpList>
+                      <BinaryOperation operation="SUB">
+                        <Variable var="i"/>
+                        <NumeralExpression number="1" type="INTEGER"/>
+                      </BinaryOperation>
+                    </ExpList>
+                  </Assignment>
+                </StatList>
+              </BlockNode>
+            </While>
+            <Assignment>
+              <VarList>
+                <Variable var="i"/>
+              </VarList>
+              <ExpList>
+                <NumeralExpression number="1" type="INTEGER"/>
+              </ExpList>
+            </Assignment>
+            <While>
+              <BinaryOperation operation="LESSEQ">
+                <Variable var="i"/>
+                <UnaryOperation operation="LENGTH">
+                  <Variable var="parts"/>
+                </UnaryOperation>
+              </BinaryOperation>
+              <BlockNode>
+                <StatList>
+                  <IfThenElse>
+                    <BinaryOperation operation="EQUAL">
+                      <Variable>
+                        <Variable var="parts"/>
+                        <Variable var="i"/>
+                      </Variable>
+                      <LiteralStringExpression string="*"/>
+                    </BinaryOperation>
+                    <BlockNode>
+                      <StatList>
+                        <Assignment>
+                          <VarList>
+                            <VariableTableIndex>
+                              <Variable var="parts"/>
+                              <BinaryOperation operation="SUB">
+                                <Variable var="i"/>
+                                <NumeralExpression number="1" type="INTEGER"/>
+                              </BinaryOperation>
+                            </VariableTableIndex>
+                          </VarList>
+                          <ExpList>
+                            <BinaryOperation operation="MUL">
+                              <Variable>
+                                <Variable var="parts"/>
+                                <BinaryOperation operation="SUB">
+                                  <Variable var="i"/>
+                                  <NumeralExpression number="1" type="INTEGER"/>
+                                </BinaryOperation>
+                              </Variable>
+                              <Variable>
+                                <Variable var="parts"/>
+                                <BinaryOperation operation="ADD">
+                                  <Variable var="i"/>
+                                  <NumeralExpression number="1" type="INTEGER"/>
+                                </BinaryOperation>
+                              </Variable>
+                            </BinaryOperation>
+                          </ExpList>
+                        </Assignment>
+                        <FunctionCallStatement>
+                          <FunctionCall>
+                            <Variable>
+                              <Variable var="table"/>
+                              <LiteralStringExpression string="remove"/>
+                            </Variable>
+                            <ExpList>
+                              <Variable var="parts"/>
+                              <BinaryOperation operation="ADD">
+                                <Variable var="i"/>
+                                <NumeralExpression number="1" type="INTEGER"/>
+                              </BinaryOperation>
+                            </ExpList>
+                          </FunctionCall>
+                        </FunctionCallStatement>
+                        <FunctionCallStatement>
+                          <FunctionCall>
+                            <Variable>
+                              <Variable var="table"/>
+                              <LiteralStringExpression string="remove"/>
+                            </Variable>
+                            <ExpList>
+                              <Variable var="parts"/>
+                              <Variable var="i"/>
+                            </ExpList>
+                          </FunctionCall>
+                        </FunctionCallStatement>
+                      </StatList>
+                    </BlockNode>
+                    <BlockNode>
+                      <StatList>
+                        <IfThenElse>
+                          <BinaryOperation operation="EQUAL">
+                            <Variable>
+                              <Variable var="parts"/>
+                              <Variable var="i"/>
+                            </Variable>
+                            <LiteralStringExpression string="/"/>
+                          </BinaryOperation>
+                          <BlockNode>
+                            <StatList>
+                              <Assignment>
+                                <VarList>
+                                  <VariableTableIndex>
+                                    <Variable var="parts"/>
+                                    <BinaryOperation operation="SUB">
+                                      <Variable var="i"/>
+                                      <NumeralExpression number="1" type="INTEGER"/>
+                                    </BinaryOperation>
+                                  </VariableTableIndex>
+                                </VarList>
+                                <ExpList>
+                                  <BinaryOperation operation="DIV">
+                                    <Variable>
+                                      <Variable var="parts"/>
+                                      <BinaryOperation operation="SUB">
+                                        <Variable var="i"/>
+                                        <NumeralExpression number="1" type="INTEGER"/>
+                                      </BinaryOperation>
+                                    </Variable>
+                                    <Variable>
+                                      <Variable var="parts"/>
+                                      <BinaryOperation operation="ADD">
+                                        <Variable var="i"/>
+                                        <NumeralExpression number="1" type="INTEGER"/>
+                                      </BinaryOperation>
+                                    </Variable>
+                                  </BinaryOperation>
+                                </ExpList>
+                              </Assignment>
+                              <FunctionCallStatement>
+                                <FunctionCall>
+                                  <Variable>
+                                    <Variable var="table"/>
+                                    <LiteralStringExpression string="remove"/>
+                                  </Variable>
+                                  <ExpList>
+                                    <Variable var="parts"/>
+                                    <BinaryOperation operation="ADD">
+                                      <Variable var="i"/>
+                                      <NumeralExpression number="1" type="INTEGER"/>
+                                    </BinaryOperation>
+                                  </ExpList>
+                                </FunctionCall>
+                              </FunctionCallStatement>
+                              <FunctionCallStatement>
+                                <FunctionCall>
+                                  <Variable>
+                                    <Variable var="table"/>
+                                    <LiteralStringExpression string="remove"/>
+                                  </Variable>
+                                  <ExpList>
+                                    <Variable var="parts"/>
+                                    <Variable var="i"/>
+                                  </ExpList>
+                                </FunctionCall>
+                              </FunctionCallStatement>
+                            </StatList>
+                          </BlockNode>
+                          <BlockNode>
+                            <StatList>
+                              <Assignment>
+                                <VarList>
+                                  <Variable var="i"/>
+                                </VarList>
+                                <ExpList>
+                                  <BinaryOperation operation="ADD">
+                                    <Variable var="i"/>
+                                    <NumeralExpression number="1" type="INTEGER"/>
+                                  </BinaryOperation>
+                                </ExpList>
+                              </Assignment>
+                            </StatList>
+                          </BlockNode>
+                        </IfThenElse>
+                      </StatList>
+                    </BlockNode>
+                  </IfThenElse>
+                </StatList>
+              </BlockNode>
+            </While>
+            <Assignment>
+              <VarList>
+                <Variable var="i"/>
+              </VarList>
+              <ExpList>
+                <NumeralExpression number="1" type="INTEGER"/>
+              </ExpList>
+            </Assignment>
+            <While>
+              <BinaryOperation operation="LESSEQ">
+                <Variable var="i"/>
+                <UnaryOperation operation="LENGTH">
+                  <Variable var="parts"/>
+                </UnaryOperation>
+              </BinaryOperation>
+              <BlockNode>
+                <StatList>
+                  <IfThenElse>
+                    <BinaryOperation operation="EQUAL">
+                      <Variable>
+                        <Variable var="parts"/>
+                        <Variable var="i"/>
+                      </Variable>
+                      <LiteralStringExpression string="+"/>
+                    </BinaryOperation>
+                    <BlockNode>
+                      <StatList>
+                        <Assignment>
+                          <VarList>
+                            <VariableTableIndex>
+                              <Variable var="parts"/>
+                              <BinaryOperation operation="SUB">
+                                <Variable var="i"/>
+                                <NumeralExpression number="1" type="INTEGER"/>
+                              </BinaryOperation>
+                            </VariableTableIndex>
+                          </VarList>
+                          <ExpList>
+                            <BinaryOperation operation="ADD">
+                              <Variable>
+                                <Variable var="parts"/>
+                                <BinaryOperation operation="SUB">
+                                  <Variable var="i"/>
+                                  <NumeralExpression number="1" type="INTEGER"/>
+                                </BinaryOperation>
+                              </Variable>
+                              <Variable>
+                                <Variable var="parts"/>
+                                <BinaryOperation operation="ADD">
+                                  <Variable var="i"/>
+                                  <NumeralExpression number="1" type="INTEGER"/>
+                                </BinaryOperation>
+                              </Variable>
+                            </BinaryOperation>
+                          </ExpList>
+                        </Assignment>
+                        <FunctionCallStatement>
+                          <FunctionCall>
+                            <Variable>
+                              <Variable var="table"/>
+                              <LiteralStringExpression string="remove"/>
+                            </Variable>
+                            <ExpList>
+                              <Variable var="parts"/>
+                              <BinaryOperation operation="ADD">
+                                <Variable var="i"/>
+                                <NumeralExpression number="1" type="INTEGER"/>
+                              </BinaryOperation>
+                            </ExpList>
+                          </FunctionCall>
+                        </FunctionCallStatement>
+                        <FunctionCallStatement>
+                          <FunctionCall>
+                            <Variable>
+                              <Variable var="table"/>
+                              <LiteralStringExpression string="remove"/>
+                            </Variable>
+                            <ExpList>
+                              <Variable var="parts"/>
+                              <Variable var="i"/>
+                            </ExpList>
+                          </FunctionCall>
+                        </FunctionCallStatement>
+                      </StatList>
+                    </BlockNode>
+                    <BlockNode>
+                      <StatList>
+                        <IfThenElse>
+                          <BinaryOperation operation="EQUAL">
+                            <Variable>
+                              <Variable var="parts"/>
+                              <Variable var="i"/>
+                            </Variable>
+                            <LiteralStringExpression string="-"/>
+                          </BinaryOperation>
+                          <BlockNode>
+                            <StatList>
+                              <Assignment>
+                                <VarList>
+                                  <VariableTableIndex>
+                                    <Variable var="parts"/>
+                                    <BinaryOperation operation="SUB">
+                                      <Variable var="i"/>
+                                      <NumeralExpression number="1" type="INTEGER"/>
+                                    </BinaryOperation>
+                                  </VariableTableIndex>
+                                </VarList>
+                                <ExpList>
+                                  <BinaryOperation operation="SUB">
+                                    <Variable>
+                                      <Variable var="parts"/>
+                                      <BinaryOperation operation="SUB">
+                                        <Variable var="i"/>
+                                        <NumeralExpression number="1" type="INTEGER"/>
+                                      </BinaryOperation>
+                                    </Variable>
+                                    <Variable>
+                                      <Variable var="parts"/>
+                                      <BinaryOperation operation="ADD">
+                                        <Variable var="i"/>
+                                        <NumeralExpression number="1" type="INTEGER"/>
+                                      </BinaryOperation>
+                                    </Variable>
+                                  </BinaryOperation>
+                                </ExpList>
+                              </Assignment>
+                              <FunctionCallStatement>
+                                <FunctionCall>
+                                  <Variable>
+                                    <Variable var="table"/>
+                                    <LiteralStringExpression string="remove"/>
+                                  </Variable>
+                                  <ExpList>
+                                    <Variable var="parts"/>
+                                    <BinaryOperation operation="ADD">
+                                      <Variable var="i"/>
+                                      <NumeralExpression number="1" type="INTEGER"/>
+                                    </BinaryOperation>
+                                  </ExpList>
+                                </FunctionCall>
+                              </FunctionCallStatement>
+                              <FunctionCallStatement>
+                                <FunctionCall>
+                                  <Variable>
+                                    <Variable var="table"/>
+                                    <LiteralStringExpression string="remove"/>
+                                  </Variable>
+                                  <ExpList>
+                                    <Variable var="parts"/>
+                                    <Variable var="i"/>
+                                  </ExpList>
+                                </FunctionCall>
+                              </FunctionCallStatement>
+                            </StatList>
+                          </BlockNode>
+                          <BlockNode>
+                            <StatList>
+                              <Assignment>
+                                <VarList>
+                                  <Variable var="i"/>
+                                </VarList>
+                                <ExpList>
+                                  <BinaryOperation operation="ADD">
+                                    <Variable var="i"/>
+                                    <NumeralExpression number="1" type="INTEGER"/>
+                                  </BinaryOperation>
+                                </ExpList>
+                              </Assignment>
+                            </StatList>
+                          </BlockNode>
+                        </IfThenElse>
+                      </StatList>
+                    </BlockNode>
+                  </IfThenElse>
+                </StatList>
+              </BlockNode>
+            </While>
+          </StatList>
+          <Return>
+            <ExpList>
+              <Variable>
+                <Variable var="parts"/>
+                <NumeralExpression number="1" type="INTEGER"/>
+              </Variable>
+              <Variable var="expression"/>
+            </ExpList>
+          </Return>
+        </BlockNode>
+      </FunctionBody>
+    </FunctionDefinition>
+    <While>
+      <BooleanExpression value="true"/>
+      <BlockNode>
+        <StatList>
+          <FunctionCallStatement>
+            <FunctionCall>
+              <Variable>
+                <Variable var="io"/>
+                <LiteralStringExpression string="write"/>
+              </Variable>
+              <ExpList>
+                <LiteralStringExpression string="Enter a mathematical expression: "/>
+              </ExpList>
+            </FunctionCall>
+          </FunctionCallStatement>
+          <Local>
+            <NameList>
+              <Name name="result"/>
+              <Name name="errorMessage"/>
+            </NameList>
+            <ExpList>
+              <FunctionCall>
+                <Variable var="parseExpression"/>
+                <ExpList>
+                  <FunctionCall>
+                    <Variable>
+                      <Variable var="io"/>
+                      <LiteralStringExpression string="read"/>
+                    </Variable>
+                    <ExpList>
+                      <LiteralStringExpression string="*line"/>
+                    </ExpList>
+                  </FunctionCall>
+                </ExpList>
+              </FunctionCall>
+            </ExpList>
+          </Local>
+          <IfThenElse>
+            <BinaryOperation operation="EQUAL">
+              <Variable var="result"/>
+              <Nil/>
+            </BinaryOperation>
+            <BlockNode>
+              <StatList>
+                <FunctionCallStatement>
+                  <FunctionCall>
+                    <Variable var="print"/>
+                    <ExpList>
+                      <Variable var="errorMessage"/>
+                    </ExpList>
+                  </FunctionCall>
+                </FunctionCallStatement>
+              </StatList>
+            </BlockNode>
+            <BlockNode>
+              <StatList>
+                <FunctionCallStatement>
+                  <FunctionCall>
+                    <Variable var="print"/>
+                    <ExpList>
+                      <Variable var="result"/>
+                    </ExpList>
+                  </FunctionCall>
+                </FunctionCallStatement>
+              </StatList>
+            </BlockNode>
+          </IfThenElse>
+        </StatList>
+      </BlockNode>
+    </While>
+  </StatList>
+</BlockNode>

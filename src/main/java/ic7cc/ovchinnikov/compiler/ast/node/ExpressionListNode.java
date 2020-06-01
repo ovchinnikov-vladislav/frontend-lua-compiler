@@ -116,4 +116,15 @@ public class ExpressionListNode extends ASTNode {
         return expressionList.indexOf(item);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (Expression expression : expressionList) {
+            builder.append(expression).append(",");
+        }
+        String args = builder.toString();
+        if (!args.isEmpty() && args.charAt(args.length() - 1) == ',')
+            args = args.substring(0, args.length() - 1);
+        return args;
+    }
 }

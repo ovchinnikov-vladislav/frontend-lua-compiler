@@ -1,0 +1,9 @@
+<BlockNode>
+  <StatList/>
+  <Return>
+    <ExpList>
+      <Variable var="a"/>
+      <Variable var="b"/>
+    </ExpList>
+  </Return>
+</BlockNode>

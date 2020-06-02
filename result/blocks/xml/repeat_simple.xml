@@ -1,0 +1,33 @@
+<BlockNode>
+  <StatList>
+    <Assignment>
+      <VarList>
+        <Variable var="x"/>
+      </VarList>
+      <ExpList>
+        <NumeralExpression number="2" type="INTEGER"/>
+      </ExpList>
+    </Assignment>
+    <RepeatUntil>
+      <BlockNode>
+        <StatList>
+          <Assignment>
+            <VarList>
+              <Variable var="x"/>
+            </VarList>
+            <ExpList>
+              <BinaryOperation operation="SUB">
+                <Variable var="x"/>
+                <NumeralExpression number="1" type="INTEGER"/>
+              </BinaryOperation>
+            </ExpList>
+          </Assignment>
+        </StatList>
+      </BlockNode>
+      <BinaryOperation operation="LESS">
+        <Variable var="x"/>
+        <NumeralExpression number="0" type="INTEGER"/>
+      </BinaryOperation>
+    </RepeatUntil>
+  </StatList>
+</BlockNode>

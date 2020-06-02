@@ -1,0 +1,158 @@
+<BlockNode>
+  <StatList>
+    <Assignment>
+      <VarList>
+        <Variable var="a"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="ADD">
+          <NumeralExpression number="5" type="INTEGER"/>
+          <NumeralExpression number="4" type="INTEGER"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="b"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="SUB">
+          <NumeralExpression number="10" type="INTEGER"/>
+          <NumeralExpression number="3" type="INTEGER"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="c"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="MUL">
+          <Variable var="a"/>
+          <Variable var="b"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="d"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="DIV">
+          <Variable var="a"/>
+          <Variable var="b"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="e"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="POW">
+          <Variable var="a"/>
+          <Variable var="b"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="f"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="MOD">
+          <Variable var="a"/>
+          <Variable var="b"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="g"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="LESS">
+          <Variable var="a"/>
+          <Variable var="b"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="h"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="LESSEQ">
+          <Variable var="a"/>
+          <Variable var="b"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="i"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="MOREEQ">
+          <Variable var="a"/>
+          <Variable var="b"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="j"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="MORE">
+          <Variable var="a"/>
+          <Variable var="b"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="k"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="EQUAL">
+          <Variable var="a"/>
+          <Variable var="b"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="l"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="NOTEQ">
+          <Variable var="a"/>
+          <Variable var="b"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="o"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="OR">
+          <Variable var="k"/>
+          <Variable var="l"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="p"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="AND">
+          <Variable var="k"/>
+          <Variable var="l"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+  </StatList>
+</BlockNode>

@@ -1,0 +1,15 @@
+<BlockNode>
+  <StatList>
+    <Assignment>
+      <VarList>
+        <Variable var="a"/>
+      </VarList>
+      <ExpList>
+        <Variable>
+          <Variable var="table"/>
+          <NumeralExpression number="0" type="INTEGER"/>
+        </Variable>
+      </ExpList>
+    </Assignment>
+  </StatList>
+</BlockNode>

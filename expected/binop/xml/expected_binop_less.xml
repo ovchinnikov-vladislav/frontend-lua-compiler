@@ -1,0 +1,15 @@
+<BlockNode>
+  <StatList>
+    <Assignment>
+      <VarList>
+        <Variable var="a"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="LESS">
+          <NumeralExpression number="1" type="INTEGER"/>
+          <NumeralExpression number="2" type="INTEGER"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+  </StatList>
+</BlockNode>

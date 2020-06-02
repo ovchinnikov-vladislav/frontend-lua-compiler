@@ -1,0 +1,24 @@
+<BlockNode>
+  <StatList>
+    <FunctionDefinition>
+      <FunctionNameVariable>
+        <Name name="a"/>
+      </FunctionNameVariable>
+      <FunctionBody>
+        <ParList varPar="false">
+          <NameList>
+            <Name name="x"/>
+          </NameList>
+        </ParList>
+        <BlockNode>
+          <StatList/>
+          <Return>
+            <ExpList>
+              <Variable var="x"/>
+            </ExpList>
+          </Return>
+        </BlockNode>
+      </FunctionBody>
+    </FunctionDefinition>
+  </StatList>
+</BlockNode>

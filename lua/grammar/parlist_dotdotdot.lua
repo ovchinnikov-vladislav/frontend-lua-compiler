@@ -1,1 +1,0 @@
-function bla(a,...) end

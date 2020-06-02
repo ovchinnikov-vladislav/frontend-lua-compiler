@@ -1,0 +1,20 @@
+<BlockNode>
+  <StatList>
+    <IfThenElse>
+      <BooleanExpression value="true"/>
+      <BlockNode>
+        <StatList>
+          <Local>
+            <NameList>
+              <Name name="x"/>
+            </NameList>
+            <ExpList>
+              <NumeralExpression number="1" type="INTEGER"/>
+            </ExpList>
+          </Local>
+        </StatList>
+      </BlockNode>
+      <BlockNode/>
+    </IfThenElse>
+  </StatList>
+</BlockNode>

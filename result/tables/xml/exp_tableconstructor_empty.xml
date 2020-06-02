@@ -1,0 +1,14 @@
+<BlockNode>
+  <StatList>
+    <Assignment>
+      <VarList>
+        <Variable var="a"/>
+      </VarList>
+      <ExpList>
+        <TableConstructor>
+          <FieldList/>
+        </TableConstructor>
+      </ExpList>
+    </Assignment>
+  </StatList>
+</BlockNode>

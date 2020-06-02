@@ -1,0 +1,31 @@
+<BlockNode>
+  <StatList>
+    <Assignment>
+      <VarList>
+        <Variable var="a"/>
+      </VarList>
+      <ExpList>
+        <TableConstructor>
+          <FieldList>
+            <FieldLeftRightExpression>
+              <BinaryOperation operation="MUL">
+                <NumeralExpression number="5" type="INTEGER"/>
+                <NumeralExpression number="3" type="INTEGER"/>
+              </BinaryOperation>
+              <NumeralExpression number="3" type="INTEGER"/>
+            </FieldLeftRightExpression>
+            <FieldExpression>
+              <NumeralExpression number="2" type="INTEGER"/>
+            </FieldExpression>
+            <FieldExpression>
+              <BinaryOperation operation="MUL">
+                <NumeralExpression number="3" type="INTEGER"/>
+                <NumeralExpression number="5" type="INTEGER"/>
+              </BinaryOperation>
+            </FieldExpression>
+          </FieldList>
+        </TableConstructor>
+      </ExpList>
+    </Assignment>
+  </StatList>
+</BlockNode>

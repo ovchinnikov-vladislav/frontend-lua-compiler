@@ -1,0 +1,32 @@
+<BlockNode>
+  <StatList>
+    <FunctionDefinition>
+      <FunctionNameVariable>
+        <Name name="addx"/>
+      </FunctionNameVariable>
+      <FunctionBody>
+        <ParList varPar="false">
+          <NameList>
+            <Name name="x"/>
+          </NameList>
+        </ParList>
+        <BlockNode>
+          <StatList/>
+          <Return>
+            <ExpList>
+              <Variable var="x"/>
+            </ExpList>
+          </Return>
+        </BlockNode>
+      </FunctionBody>
+    </FunctionDefinition>
+    <FunctionCallStatement>
+      <FunctionCall>
+        <Variable var="addx"/>
+        <ExpList>
+          <NumeralExpression number="5" type="INTEGER"/>
+        </ExpList>
+      </FunctionCall>
+    </FunctionCallStatement>
+  </StatList>
+</BlockNode>

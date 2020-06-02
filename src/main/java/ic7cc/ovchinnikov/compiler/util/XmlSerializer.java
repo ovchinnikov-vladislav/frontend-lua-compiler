@@ -1,13 +1,15 @@
 package ic7cc.ovchinnikov.compiler.util;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import ic7cc.ovchinnikov.compiler.ast.xml.*;
 import ic7cc.ovchinnikov.compiler.ast.node.*;
+import ic7cc.ovchinnikov.compiler.ast.xml.serializer.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class XmlSerializer {
 
@@ -46,4 +48,9 @@ public class XmlSerializer {
         mapper.writeValue(file, blockNode);
     }
 
+    public HashMap<String, Object> read(File file) throws IOException {
+        XmlMapper mapper = new XmlMapper();
+
+        return mapper.readValue(file, HashMap.class);
+    }
 }

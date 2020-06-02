@@ -1,0 +1,58 @@
+<BlockNode>
+  <StatList>
+    <Assignment>
+      <VarList>
+        <Variable var="myTable"/>
+      </VarList>
+      <ExpList>
+        <TableConstructor>
+          <FieldList>
+            <FieldNameExpression ident="myValue">
+              <Nil/>
+            </FieldNameExpression>
+            <FieldNameExpression ident="myOtherValue">
+              <Nil/>
+            </FieldNameExpression>
+          </FieldList>
+        </TableConstructor>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="x"/>
+      </VarList>
+      <ExpList>
+        <NumeralExpression number="5" type="INTEGER"/>
+      </ExpList>
+    </Assignment>
+    <ForIn>
+      <NameList>
+        <Name name="key"/>
+        <Name name="value"/>
+      </NameList>
+      <ExpList>
+        <FunctionCall>
+          <Variable var="pairs"/>
+          <ExpList>
+            <Variable var="myTable"/>
+          </ExpList>
+        </FunctionCall>
+      </ExpList>
+      <BlockNode>
+        <StatList>
+          <Assignment>
+            <VarList>
+              <Variable var="x"/>
+            </VarList>
+            <ExpList>
+              <BinaryOperation operation="ADD">
+                <Variable var="x"/>
+                <NumeralExpression number="1" type="INTEGER"/>
+              </BinaryOperation>
+            </ExpList>
+          </Assignment>
+        </StatList>
+      </BlockNode>
+    </ForIn>
+  </StatList>
+</BlockNode>

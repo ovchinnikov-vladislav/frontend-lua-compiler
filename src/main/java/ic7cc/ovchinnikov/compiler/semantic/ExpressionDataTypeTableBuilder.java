@@ -3,11 +3,13 @@ package ic7cc.ovchinnikov.compiler.semantic;
 import ic7cc.ovchinnikov.compiler.ast.Operation;
 import ic7cc.ovchinnikov.compiler.ast.node.*;
 import ic7cc.ovchinnikov.compiler.ast.xml.util.SerializeDefinedType;
+import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Getter
 public class ExpressionDataTypeTableBuilder {
 
     private final Map<String, Type> typeMap = new HashMap<>();
@@ -320,9 +322,9 @@ public class ExpressionDataTypeTableBuilder {
                     throw new Exception("Bitwise operation cannot be applied to (" + type.name() + ")");
                 return Type.INTEGER;
             case LENGTH:
-                if (type != Type.STRING)
-                    throw new Exception("String operation cannot be applied to (" + type.name() + ")");
-                return Type.STRING;
+                if (type != Type.STRING && type != Type.TABLE)
+                    throw new Exception("Length operation cannot be applied to (" + type.name() + ")");
+                return Type.INTEGER;
             case NOT:
                 return Type.BOOLEAN;
             case UNMINUS:
@@ -335,7 +337,7 @@ public class ExpressionDataTypeTableBuilder {
     }
 
 
-    private enum Type {
+    public enum Type {
         STRING,
         BOOLEAN,
         INTEGER,

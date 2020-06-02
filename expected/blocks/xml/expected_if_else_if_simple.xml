@@ -1,0 +1,64 @@
+<BlockNode>
+  <StatList>
+    <Assignment>
+      <VarList>
+        <Variable var="x"/>
+      </VarList>
+      <ExpList>
+        <NumeralExpression number="1" type="INTEGER"/>
+      </ExpList>
+    </Assignment>
+    <IfThenElse>
+      <BinaryOperation operation="EQUAL">
+        <Variable var="x"/>
+        <NumeralExpression number="1" type="INTEGER"/>
+      </BinaryOperation>
+      <BlockNode>
+        <StatList>
+          <Assignment>
+            <VarList>
+              <Variable var="x"/>
+            </VarList>
+            <ExpList>
+              <NumeralExpression number="1" type="INTEGER"/>
+            </ExpList>
+          </Assignment>
+        </StatList>
+      </BlockNode>
+      <BlockNode>
+        <StatList>
+          <IfThenElse>
+            <BinaryOperation operation="EQUAL">
+              <Variable var="x"/>
+              <NumeralExpression number="2" type="INTEGER"/>
+            </BinaryOperation>
+            <BlockNode>
+              <StatList>
+                <Assignment>
+                  <VarList>
+                    <Variable var="x"/>
+                  </VarList>
+                  <ExpList>
+                    <NumeralExpression number="3" type="INTEGER"/>
+                  </ExpList>
+                </Assignment>
+              </StatList>
+            </BlockNode>
+            <BlockNode>
+              <StatList>
+                <Assignment>
+                  <VarList>
+                    <Variable var="x"/>
+                  </VarList>
+                  <ExpList>
+                    <NumeralExpression number="4" type="INTEGER"/>
+                  </ExpList>
+                </Assignment>
+              </StatList>
+            </BlockNode>
+          </IfThenElse>
+        </StatList>
+      </BlockNode>
+    </IfThenElse>
+  </StatList>
+</BlockNode>

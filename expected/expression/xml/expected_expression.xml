@@ -1,0 +1,56 @@
+<BlockNode>
+  <StatList>
+    <Assignment>
+      <VarList>
+        <Variable var="a"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="OR">
+          <BinaryOperation operation="MOREEQ">
+            <BinaryOperation operation="LESS">
+              <BinaryOperation operation="MUL">
+                <BinaryOperation operation="DIV">
+                  <BinaryOperation operation="MUL">
+                    <NumeralExpression number="5" type="INTEGER"/>
+                    <BinaryOperation operation="ADD">
+                      <NumeralExpression number="3" type="INTEGER"/>
+                      <NumeralExpression number="4" type="INTEGER"/>
+                    </BinaryOperation>
+                  </BinaryOperation>
+                  <BinaryOperation operation="BXOR">
+                    <BinaryOperation operation="BLEFT">
+                      <BinaryOperation operation="BRIGHT">
+                        <NumeralExpression number="9" type="INTEGER"/>
+                        <NumeralExpression number="2" type="INTEGER"/>
+                      </BinaryOperation>
+                      <UnaryOperation operation="BNOT">
+                        <NumeralExpression number="5" type="INTEGER"/>
+                      </UnaryOperation>
+                    </BinaryOperation>
+                    <NumeralExpression number="0" type="INTEGER"/>
+                  </BinaryOperation>
+                </BinaryOperation>
+                <NumeralExpression number="5" type="INTEGER"/>
+              </BinaryOperation>
+              <BinaryOperation operation="DIV">
+                <BinaryOperation operation="MUL">
+                  <NumeralExpression number="5" type="INTEGER"/>
+                  <NumeralExpression number="10" type="INTEGER"/>
+                </BinaryOperation>
+                <NumeralExpression number="4" type="INTEGER"/>
+              </BinaryOperation>
+            </BinaryOperation>
+            <NumeralExpression number="0" type="INTEGER"/>
+          </BinaryOperation>
+          <BinaryOperation operation="AND">
+            <BooleanExpression value="true"/>
+            <BinaryOperation operation="OR">
+              <BooleanExpression value="true"/>
+              <BooleanExpression value="false"/>
+            </BinaryOperation>
+          </BinaryOperation>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+  </StatList>
+</BlockNode>

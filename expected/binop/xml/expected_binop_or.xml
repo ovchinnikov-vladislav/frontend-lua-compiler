@@ -1,0 +1,15 @@
+<BlockNode>
+  <StatList>
+    <Assignment>
+      <VarList>
+        <Variable var="a"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="OR">
+          <Variable var="b"/>
+          <Variable var="c"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+  </StatList>
+</BlockNode>

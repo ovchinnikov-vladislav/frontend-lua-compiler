@@ -3,13 +3,17 @@ package ic7cc.ovchinnikov.compiler;
 import ic7cc.ovchinnikov.compiler.ast.node.BlockNode;
 import ic7cc.ovchinnikov.compiler.lexer.Lexer;
 import ic7cc.ovchinnikov.compiler.parser.Parser;
+import ic7cc.ovchinnikov.compiler.semantic.ExpressionDataTypeTableBuilder;
 import ic7cc.ovchinnikov.compiler.util.XmlSerializer;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BinopTest {
 
@@ -28,6 +32,11 @@ public class BinopTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_and.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/binop/xml/binop_and.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/binop/xml/expected_binop_and.xml").toFile());
+
+        Assert.assertEquals(expected, result);
     }
 
     @Test
@@ -38,6 +47,11 @@ public class BinopTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_concat.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/binop/xml/binop_concat.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/binop/xml/expected_binop_concat.xml").toFile());
+
+        Assert.assertEquals(expected, result);
     }
 
     @Test
@@ -48,6 +62,11 @@ public class BinopTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_div.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/binop/xml/binop_div.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/binop/xml/expected_binop_div.xml").toFile());
+
+        Assert.assertEquals(expected, result);
     }
 
     @Test
@@ -58,6 +77,11 @@ public class BinopTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_equal.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/binop/xml/binop_equal.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/binop/xml/expected_binop_equal.xml").toFile());
+
+        Assert.assertEquals(expected, result);
     }
 
     @Test
@@ -68,6 +92,11 @@ public class BinopTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_more_equal.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/binop/xml/binop_more_equal.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/binop/xml/expected_binop_more_equal.xml").toFile());
+
+        Assert.assertEquals(expected, result);
     }
 
     @Test
@@ -78,6 +107,11 @@ public class BinopTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_more.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/binop/xml/binop_more.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/binop/xml/expected_binop_more.xml").toFile());
+
+        Assert.assertEquals(expected, result);
     }
 
     @Test
@@ -88,6 +122,11 @@ public class BinopTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_less.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/binop/xml/binop_less.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/binop/xml/expected_binop_less.xml").toFile());
+
+        Assert.assertEquals(expected, result);
     }
 
 
@@ -99,6 +138,11 @@ public class BinopTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_less_equal.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/binop/xml/binop_less_equal.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/binop/xml/expected_binop_less_equal.xml").toFile());
+
+        Assert.assertEquals(expected, result);
     }
 
     @Test
@@ -109,6 +153,11 @@ public class BinopTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_mod.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/binop/xml/binop_mod.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/binop/xml/expected_binop_mod.xml").toFile());
+
+        Assert.assertEquals(expected, result);
     }
 
     @Test
@@ -119,6 +168,11 @@ public class BinopTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_not_equal.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/binop/xml/binop_not_equal.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/binop/xml/expected_binop_not_equal.xml").toFile());
+
+        Assert.assertEquals(expected, result);
     }
 
     @Test
@@ -129,6 +183,11 @@ public class BinopTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_or.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/binop/xml/binop_or.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/binop/xml/expected_binop_or.xml").toFile());
+
+        Assert.assertEquals(expected, result);
     }
 
     @Test
@@ -139,6 +198,11 @@ public class BinopTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_add.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/binop/xml/binop_add.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/binop/xml/expected_binop_add.xml").toFile());
+
+        Assert.assertEquals(expected, result);
     }
 
     @Test
@@ -149,6 +213,11 @@ public class BinopTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_pow.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/binop/xml/binop_pow.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/binop/xml/expected_binop_pow.xml").toFile());
+
+        Assert.assertEquals(expected, result);
     }
 
     @Test
@@ -159,6 +228,11 @@ public class BinopTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_sub.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/binop/xml/binop_sub.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/binop/xml/expected_binop_sub.xml").toFile());
+
+        Assert.assertEquals(expected, result);
     }
 
     @Test
@@ -169,5 +243,32 @@ public class BinopTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/binop/xml/binop_times.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/binop/xml/binop_times.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/binop/xml/expected_binop_times.xml").toFile());
+
+        Assert.assertEquals(expected, result);
+    }
+
+    @Test
+    public void binopsTest() throws Exception {
+        File file = Path.of("lua/operators/binops_simple.lua").toFile();
+
+        Parser parser = new Parser(new Lexer(new FileReader(file)));
+        BlockNode block = (BlockNode) parser.parse().value;
+
+        xmlSerializer.save(block, Path.of("result/binop/xml/binop_simple.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/binop/xml/binop_simple.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/binop/xml/expected_binop_simple.xml").toFile());
+
+        Assert.assertEquals(expected, result);
+
+        ExpressionDataTypeTableBuilder builder = new ExpressionDataTypeTableBuilder();
+        builder.analyze(block);
+
+        Map<String, ExpressionDataTypeTableBuilder.Type> map = builder.getTypeMap();
+
+        Assert.assertEquals(ExpressionDataTypeTableBuilder.Type.BOOLEAN, map.get("p"));
     }
 }

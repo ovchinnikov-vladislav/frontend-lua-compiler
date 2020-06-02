@@ -1,1 +1,0 @@
-for i = 1, 2 do a=1 end

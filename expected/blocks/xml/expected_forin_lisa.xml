@@ -1,0 +1,40 @@
+<BlockNode>
+  <StatList>
+    <ForIn>
+      <NameList>
+        <Name name="k"/>
+      </NameList>
+      <ExpList>
+        <FunctionCall>
+          <Variable var="pairs"/>
+          <ExpList>
+            <Variable var="t"/>
+          </ExpList>
+        </FunctionCall>
+      </ExpList>
+      <BlockNode>
+        <StatList>
+          <Assignment>
+            <VarList>
+              <Variable var="a"/>
+            </VarList>
+            <ExpList>
+              <BinaryOperation operation="CONCAT">
+                <Variable var="a"/>
+                <Variable var="k"/>
+              </BinaryOperation>
+            </ExpList>
+          </Assignment>
+          <FunctionCallStatement>
+            <FunctionCall>
+              <Variable var="print"/>
+              <ExpList>
+                <Variable var="a"/>
+              </ExpList>
+            </FunctionCall>
+          </FunctionCallStatement>
+        </StatList>
+      </BlockNode>
+    </ForIn>
+  </StatList>
+</BlockNode>

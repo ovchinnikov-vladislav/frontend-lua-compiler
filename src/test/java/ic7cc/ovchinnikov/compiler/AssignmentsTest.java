@@ -4,12 +4,14 @@ import ic7cc.ovchinnikov.compiler.ast.node.BlockNode;
 import ic7cc.ovchinnikov.compiler.lexer.Lexer;
 import ic7cc.ovchinnikov.compiler.parser.Parser;
 import ic7cc.ovchinnikov.compiler.util.XmlSerializer;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Path;
+import java.util.HashMap;
 
 public class AssignmentsTest {
 
@@ -28,6 +30,11 @@ public class AssignmentsTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/assignments/xml/assign_simple.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/assignments/xml/assign_simple.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/assignments/xml/expected_assign_simple.xml").toFile());
+
+        Assert.assertEquals(expected, result);
     }
 
     @Test
@@ -38,6 +45,11 @@ public class AssignmentsTest {
         BlockNode block = (BlockNode) parser.parse().value;
 
         xmlSerializer.save(block, Path.of("result/assignments/xml/assign_multiple.xml").toFile());
+
+        HashMap<String, Object> result = xmlSerializer.read(Path.of("result/assignments/xml/assign_multiple.xml").toFile());
+        HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/assignments/xml/expected_assign_multiple.xml").toFile());
+
+        Assert.assertEquals(expected, result);
     }
 
 }

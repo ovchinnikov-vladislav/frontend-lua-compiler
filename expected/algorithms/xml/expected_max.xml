@@ -1,0 +1,82 @@
+<BlockNode>
+  <StatList>
+    <Assignment>
+      <VarList>
+        <Variable var="a"/>
+      </VarList>
+      <ExpList>
+        <TableConstructor>
+          <FieldList>
+            <FieldExpression>
+              <NumeralExpression number="76" type="INTEGER"/>
+            </FieldExpression>
+            <FieldExpression>
+              <NumeralExpression number="2" type="INTEGER"/>
+            </FieldExpression>
+            <FieldExpression>
+              <NumeralExpression number="15" type="INTEGER"/>
+            </FieldExpression>
+            <FieldExpression>
+              <NumeralExpression number="111" type="INTEGER"/>
+            </FieldExpression>
+          </FieldList>
+        </TableConstructor>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="max"/>
+      </VarList>
+      <ExpList>
+        <Variable>
+          <Variable var="a"/>
+          <NumeralExpression number="1" type="INTEGER"/>
+        </Variable>
+      </ExpList>
+    </Assignment>
+    <For ident="i">
+      <NumeralExpression number="1" type="INTEGER"/>
+      <UnaryOperation operation="LENGTH">
+        <Variable var="a"/>
+      </UnaryOperation>
+      <NumeralExpression number="1" type="INTEGER"/>
+      <BlockNode>
+        <StatList>
+          <IfThenElse>
+            <BinaryOperation operation="MORE">
+              <Variable>
+                <Variable var="a"/>
+                <Variable var="i"/>
+              </Variable>
+              <Variable var="max"/>
+            </BinaryOperation>
+            <BlockNode>
+              <StatList>
+                <Assignment>
+                  <VarList>
+                    <Variable var="max"/>
+                  </VarList>
+                  <ExpList>
+                    <Variable>
+                      <Variable var="a"/>
+                      <Variable var="i"/>
+                    </Variable>
+                  </ExpList>
+                </Assignment>
+              </StatList>
+            </BlockNode>
+            <BlockNode/>
+          </IfThenElse>
+        </StatList>
+      </BlockNode>
+    </For>
+    <FunctionCallStatement>
+      <FunctionCall>
+        <Variable var="print"/>
+        <ExpList>
+          <Variable var="max"/>
+        </ExpList>
+      </FunctionCall>
+    </FunctionCallStatement>
+  </StatList>
+</BlockNode>

@@ -1,0 +1,24 @@
+<BlockNode>
+  <StatList>
+    <Assignment>
+      <VarList>
+        <Variable var="a"/>
+      </VarList>
+      <ExpList>
+        <TableConstructor>
+          <FieldList>
+            <FieldExpression>
+              <NumeralExpression number="1" type="INTEGER"/>
+            </FieldExpression>
+            <FieldExpression>
+              <NumeralExpression number="2" type="INTEGER"/>
+            </FieldExpression>
+            <FieldExpression>
+              <NumeralExpression number="3" type="INTEGER"/>
+            </FieldExpression>
+          </FieldList>
+        </TableConstructor>
+      </ExpList>
+    </Assignment>
+  </StatList>
+</BlockNode>

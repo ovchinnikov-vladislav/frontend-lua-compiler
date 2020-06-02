@@ -1,0 +1,32 @@
+<BlockNode>
+  <StatList>
+    <Assignment>
+      <VarList>
+        <Variable var="c"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="OR">
+          <BinaryOperation operation="MUL">
+            <NumeralExpression number="5" type="INTEGER"/>
+            <NumeralExpression number="5.0" type="DOUBLE"/>
+          </BinaryOperation>
+          <BinaryOperation operation="MUL">
+            <NumeralExpression number="3" type="INTEGER"/>
+            <NumeralExpression number="10" type="INTEGER"/>
+          </BinaryOperation>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="b"/>
+      </VarList>
+      <ExpList>
+        <BinaryOperation operation="AND">
+          <Variable var="c"/>
+          <BooleanExpression value="false"/>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+  </StatList>
+</BlockNode>

@@ -217,4 +217,4 @@ CommentContent = (!("]""="*"]"))*
       \\\'                    { string.append("\'"); }
 }
 
-      .|\n                    { throw new RuntimeException("Illegal character <" + Pattern.quote(yytext()) + ">"); }
+      .|\n                    { error("Illegal character <"+ Pattern.quote(yytext())+">"); }

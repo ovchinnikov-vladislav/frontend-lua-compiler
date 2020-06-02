@@ -18,13 +18,19 @@ public class App {
 //        Parser parser = new Parser(new Lexer(new FileReader("lua/calculator.lua")));
 //        parser.parse();
         Parser parser = new Parser(new Lexer(new FileReader("lua/testlocal.lua")));
-        BlockNode blockNode = (BlockNode) parser.parse().value;
+        try {
+            Object object = parser.parse().value;
 
-        ExpressionDataTypeTableBuilder builder = new ExpressionDataTypeTableBuilder();
-        builder.analyze(blockNode);
+            if (object instanceof BlockNode) {
+                ExpressionDataTypeTableBuilder builder = new ExpressionDataTypeTableBuilder();
+                builder.analyze((BlockNode) object);
 
-        XmlSerializer serializer = new XmlSerializer();
+                XmlSerializer serializer = new XmlSerializer();
 
-        serializer.save(blockNode, new File("result/xml/testlocal.xml"));
+                serializer.save((BlockNode) object, new File("result/xml/testlocal.xml"));
+            }
+        } catch (Exception exc) {
+            System.out.println(exc.getMessage());
+        }
     }
 }

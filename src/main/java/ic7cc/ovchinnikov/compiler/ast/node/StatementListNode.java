@@ -92,7 +92,7 @@ public class StatementListNode extends ASTNode {
     public String toString() {
         StringBuilder result = new StringBuilder();
         for (Statement statement : statementList) {
-            result.append(statement).append("\n");
+            result.append(statement).append("; ");
         }
 
         return result.toString();

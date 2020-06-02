@@ -1,36 +1,94 @@
 <BlockNode>
   <StatList>
-    <FunctionDefinition>
-      <FunctionNameVariable>
-        <Name name="a"/>
-      </FunctionNameVariable>
-      <FunctionBody>
-        <ParList varPar="false">
-          <NameList>
-            <Name name="b"/>
-          </NameList>
-        </ParList>
-        <BlockNode>
-          <StatList/>
-          <Return>
+    <IfThenElse>
+      <BinaryOperation operation="EQUAL">
+        <Variable var="a"/>
+        <NumeralExpression number="5" type="INTEGER"/>
+      </BinaryOperation>
+      <BlockNode>
+        <StatList>
+          <Assignment>
+            <VarList>
+              <Variable var="a"/>
+            </VarList>
             <ExpList>
-              <Variable var="b"/>
+              <BinaryOperation operation="MUL">
+                <NumeralExpression number="3" type="INTEGER"/>
+                <NumeralExpression number="5.0" type="DOUBLE"/>
+              </BinaryOperation>
             </ExpList>
-          </Return>
-        </BlockNode>
-      </FunctionBody>
-    </FunctionDefinition>
+          </Assignment>
+          <Assignment>
+            <VarList>
+              <Variable var="b"/>
+            </VarList>
+            <ExpList>
+              <BinaryOperation operation="MUL">
+                <NumeralExpression number="3" type="INTEGER"/>
+                <NumeralExpression number="7" type="INTEGER"/>
+              </BinaryOperation>
+            </ExpList>
+          </Assignment>
+          <Assignment>
+            <VarList>
+              <Variable var="f"/>
+            </VarList>
+            <ExpList>
+              <FunctionExpression varArgs="false">
+                <NameList/>
+                <Block>
+                  <StatList>
+                    <Assignment>
+                      <VarList>
+                        <Variable var="a"/>
+                      </VarList>
+                      <ExpList>
+                        <BinaryOperation operation="ADD">
+                          <Variable var="a"/>
+                          <BinaryOperation operation="MUL">
+                            <Variable var="b"/>
+                            <Variable var="a"/>
+                          </BinaryOperation>
+                        </BinaryOperation>
+                      </ExpList>
+                    </Assignment>
+                  </StatList>
+                  <Return>
+                    <ExpList>
+                      <Variable var="a"/>
+                    </ExpList>
+                  </Return>
+                </Block>
+              </FunctionExpression>
+            </ExpList>
+          </Assignment>
+        </StatList>
+      </BlockNode>
+      <BlockNode/>
+    </IfThenElse>
     <Assignment>
       <VarList>
-        <Variable var="a"/>
+        <Variable var="c"/>
       </VarList>
       <ExpList>
-        <FunctionCall>
-          <Variable var="a"/>
-          <ExpList>
-            <NumeralExpression number="4" type="INTEGER"/>
-          </ExpList>
-        </FunctionCall>
+        <BinaryOperation operation="OR">
+          <BinaryOperation operation="MUL">
+            <NumeralExpression number="5" type="INTEGER"/>
+            <NumeralExpression number="5.0" type="DOUBLE"/>
+          </BinaryOperation>
+          <BinaryOperation operation="MUL">
+            <NumeralExpression number="3" type="INTEGER"/>
+            <NumeralExpression number="10" type="INTEGER"/>
+          </BinaryOperation>
+        </BinaryOperation>
+      </ExpList>
+    </Assignment>
+    <Assignment>
+      <VarList>
+        <Variable var="b"/>
+      </VarList>
+      <ExpList>
+        <Variable var="c"/>
       </ExpList>
     </Assignment>
   </StatList>

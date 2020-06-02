@@ -91,12 +91,13 @@ precedence nonassoc COMMA;
 precedence left OR;
 precedence left AND;
 precedence left BOR;
+precedence left BXOR;
 precedence left BAND;
 precedence left EQUAL, NOTEQ;
 precedence left LESSEQ, LESS, MORE, MOREEQ;
 precedence left BRIGHT, BLEFT;
 precedence left ADD, SUB, CONCAT;
-precedence left MUL, DIV, MOD;
+precedence left MUL, DIV, MOD, FDIV;
 precedence right POW;
 precedence right UNMINUS, NOT, BNOT, LENGTH;
 

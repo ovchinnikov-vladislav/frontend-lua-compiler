@@ -10,14 +10,13 @@ import java.util.Map;
 
 public class ExpressionDataTypeTableBuilder {
 
-    private Map<String, Type> typeMap;
+    private final Map<String, Type> typeMap = new HashMap<>();
 
     public void analyze(BlockNode blockNode) {
         blockNode(blockNode);
     }
 
     private void blockNode(BlockNode block) {
-        typeMap = new HashMap<>();
         StatementListNode statementListNode = block.getStatementListNode();
         statementListNode(statementListNode);
 
@@ -101,7 +100,8 @@ public class ExpressionDataTypeTableBuilder {
     }
 
     private void ifThenElse(IfThenElseBlockNode ifThenElseBlockNode) {
-        expression(ifThenElseBlockNode.getIfExpression());
+        Type t = expression(ifThenElseBlockNode.getIfExpression());
+        System.out.println(t + ": " + ifThenElseBlockNode.getIfExpression());
         blockNode(ifThenElseBlockNode.getThenBlockNode());
         if (ifThenElseBlockNode.getElseBlockNode() != null)
             blockNode(ifThenElseBlockNode.getElseBlockNode());
@@ -302,6 +302,12 @@ public class ExpressionDataTypeTableBuilder {
                 else
                     return Type.INTEGER;
             case BOOLEAN:
+                if (leftExpressionType != Type.BOOLEAN || rightExpressionType != Type.BOOLEAN) {
+                    if (operation == Operation.ADD)
+                        return rightExpressionType;
+                    else if (operation == Operation.OR)
+                        return leftExpressionType;
+                }
                 return Type.BOOLEAN;
         }
         throw new Exception("Undefined operation");

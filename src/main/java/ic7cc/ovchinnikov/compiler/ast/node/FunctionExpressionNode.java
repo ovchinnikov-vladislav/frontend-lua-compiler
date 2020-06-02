@@ -76,6 +76,6 @@ public class FunctionExpressionNode extends Expression {
         else if (!args.trim().isEmpty() && args.charAt(args.length() - 1) == ',')
             args = args.substring(0, args.length() - 1);
 
-        return "function (" + args + ")" + "\n" + blockNode;
+        return "function (" + args + ") " + blockNode;
     }
 }

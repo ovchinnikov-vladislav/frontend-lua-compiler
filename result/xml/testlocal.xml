@@ -1,12 +1,73 @@
 <BlockNode>
   <StatList>
+    <Do>
+      <BlockNode>
+        <StatList>
+          <Assignment>
+            <VarList>
+              <Variable var="a"/>
+            </VarList>
+            <ExpList>
+              <BinaryOperation operation="DIV">
+                <BinaryOperation operation="MUL">
+                  <NumeralExpression number="5" type="INTEGER"/>
+                  <NumeralExpression number="3" type="INTEGER"/>
+                </BinaryOperation>
+                <NumeralExpression number="5" type="INTEGER"/>
+              </BinaryOperation>
+            </ExpList>
+          </Assignment>
+          <Assignment>
+            <VarList>
+              <Variable var="b"/>
+            </VarList>
+            <ExpList>
+              <BinaryOperation operation="DIV">
+                <BinaryOperation operation="MUL">
+                  <NumeralExpression number="3" type="INTEGER"/>
+                  <NumeralExpression number="3.0" type="DOUBLE"/>
+                </BinaryOperation>
+                <NumeralExpression number="8" type="INTEGER"/>
+              </BinaryOperation>
+            </ExpList>
+          </Assignment>
+          <Assignment>
+            <VarList>
+              <Variable var="c"/>
+            </VarList>
+            <ExpList>
+              <BinaryOperation operation="DIV">
+                <BinaryOperation operation="MUL">
+                  <NumeralExpression number="5" type="INTEGER"/>
+                  <NumeralExpression number="1.0" type="DOUBLE"/>
+                </BinaryOperation>
+                <NumeralExpression number="1" type="INTEGER"/>
+              </BinaryOperation>
+            </ExpList>
+          </Assignment>
+          <Assignment>
+            <VarList>
+              <Variable var="d"/>
+            </VarList>
+            <ExpList>
+              <BinaryOperation operation="AND">
+                <BooleanExpression value="true"/>
+                <BooleanExpression value="false"/>
+              </BinaryOperation>
+            </ExpList>
+          </Assignment>
+        </StatList>
+      </BlockNode>
+    </Do>
     <Assignment>
       <VarList>
-        <Variable var="a"/>
-        <Variable var="b"/>
+        <Variable var="k"/>
       </VarList>
       <ExpList>
-        <NumeralExpression number="5" type="INTEGER"/>
+        <BinaryOperation operation="ADD">
+          <Variable var="a"/>
+          <Variable var="b"/>
+        </BinaryOperation>
       </ExpList>
     </Assignment>
   </StatList>

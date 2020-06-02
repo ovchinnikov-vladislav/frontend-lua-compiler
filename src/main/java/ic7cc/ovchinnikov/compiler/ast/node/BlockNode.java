@@ -72,7 +72,6 @@ public class BlockNode extends ASTNode {
 
     @Override
     public String toString() {
-        return  statementListNode +
-                "\n" + returnStatement;
+        return  statementListNode + " " + returnStatement;
     }
 }

@@ -2,16 +2,8 @@
   <StatList/>
   <Return>
     <ExpList>
-      <PrefixExpression>
-        <PrefixExpressionVariable>
-          <Variable var="a"/>
-        </PrefixExpressionVariable>
-      </PrefixExpression>
-      <PrefixExpression>
-        <PrefixExpressionVariable>
-          <Variable var="b"/>
-        </PrefixExpressionVariable>
-      </PrefixExpression>
+      <Variable var="a"/>
+      <Variable var="b"/>
     </ExpList>
   </Return>
 </BlockNode>

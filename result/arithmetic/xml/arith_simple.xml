@@ -8,22 +8,14 @@
         <BinaryOperation operation="ADD">
           <BinaryOperation operation="DIV">
             <BinaryOperation operation="MUL">
-              <PrefixExpression>
-                <PrefixExpressionLParenExpressionRParen>
-                  <BinaryOperation operation="ADD">
-                    <NumeralExpression number="4" type="INTEGER"/>
-                    <NumeralExpression number="3" type="INTEGER"/>
-                  </BinaryOperation>
-                </PrefixExpressionLParenExpressionRParen>
-              </PrefixExpression>
-              <PrefixExpression>
-                <PrefixExpressionLParenExpressionRParen>
-                  <BinaryOperation operation="ADD">
-                    <NumeralExpression number="5" type="INTEGER"/>
-                    <NumeralExpression number="3" type="INTEGER"/>
-                  </BinaryOperation>
-                </PrefixExpressionLParenExpressionRParen>
-              </PrefixExpression>
+              <BinaryOperation operation="ADD">
+                <NumeralExpression number="4" type="INTEGER"/>
+                <NumeralExpression number="3" type="INTEGER"/>
+              </BinaryOperation>
+              <BinaryOperation operation="ADD">
+                <NumeralExpression number="5" type="INTEGER"/>
+                <NumeralExpression number="3" type="INTEGER"/>
+              </BinaryOperation>
             </BinaryOperation>
             <NumeralExpression number="3" type="INTEGER"/>
           </BinaryOperation>

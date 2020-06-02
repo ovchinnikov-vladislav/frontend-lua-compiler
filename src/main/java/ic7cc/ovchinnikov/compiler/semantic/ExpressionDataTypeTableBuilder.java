@@ -28,16 +28,17 @@ public class ExpressionDataTypeTableBuilder {
         List<Statement> statementList = statementListNode.getStatementList();
         for (Statement statement : statementList) {
             statement(statement);
-            System.out.println();
         }
     }
 
     private void returnStatement(ReturnStatement returnStatement) {
         if (returnStatement instanceof ReturnNode) {
             ExpressionListNode expressionListNode = ((ReturnNode) returnStatement).getExpressionListNode();
-            List<Expression> expressions = expressionListNode.getExpressionList();
-            for (Expression expression : expressions) {
-                expression(expression);
+            if (expressionListNode != null) {
+                List<Expression> expressions = expressionListNode.getExpressionList();
+                for (Expression expression : expressions) {
+                    expression(expression);
+                }
             }
         }
     }
@@ -69,16 +70,30 @@ public class ExpressionDataTypeTableBuilder {
 
     private void assignment(AssignmentNode assignmentNode) {
         for (int i = 0; i < assignmentNode.getVariableListNode().size(); i++) {
-            if (assignmentNode.getVariableListNode().getVar(i) instanceof VariableNode) {
-                if (i < assignmentNode.getExpressionListNode().size()) {
-                    Expression expression = assignmentNode.getExpressionListNode().getExp(i);
-                    Type type = expression(expression);
-                    System.out.println(type + ": " + assignmentNode.getVariableListNode().getVar(i) + " = " + expression);
-                } else {
-                    Expression expression = new NilNode();
-                    Type type = expression(expression);
-                    System.out.println(type + ": " + assignmentNode.getVariableListNode().getVar(i) + " = " + expression);
+            if (assignmentNode.getVariableListNode().getVar(i) instanceof VariableTabIndexNode) {
+                PrefixExpression prefixExpression = ((VariableTabIndexNode) assignmentNode.getVariableListNode().getVar(i)).getPreExp();
+                if (prefixExpression instanceof PrefixExpressionLPExpressionRPNode) {
+                    Expression expression = ((PrefixExpressionLPExpressionRPNode) prefixExpression).getExpression();
+                    Type t = expression(expression);
+                    System.out.println(t + ": " + expression);
+                } else if (prefixExpression instanceof PrefixExpressionFunctionCallNode) {
+                    functionCall(((PrefixExpressionFunctionCallNode) prefixExpression).getCall());
                 }
+
+                Expression indexExpression = ((VariableTabIndexNode) assignmentNode.getVariableListNode().getVar(i)).getIndexExpression();
+                Type t = expression(indexExpression);
+                System.out.println(t + ": " + indexExpression);
+            }
+            if (i < assignmentNode.getExpressionListNode().size()) {
+                Expression expression = assignmentNode.getExpressionListNode().getExp(i);
+                Type type = expression(expression);
+                System.out.println(type + ": " + assignmentNode.getVariableListNode().getVar(i) + " = " + expression);
+                typeMap.put(assignmentNode.getVariableListNode().getVar(i).toString(), type);
+            } else {
+                Expression expression = new NilNode();
+                Type type = expression(expression);
+                System.out.println(type + ": " + assignmentNode.getVariableListNode().getVar(i) + " = " + expression);
+                typeMap.put(assignmentNode.getVariableListNode().getVar(i).toString(), type);
             }
         }
     }
@@ -141,8 +156,10 @@ public class ExpressionDataTypeTableBuilder {
         if (functionCall instanceof FunctionCallNode) {
             prefixExpression(((FunctionCallNode) functionCall).getPreExp());
             List<Expression> expressions = ((FunctionCallNode) functionCall).getExpressionListNode().getExpressionList();
-            for (Expression expression : expressions)
-                expression(expression);
+            for (Expression expression : expressions) {
+                Type t = expression(expression);
+                System.out.println(t + ": " + expression);
+            }
         } else if (functionCall instanceof FunctionCallSelfNode) {
             prefixExpression(((FunctionCallSelfNode) functionCall).getPreExp());
             List<Expression> expressions = ((FunctionCallSelfNode) functionCall).getExpressionListNode().getExpressionList();
@@ -151,15 +168,34 @@ public class ExpressionDataTypeTableBuilder {
         }
     }
 
+    private void field(Field field) {
+        if (field instanceof FieldLeftRightExpressionNode) {
+            Expression leftExpression = ((FieldLeftRightExpressionNode) field).getLeftExpression();
+            Type t1 = expression(leftExpression);
+            Expression rightExpression = ((FieldLeftRightExpressionNode) field).getRightExpression();
+            Type t2 = expression(rightExpression);
+
+            System.out.println("[" + t1 + ": " + leftExpression + "] = " + t2 + ": " + rightExpression);
+        } else if (field instanceof FieldNameExpressionNode) {
+            Expression expression = ((FieldNameExpressionNode) field).getExpression();
+            Type t = expression(expression);
+            System.out.println(t + ": " + expression);
+        } else if (field instanceof FieldExpressionNode) {
+            Expression expression = ((FieldExpressionNode) field).getFieldExpression();
+            Type t = expression(expression);
+            System.out.println(t + ": " + expression);
+        }
+    }
+
     private Type expression(Expression expression) {
         if (expression instanceof BooleanExpressionNode)
-            return booleanExpression((BooleanExpressionNode) expression);
+            return Type.BOOLEAN;
         else if (expression instanceof BinaryOperationNode)
             return binaryOperationNode((BinaryOperationNode) expression);
         else if (expression instanceof FunctionExpressionNode)
             return functionExpressionNode((FunctionExpressionNode) expression);
         else if (expression instanceof LiteralStringExpressionNode)
-            return literalStringExpression((LiteralStringExpressionNode) expression);
+            return Type.STRING;
         else if (expression instanceof NumeralExpressionNode)
             return numeralExpression((NumeralExpressionNode) expression);
         else if (expression instanceof PrefixExpressionNode)
@@ -168,11 +204,7 @@ public class ExpressionDataTypeTableBuilder {
             return tableConstructor(((TableConstructorExpressionNode) expression).getTableCons());
         else if (expression instanceof UnaryOperationNode)
             return unaryOperation((UnaryOperationNode) expression);
-        return Type.UNDEFINED;
-    }
-
-    private Type booleanExpression(BooleanExpressionNode booleanExpressionNode) {
-        return Type.BOOLEAN;
+        return Type.NIL;
     }
 
     private Type binaryOperationNode(BinaryOperationNode binaryOperationNode) {
@@ -183,17 +215,13 @@ public class ExpressionDataTypeTableBuilder {
             return checkTypeBinaryOperation(binaryOperationNode.getOperation(), t1, t2);
         } catch (Exception exc) {
             System.out.println("Error: " + exc.getMessage());
-            return Type.UNDEFINED;
+            return Type.NIL;
         }
     }
 
     private Type functionExpressionNode(FunctionExpressionNode functionExpressionNode) {
         blockNode(functionExpressionNode.getBlockNode());
         return Type.FUNCTION;
-    }
-
-    private Type literalStringExpression(LiteralStringExpressionNode literalStringExpressionNode) {
-        return Type.STRING;
     }
 
     private Type numeralExpression(NumeralExpressionNode numeralExpressionNode) {
@@ -206,16 +234,25 @@ public class ExpressionDataTypeTableBuilder {
     private Type prefixExpression(PrefixExpression prefixExpression) {
         if (prefixExpression instanceof PrefixExpressionLPExpressionRPNode) {
             return expression(((PrefixExpressionLPExpressionRPNode) prefixExpression).getExpression());
+        } else if (prefixExpression instanceof PrefixExpressionFunctionCallNode) {
+            functionCall(((PrefixExpressionFunctionCallNode) prefixExpression).getCall());
+        } else if (prefixExpression instanceof PrefixExpressionVariableNode) {
+            Type t = typeMap.get(((PrefixExpressionVariableNode) prefixExpression).getVariable().toString());
+            return t == null ? Type.NIL : t;
         }
-        return Type.FUNCTION;
+        return Type.NIL;
     }
 
     private Type tableConstructor(TableConstructorNode tableConstructorNode) {
+        List<Field> fields = tableConstructorNode.getFieldListNode().getFieldList();
+        for (Field field : fields) {
+            field(field);
+        }
+
         return Type.TABLE;
     }
 
     private Type unaryOperation(UnaryOperationNode unaryOperationNode) {
-        System.out.print(unaryOperationNode);
         Type t = expression(unaryOperationNode.getExpression());
 
         try {
@@ -233,20 +270,24 @@ public class ExpressionDataTypeTableBuilder {
                         (leftExpressionType == Type.BOOLEAN || rightExpressionType == Type.BOOLEAN ||
                                 leftExpressionType == Type.TABLE || rightExpressionType == Type.TABLE ||
                                 leftExpressionType == Type.FUNCTION || rightExpressionType == Type.FUNCTION)) {
-                    throw new Exception("Сoncatenation cannot be applied to (" + (leftExpressionType.name() + " "+operation.toString()+" " + rightExpressionType.name()) + ")");
+                    throw new Exception("Сoncatenation cannot be applied to (" + (leftExpressionType.name() + " " + operation.toString() + " " + rightExpressionType.name()) + ")");
                 }
                 return Type.STRING;
             case BITWISE:
                 if (!(leftExpressionType == Type.INTEGER && rightExpressionType == Type.INTEGER))
-                    throw new Exception("Bitwise operation cannot be applied to (" + (leftExpressionType.name() + " "+operation.toString()+" " + rightExpressionType.name()) + ")");
+                    throw new Exception("Bitwise operation cannot be applied to (" + (leftExpressionType.name() + " " + operation.toString() + " " + rightExpressionType.name()) + ")");
                 return Type.INTEGER;
             case RELATION:
-                // TODO: Сделать проверку операций отношения
-                return null;
+                if (operation == Operation.EQUAL || operation == Operation.NOTEQ)
+                    return Type.BOOLEAN;
+                else if (leftExpressionType == Type.INTEGER || leftExpressionType == Type.DOUBLE ||
+                        rightExpressionType == Type.INTEGER || rightExpressionType == Type.DOUBLE)
+                    return Type.BOOLEAN;
+                throw new Exception("Bitwise operation cannot be applied to (" + (leftExpressionType.name() + " " + operation.toString() + " " + rightExpressionType.name()) + ")");
             case ARITHMETIC:
                 if (!((leftExpressionType == Type.INTEGER || leftExpressionType == Type.DOUBLE) &&
                         (rightExpressionType == Type.INTEGER || rightExpressionType == Type.DOUBLE))) {
-                    throw new Exception("Arithmetic operation cannot be applied to (" + (leftExpressionType.name() + " "+operation.toString()+" " + rightExpressionType.name()) + ")");
+                    throw new Exception("Arithmetic operation cannot be applied to (" + (leftExpressionType.name() + " " + operation.toString() + " " + rightExpressionType.name()) + ")");
                 }
                 if (leftExpressionType == Type.DOUBLE && rightExpressionType == Type.DOUBLE)
                     return Type.DOUBLE;
@@ -254,6 +295,8 @@ public class ExpressionDataTypeTableBuilder {
                     return Type.DOUBLE;
                 else
                     return Type.INTEGER;
+            case BOOLEAN:
+                return Type.BOOLEAN;
         }
         throw new Exception("Undefined operation");
     }
@@ -286,6 +329,6 @@ public class ExpressionDataTypeTableBuilder {
         DOUBLE,
         TABLE,
         FUNCTION,
-        UNDEFINED
+        NIL
     }
 }

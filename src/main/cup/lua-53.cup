@@ -108,15 +108,15 @@ precedence right UNMINUS, NOT, BNOT, LENGTH;
 start with blockNode;
 
 blockNode ::=  statlist:sl retstat:rs   {:
-                                        System.out.println("BlockNode with statlist and retstat");
+                                        //System.out.println("BlockNode with statlist and retstat");
                                         RESULT = new BlockNode(sl, rs);
                                     :}
          | statlist:sl              {:
-                                        System.out.println("BlockNode with statlist");
+                                        //System.out.println("BlockNode with statlist");
                                         RESULT = new BlockNode(sl, null);
                                     :}
          | retstat:rs               {:
-                                        System.out.println("BlockNode with retstat");
+                                        //System.out.println("BlockNode with retstat");
                                         StatementListNode sl = new StatementListNode();
                                         sl.setStart(rs.getStart());
                                         sl.setEnd(rs.getStart());
@@ -132,11 +132,11 @@ blockNode ::=  statlist:sl retstat:rs   {:
          ;
 
 statlist ::=  stat:s			    {:
-									    System.out.println("Single stat");
+									    //System.out.println("Single stat");
 									    RESULT = new StatementListNode(s);
 								    :}
             | stat:s statlist:sl    {:
-                                        System.out.println("Recurrent stat");
+                                       // System.out.println("Recurrent stat");
 									    if (sl == null) {
 										    sl = new StatementListNode(s);
 										    RESULT = sl;
@@ -149,16 +149,16 @@ statlist ::=  stat:s			    {:
             ;
 
 stat ::=  SEMICOLON                                                 {:
-                                                                        System.out.println("SEMICOLON");
+                                                                        //System.out.println("SEMICOLON");
                                                                     :}
         | varlist:vl ASSIGNMENT explist:el                          {:
-                                                                        System.out.println("statement");
+                                                                        //System.out.println("statement");
                                                                         RESULT = new AssignmentNode(vl, el);
                                                                     :}
         | functioncall:fc                                           {:  RESULT = new FunctionCallStatementNode(fc); :}
         | BREAK                                                     {:  RESULT = new BreakNode(); :}
         | DO blockNode:b END                                            {:
-                                                                        System.out.println("statement - do end");
+                                                                        //System.out.println("statement - do end");
                                                                         RESULT = new DoBlockNode(b);
                                                                     :}
         | WHILE expression:e DO blockNode:b END                                {:  RESULT = new WhileBlockNode(e, b); :}
@@ -167,17 +167,7 @@ stat ::=  SEMICOLON                                                 {:
         | FOR NAME:nameNode ASSIGNMENT expression:e1 COMMA expression:e2 comforexp:e3 DO blockNode:b END {:   RESULT = new ForBlockNode(nameNode, e1, e2, e3, b);  :}
         | FOR namelist:nl IN explist:el DO blockNode:b END              {:  RESULT = new ForInBlockNode(nl, el, b);  :}
         | FUNCTION funcname:fn funcbody:fb                          {:
-                                                                       /* VariableListNode vl = FunctionSyntactic.funcNameToVarList(fn);
-                                                                        vl.setStart(fn.getStart());
-                                                                        vl.setEnd(fn.getEnd());
 
-                                                                        ExpressionListNode args = FunctionSyntactic.methodDefinitionToExpression(fn, fb);
-                                                                        args.setStart(fb.getStart());
-                                                                        args.setEnd(fb.getEnd());
-
-                                                                        AssignmentNode asm = new AssignmentNode(vl, args);
-
-                                                                        RESULT = asm; */
                                                                         RESULT = new FunctionDefinitionNode(fn, fb);
                                                                     :}
         | LOCAL FUNCTION NAME:nameNode funcbody:fb                      {:  RESULT = new LocalFunctionDefinitionNode(nameNode, fb.getParListNode().getNameListNode(), fb.getParListNode().getVarParList(), fb.getBlockNode()); :}
@@ -287,11 +277,11 @@ expression	::=	 NIL                                {:  RESULT = new NilNode(); :
 	   ;
 
 prefixexp ::=  var:v                       {:
-                                                    System.out.println("Prefixexp var");
+                                                    //System.out.println("Prefixexp var");
                                                     RESULT = new PrefixExpressionVariableNode(v);
                                                 :}
              | functioncall:fc                  {:
-                                                    System.out.println("Prefixexp");
+                                                    //System.out.println("Prefixexp");
                                                     RESULT = new PrefixExpressionFunctionCallNode(fc);
                                                 :}
              | LPAREN expression:e RPAREN       {:
@@ -315,7 +305,7 @@ funcbody ::=  LPAREN parlist:pl RPAREN blockNode:b END        {:  RESULT = new F
 parlist ::=  namelist:nl COMMA PARAMS                     {:  RESULT = new ParListNode(nl, true);  :}
            | namelist:nl                                  {:  RESULT = new ParListNode(nl, false); :}
            | PARAMS                                       {:
-                                                              System.out.println("parlist -> PARAMS");
+                                                              //System.out.println("parlist -> PARAMS");
                                                               NameListNode nl = new NameListNode();
                                                               nl.setStart(LocationFactory.from(null));
                                                               nl.setEnd(LocationFactory.from(null));

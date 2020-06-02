@@ -6,16 +6,8 @@
       </VarList>
       <ExpList>
         <BinaryOperation operation="AND">
-          <PrefixExpression>
-            <PrefixExpressionVariable>
-              <Variable var="b"/>
-            </PrefixExpressionVariable>
-          </PrefixExpression>
-          <PrefixExpression>
-            <PrefixExpressionVariable>
-              <Variable var="c"/>
-            </PrefixExpressionVariable>
-          </PrefixExpression>
+          <Variable var="b"/>
+          <Variable var="c"/>
         </BinaryOperation>
       </ExpList>
     </Assignment>

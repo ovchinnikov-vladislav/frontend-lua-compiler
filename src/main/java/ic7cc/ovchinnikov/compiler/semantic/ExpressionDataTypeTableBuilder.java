@@ -10,13 +10,14 @@ import java.util.Map;
 
 public class ExpressionDataTypeTableBuilder {
 
-    private Map<String, Type> typeMap = new HashMap<>();
+    private Map<String, Type> typeMap;
 
     public void analyze(BlockNode blockNode) {
         blockNode(blockNode);
     }
 
     private void blockNode(BlockNode block) {
+        typeMap = new HashMap<>();
         StatementListNode statementListNode = block.getStatementListNode();
         statementListNode(statementListNode);
 
@@ -37,7 +38,8 @@ public class ExpressionDataTypeTableBuilder {
             if (expressionListNode != null) {
                 List<Expression> expressions = expressionListNode.getExpressionList();
                 for (Expression expression : expressions) {
-                    expression(expression);
+                    Type t = expression(expression);
+                    System.out.println(t + ": return " + expression);
                 }
             }
         }
@@ -58,14 +60,14 @@ public class ExpressionDataTypeTableBuilder {
             functionCallStmt((FunctionCallStatementNode) statement);
         else if (statement instanceof LocalNode)
             local((LocalNode) statement);
-        else if (statement instanceof LocalFunctionDefinitionNode)
-            localFunctionDef((LocalFunctionDefinitionNode) statement);
+//        else if (statement instanceof LocalFunctionDefinitionNode)
+//            localFunctionDefinitionNodeBlockNodeMap.put((LocalFunctionDefinitionNode) statement, ((LocalFunctionDefinitionNode) statement).getBlockNode());
         else if (statement instanceof RepeatUntilNode)
             repeatUntil((RepeatUntilNode) statement);
         else if (statement instanceof WhileBlockNode)
             whileBlock((WhileBlockNode) statement);
-        else if (statement instanceof FunctionDefinitionNode)
-            functionDefNode((FunctionDefinitionNode) statement);
+//        else if (statement instanceof FunctionDefinitionNode)
+//            functionDefinitionNodeMap.put(((FunctionDefinitionNode) statement).getFunctionName(), ((FunctionDefinitionNode) statement).getFunctionBody());
     }
 
     private void assignment(AssignmentNode assignmentNode) {
@@ -101,7 +103,8 @@ public class ExpressionDataTypeTableBuilder {
     private void ifThenElse(IfThenElseBlockNode ifThenElseBlockNode) {
         expression(ifThenElseBlockNode.getIfExpression());
         blockNode(ifThenElseBlockNode.getThenBlockNode());
-        blockNode(ifThenElseBlockNode.getElseBlockNode());
+        if (ifThenElseBlockNode.getElseBlockNode() != null)
+            blockNode(ifThenElseBlockNode.getElseBlockNode());
     }
 
     private void doBlock(DoBlockNode doBlockNode) {
@@ -163,8 +166,10 @@ public class ExpressionDataTypeTableBuilder {
         } else if (functionCall instanceof FunctionCallSelfNode) {
             prefixExpression(((FunctionCallSelfNode) functionCall).getPreExp());
             List<Expression> expressions = ((FunctionCallSelfNode) functionCall).getExpressionListNode().getExpressionList();
-            for (Expression expression : expressions)
-                expression(expression);
+            for (Expression expression : expressions) {
+                Type t = expression(expression);
+                System.out.println(t + ": " + expression);
+            }
         }
     }
 
@@ -258,8 +263,9 @@ public class ExpressionDataTypeTableBuilder {
         try {
             return checkTypeUnaryOperation(unaryOperationNode.getOperation(), t);
         } catch (Exception exc) {
-            throw new RuntimeException(exc.getMessage());
+            System.out.println(exc.getMessage());
         }
+        return t;
     }
 
 
@@ -317,8 +323,9 @@ public class ExpressionDataTypeTableBuilder {
                 if (type != Type.INTEGER && type != Type.DOUBLE)
                     throw new Exception("Arithmetic operation cannot be applied to (" + type.name() + ")");
                 return type;
+            default:
+                return Type.NIL;
         }
-        throw new Exception("Undefined operation");
     }
 
 

@@ -8,7 +8,6 @@ import java_cup.runtime.*;
 import ic7cc.ovchinnikov.compiler.ast.*;
 import ic7cc.ovchinnikov.compiler.ast.node.*;
 import ic7cc.ovchinnikov.compiler.parser.location.*;
-import ic7cc.ovchinnikov.compiler.parser.grammar.*;
 
 import ic7cc.ovchinnikov.compiler.lexer.Lexer;
 
@@ -16,12 +15,10 @@ scan with {: return lexer.next_token(); :};
 
 parser code {:
   public boolean syntaxErrors;
-  DefaultProductionRuleBroadcaster productionRuleBroadcaster;
   Lexer lexer;
 
   public Parser(Lexer lex) {
     super(lex);
-    productionRuleBroadcaster = new DefaultProductionRuleBroadcaster();
 
     symbolFactory = lex.getSymbolFactory();
 

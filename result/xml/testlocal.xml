@@ -1,73 +1,36 @@
 <BlockNode>
   <StatList>
-    <Do>
-      <BlockNode>
-        <StatList>
-          <Assignment>
-            <VarList>
-              <Variable var="a"/>
-            </VarList>
+    <FunctionDefinition>
+      <FunctionNameVariable>
+        <Name name="a"/>
+      </FunctionNameVariable>
+      <FunctionBody>
+        <ParList varPar="false">
+          <NameList>
+            <Name name="b"/>
+          </NameList>
+        </ParList>
+        <BlockNode>
+          <StatList/>
+          <Return>
             <ExpList>
-              <BinaryOperation operation="DIV">
-                <BinaryOperation operation="MUL">
-                  <NumeralExpression number="5" type="INTEGER"/>
-                  <NumeralExpression number="3" type="INTEGER"/>
-                </BinaryOperation>
-                <NumeralExpression number="5" type="INTEGER"/>
-              </BinaryOperation>
-            </ExpList>
-          </Assignment>
-          <Assignment>
-            <VarList>
               <Variable var="b"/>
-            </VarList>
-            <ExpList>
-              <BinaryOperation operation="DIV">
-                <BinaryOperation operation="MUL">
-                  <NumeralExpression number="3" type="INTEGER"/>
-                  <NumeralExpression number="3.0" type="DOUBLE"/>
-                </BinaryOperation>
-                <NumeralExpression number="8" type="INTEGER"/>
-              </BinaryOperation>
             </ExpList>
-          </Assignment>
-          <Assignment>
-            <VarList>
-              <Variable var="c"/>
-            </VarList>
-            <ExpList>
-              <BinaryOperation operation="DIV">
-                <BinaryOperation operation="MUL">
-                  <NumeralExpression number="5" type="INTEGER"/>
-                  <NumeralExpression number="1.0" type="DOUBLE"/>
-                </BinaryOperation>
-                <NumeralExpression number="1" type="INTEGER"/>
-              </BinaryOperation>
-            </ExpList>
-          </Assignment>
-          <Assignment>
-            <VarList>
-              <Variable var="d"/>
-            </VarList>
-            <ExpList>
-              <BinaryOperation operation="AND">
-                <BooleanExpression value="true"/>
-                <BooleanExpression value="false"/>
-              </BinaryOperation>
-            </ExpList>
-          </Assignment>
-        </StatList>
-      </BlockNode>
-    </Do>
+          </Return>
+        </BlockNode>
+      </FunctionBody>
+    </FunctionDefinition>
     <Assignment>
       <VarList>
-        <Variable var="k"/>
+        <Variable var="a"/>
       </VarList>
       <ExpList>
-        <BinaryOperation operation="ADD">
+        <FunctionCall>
           <Variable var="a"/>
-          <Variable var="b"/>
-        </BinaryOperation>
+          <ExpList>
+            <NumeralExpression number="4" type="INTEGER"/>
+          </ExpList>
+        </FunctionCall>
       </ExpList>
     </Assignment>
   </StatList>

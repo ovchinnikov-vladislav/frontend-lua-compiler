@@ -1,7 +1,6 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
 import lombok.Getter;
 import lombok.Setter;
@@ -85,34 +84,6 @@ public class VariableListNode extends ASTNode {
     @Override
     public void setParent(ASTNode parent) {
         this.parent = parent;
-    }
-
-    @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
-    }
-
-    @Override
-    public void childrenAccept(Visitor visitor) {
-        for (int i = 0; i < size(); i++)
-            if (getVar(i) != null)
-                getVar(i).accept(visitor);
-    }
-
-    @Override
-    public void traverseTopDown(Visitor visitor) {
-        this.accept(visitor);
-        for (int i = 0; i < size(); i++)
-            if (getVar(i) != null)
-                getVar(i).traverseTopDown(visitor);
-    }
-
-    @Override
-    public void traverseBottomUp(Visitor visitor) {
-        for (int i = 0; i < size(); i++)
-            if (getVar(i) != null)
-                getVar(i).traverseBottomUp(visitor);
-        this.accept(visitor);
     }
 
     @Override

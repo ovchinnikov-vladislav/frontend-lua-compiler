@@ -1,7 +1,6 @@
 package ic7cc.ovchinnikov.compiler.ast.node;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import ic7cc.ovchinnikov.compiler.ast.Visitor;
 import ic7cc.ovchinnikov.compiler.ast.impl.ASTNode;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,34 +32,6 @@ public class StatementListNode extends ASTNode {
     @Override
     public void setParent(ASTNode parent) {
         this.parent = parent;
-    }
-
-    @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
-    }
-
-    @Override
-    public void childrenAccept(Visitor visitor) {
-        for (int i = 0; i < size(); i++)
-            if (getStat(i) != null)
-                getStat(i).accept(visitor);
-    }
-
-    @Override
-    public void traverseTopDown(Visitor visitor) {
-        this.accept(visitor);
-        for (int i = 0; i < size(); i++)
-            if (getStat(i) != null)
-                getStat(i).traverseTopDown(visitor);
-    }
-
-    @Override
-    public void traverseBottomUp(Visitor visitor) {
-        for (int i = 0; i < size(); i++)
-            if (getStat(i) != null)
-                getStat(i).traverseBottomUp(visitor);
-        this.accept(visitor);
     }
 
     public StatementListNode append(Statement anItem) {

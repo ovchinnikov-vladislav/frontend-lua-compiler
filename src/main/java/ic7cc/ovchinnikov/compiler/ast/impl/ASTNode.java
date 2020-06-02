@@ -1,14 +1,13 @@
 package ic7cc.ovchinnikov.compiler.ast.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import ic7cc.ovchinnikov.compiler.ast.VisitedNode;
 import ic7cc.ovchinnikov.compiler.parser.location.Location;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class ASTNode implements VisitedNode {
+public abstract class ASTNode {
 
     @JsonIgnore
     private Location start;

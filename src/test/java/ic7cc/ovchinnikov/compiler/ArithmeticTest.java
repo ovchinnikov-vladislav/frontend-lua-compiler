@@ -3,6 +3,7 @@ package ic7cc.ovchinnikov.compiler;
 import ic7cc.ovchinnikov.compiler.ast.node.BlockNode;
 import ic7cc.ovchinnikov.compiler.lexer.Lexer;
 import ic7cc.ovchinnikov.compiler.parser.Parser;
+import ic7cc.ovchinnikov.compiler.semantic.ExpressionDataTypeTableBuilder;
 import ic7cc.ovchinnikov.compiler.util.XmlSerializer;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,6 +13,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ArithmeticTest {
 
@@ -35,6 +37,13 @@ public class ArithmeticTest {
         HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/arithmetic/xml/expected_arith_simple.xml").toFile());
 
         Assert.assertEquals(expected, result);
+
+        ExpressionDataTypeTableBuilder builder = new ExpressionDataTypeTableBuilder();
+        builder.analyze(block);
+
+        Map<String, ExpressionDataTypeTableBuilder.Type> typeMap = builder.getTypeMap();
+
+        Assert.assertEquals(ExpressionDataTypeTableBuilder.Type.DOUBLE, typeMap.get("a"));
     }
 
 }

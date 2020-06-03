@@ -17,7 +17,7 @@ import java.text.*;
 %column
 
 %cup
-%cupdebug
+//%cupdebug
 // Имя класса с токенами, который сгенерил cup
 %cupsym Token
 // Генерирование верного токена окончания файла

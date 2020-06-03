@@ -44,7 +44,6 @@ parser code {:
 :};
 
 /* Терминалы (токены, которые будут прочитаны лексером). */
-
 terminal ASSIGNMENT;                                        // =
 terminal DOT, COLON;                                        // операция точки и двоеточие
 terminal LOCAL, FUNCTION, END;
@@ -102,7 +101,6 @@ precedence right POW;
 precedence right UNMINUS, NOT, BNOT, LENGTH;
 
 /* Продукции грамматики */
-
 start with blockNode;
 
 blockNode ::=  statlist:sl retstat:rs   {:
@@ -124,7 +122,7 @@ blockNode ::=  statlist:sl retstat:rs   {:
 										StatementListNode statlist = new StatementListNode();
 										statlist.setStart(LocationFactory.from(null));
 										statlist.setEnd(LocationFactory.from(null));
-										System.out.println("Empty blockNode");
+										//System.out.println("Empty blockNode");
 										RESULT = new BlockNode(statlist, null);
                                     :}
          ;

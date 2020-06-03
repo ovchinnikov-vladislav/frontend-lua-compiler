@@ -3,6 +3,7 @@ package ic7cc.ovchinnikov.compiler;
 import ic7cc.ovchinnikov.compiler.ast.node.BlockNode;
 import ic7cc.ovchinnikov.compiler.lexer.Lexer;
 import ic7cc.ovchinnikov.compiler.parser.Parser;
+import ic7cc.ovchinnikov.compiler.semantic.ExpressionDataTypeTableBuilder;
 import ic7cc.ovchinnikov.compiler.util.XmlSerializer;
 import org.junit.Assert;
 import org.junit.Before;
@@ -50,6 +51,11 @@ public class TableTest {
         HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/tables/xml/expected_exp_tableconstructor.xml").toFile());
 
         Assert.assertEquals(expected, result);
+
+        ExpressionDataTypeTableBuilder builder = new ExpressionDataTypeTableBuilder();
+        builder.analyze(block);
+
+        Assert.assertEquals(ExpressionDataTypeTableBuilder.Type.TABLE, builder.getTypeMap().get("a"));
     }
 
     @Test
@@ -65,6 +71,11 @@ public class TableTest {
         HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/tables/xml/expected_exp_tableconstructor_empty.xml").toFile());
 
         Assert.assertEquals(expected, result);
+
+        ExpressionDataTypeTableBuilder builder = new ExpressionDataTypeTableBuilder();
+        builder.analyze(block);
+
+        Assert.assertEquals(ExpressionDataTypeTableBuilder.Type.TABLE, builder.getTypeMap().get("a"));
     }
 
     @Test
@@ -80,6 +91,11 @@ public class TableTest {
         HashMap<String, Object> expected = xmlSerializer.read(Path.of("expected/tables/xml/expected_explist_tableconstructor.xml").toFile());
 
         Assert.assertEquals(expected, result);
+
+        ExpressionDataTypeTableBuilder builder = new ExpressionDataTypeTableBuilder();
+        builder.analyze(block);
+
+        Assert.assertEquals(ExpressionDataTypeTableBuilder.Type.TABLE, builder.getTypeMap().get("a"));
     }
 
     @Test

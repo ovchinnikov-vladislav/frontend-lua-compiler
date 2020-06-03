@@ -114,16 +114,21 @@ public class ExpressionDataTypeTableBuilder {
     }
 
     private void forBlock(ForBlockNode forBlockNode) {
-        expression(forBlockNode.getStartExpression());
-        expression(forBlockNode.getEndExpression());
-        expression(forBlockNode.getStepExpression());
+        Type startType = expression(forBlockNode.getStartExpression());
+        Type endType = expression(forBlockNode.getEndExpression());
+        Type stepType = expression(forBlockNode.getStepExpression());
+        System.out.print("for i = " + startType + ": " + forBlockNode.getStartExpression());
+        System.out.print(", " + endType + ": " + forBlockNode.getEndExpression());
+        System.out.println(", " + stepType + ": " + forBlockNode.getStepExpression());
+
         blockNode(forBlockNode.getBlockNode());
     }
 
     private void forInBlock(ForInBlockNode forInBlockNode) {
         List<Expression> expressions = forInBlockNode.getExpressionListNode().getExpressionList();
         for (Expression expression : expressions) {
-            expression(expression);
+            Type t = expression(expression);
+            System.out.print(t + ": " + expression + " ");
         }
         blockNode(forInBlockNode.getBlockNode());
     }
@@ -133,9 +138,18 @@ public class ExpressionDataTypeTableBuilder {
     }
 
     private void local(LocalNode localNode) {
-        List<Expression> expressions = localNode.getExpressionListNode().getExpressionList();
-        for (Expression expression : expressions) {
-            expression(expression);
+        for (int i = 0; i < localNode.getNameListNode().size(); i++) {
+            if (i < localNode.getExpressionListNode().size()) {
+                Expression expression = localNode.getExpressionListNode().getExp(i);
+                Type type = expression(expression);
+                System.out.println("local " + type + ": " + localNode.getNameListNode().getName(i) + " = " + expression);
+                typeMap.put(localNode.getNameListNode().getName(i).toString(), type);
+            } else {
+                Expression expression = new NilNode();
+                Type type = expression(expression);
+                System.out.println("local " + type + ": " + localNode.getNameListNode().getName(i) + " = " + expression);
+                typeMap.put(localNode.getNameListNode().getName(i).toString(), type);
+            }
         }
     }
 
@@ -145,11 +159,13 @@ public class ExpressionDataTypeTableBuilder {
 
     private void repeatUntil(RepeatUntilNode repeatUntilNode) {
         blockNode(repeatUntilNode.getBlockNode());
-        expression(repeatUntilNode.getExpression());
+        Type t = expression(repeatUntilNode.getExpression());
+        System.out.println("until " + t + ": " + repeatUntilNode.getExpression());
     }
 
     private void whileBlock(WhileBlockNode whileBlockNode) {
-        expression(whileBlockNode.getExpression());
+        Type t = expression(whileBlockNode.getExpression());
+        System.out.println("while " + t + ": " + whileBlockNode.getExpression());
         blockNode(whileBlockNode.getBlockNode());
     }
 
